@@ -2,6 +2,7 @@ import React , {useState, useEffect}from 'react'
 import {Col, Container, Row} from 'react-bootstrap'
 import {ArrowRightCircle} from 'react-bootstrap-icons'
 import '../studentLandingPage/studentLandingPage.css'
+import Navbar from '../navbar/navbar'
 
 function StudentLandingPage() {
     const [loopNum, setLoopNum] = useState(0)
@@ -41,6 +42,7 @@ function StudentLandingPage() {
 
     return (
         <section>
+            <Navbar/>
             <Container className='banner' id='home'>
                 <div className='black-div' ></div>
                 <div className='align-items-center'>

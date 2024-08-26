@@ -26,6 +26,10 @@ nav img {
     width: 100px;
 }
 
+nav ul li a {
+    color: #0c0a09;
+}
+
 .nav__bar {
     padding: 1rem;
     display: flex;
@@ -41,7 +45,7 @@ nav img {
     cursor: pointer;
 }
 
-.nav__links {
+.nav_links {
     list-style: none;
     position: absolute;
     width: 100%;
@@ -56,11 +60,11 @@ nav img {
     z-index: -1;
 }
 
-.nav__links.open {
+.nav_links.open {
     transform: translateY(0);
 }
 
-.nav__links a {
+.nav_links a {
     position: relative;
     isolation: isolate;
     padding-bottom: 8px;
@@ -91,7 +95,7 @@ nav img {
         display: none;
     }
 
-    .nav__links {
+    .nav_links {
         padding: 0;
         width: unset;
         position: static;
@@ -104,7 +108,7 @@ nav img {
         display: block;
     }
 
-    .nav__links a::after {
+    .nav_links a::after {
         position: absolute;
         content: "";
         left: 0;
@@ -116,7 +120,7 @@ nav img {
         transform-origin: left;
     }
 
-    .nav__links a:hover::after {
+    .nav_links a:hover::after {
         width: 100%;
     }
 }
