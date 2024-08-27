@@ -2,6 +2,7 @@ import React, {useState,} from 'react'
 import './LandingPage.css';
 import { FaEnvelope, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import {NavLink} from 'react-router-dom' 
+import Footer from '../footer/footer';
 function LandingPage() {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -15,27 +16,34 @@ function LandingPage() {
 
     return (
         <>
-            <header class="header">
-                <nav>
-                    <div class="nav__bar">
-                        <div class="logo">
-                            <a href="#"><img src="./header.jpg" alt="logo" /></a>
-                        </div>
-                        <div class="nav__menu__btn" id="menu-btn" onClick={handleMenuButtonClick}>
-                            <i class="ri-menu-line"></i>
-                        </div>
+            <nav>
+                <div class="nav__bar">
+                    <div class="logo">
+                        <a href="#"><img src="./nameLogo.jpg" alt="logo" /></a>
                     </div>
-                    <ul class="nav__links" id="nav-links" onClick={handleNavLinkClick}>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#service">Services</a></li>
-                        <li><a href="#explore">Explore</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
+                    <div class="nav__menu__btn" id="menu-btn" onClick={handleMenuButtonClick}>
+                        <i class="ri-menu-line"></i>
+                    </div>
+                </div>
+                <ul class="nav__links" id="nav-links" onClick={handleNavLinkClick}>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#service">Services</a></li>
+                    <li><a href="#explore">Explore</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <din className="nav__btns">
                     <NavLink to="/signup">
-                        <button class="btn nav__btn">Login</button>
+                        <button class="btn nav__btn">Admin</button>
                     </NavLink>
-                </nav>
+                    <NavLink to="/signup">
+                        <button class="btn nav__btn">User</button>
+                    </NavLink>
+                </din>
+            </nav>
+
+            <header class="header">
+            <div className='black-div' ></div>
                 <div class="section__container header__container" id="home">
                     <p>Simple - Unique - Friendly</p>
                     <h1>Make Yourself At Home<br />In Our <span>Hostels</span>.</h1>
@@ -44,7 +52,7 @@ function LandingPage() {
 
             <section class="section__container about__container" id="about">
                 <div class="about__image">
-                    <img src="../../assets/Landing/about.jpg" alt="about" />
+                    <img src="/about.jpg" alt="about" />
                 </div>
                 <div class="about__content">
                     <p class="section__subheader">ABOUT US</p>
@@ -175,54 +183,7 @@ function LandingPage() {
                 </div>
             </section>
 
-            <footer class="footer" id="contact">
-                <div class="section__container footer__container">
-                    <div class="footer__col">
-                        <div class="logo">
-                            <a href="#home"><img src="../../assets/Landing/logo.png" alt="logo" /></a>
-                        </div>
-                        <p class="section__description">
-                            Discover a world of comfort, luxury, and adventure as you explore
-                            our curated selection of hotels, making every moment of your getaway
-                            truly extraordinary.
-                        </p>
-                        <button class="btn">Book Now</button>
-                    </div>
-                    <div class="footer__col">
-                        <h4>QUICK LINKS</h4>
-                        <ul class="footer__links">
-                            <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">My Reservation</a></li>
-                            <li><a href="#">View Rooms</a></li>
-                            <li><a href="#">Manage Profile</a></li>
-                            <li><a href="#">About</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer__col">
-                        <h4>OUR SERVICES</h4>
-                        <ul class="footer__links">
-                            <li><a href="#">Complaints</a></li>
-                            <li><a href="#">Feedback & Help</a></li>
-                            <li><a href="#">Mess Card</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer__col">
-                        <h4>CONTACT US</h4>
-                        <ul class="footer__links">
-                            <li><a href="#">rayalpark@info.com</a></li>
-                        </ul>
-                        <div class="footer__socials">
-                            <a href="#"><FaInstagram/></a>
-                            <a href="#"><FaFacebook /></a>
-                            <a href="#"><FaEnvelope/></a>
-                            <a href="#"><FaTwitter/></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer__bar">
-                    Copyright © 2023 Web Design Mastery. All rights reserved.
-                </div>
-            </footer>
+            <Footer />
         </>
     )
 }
