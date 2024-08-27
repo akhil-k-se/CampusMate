@@ -4,6 +4,7 @@ import {ArrowRightCircle} from 'react-bootstrap-icons'
 import '../studentLandingPage/studentLandingPage.css'
 import Navbar from '../navbar/navbar'
 import Footer from '../footer/footer'
+import { NavLink } from 'react-router-dom'
 
 function StudentLandingPage() {
     const [loopNum, setLoopNum] = useState(0)
@@ -52,7 +53,7 @@ function StudentLandingPage() {
                         <span className='tagline'>Welcome Student<span id='pink-bar'></span>{`Akashdeep Singla`}</span>
                         <h1>{`Say hi to `}<span className='wrap'>{text}</span></h1>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate dolores eum accusantium sapiente amet! Rerum cupiditate facilis, voluptates ipsam autem voluptate exercitationem, quos corporis iste eum sequi fugit, placeat saepe.</p>
-                        <button className='btn'>View Room</button>
+                        <NavLink to="/booking"><button className='btn'>Book Room</button></NavLink>
                         </div>
                         <div className="userName">
                         <img src="/154800922.jpeg" alt="" />
@@ -105,6 +106,7 @@ function StudentLandingPage() {
                 <p class="section__subheader">EXPLORE</p>
                 <h2 class="section__header">What's New Today.</h2>
                 <div class="explore__bg">
+                    <div className='black-div'></div>
                     <div class="explore__content">
                         <p class="section__description">10th AUG 2024</p>
                         <h4>A New Mess Menu Is Available In Our Hostels.</h4>

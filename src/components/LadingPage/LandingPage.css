@@ -99,6 +99,8 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
+    border-radius: 100px;
+    margin: 0 20px;
 }
 
 .black-div {
@@ -348,6 +350,8 @@ nav {
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
+    border-radius: 100px;
+    margin: 0 20px;
 }
 
 .service__container {
@@ -441,6 +445,8 @@ nav {
 .explore__bg {
     margin-top: 4rem;
     padding-block: 3rem;
+    position: relative;
+    margin: 0 20px 20px 20px;
     display: grid;
     grid-template-columns:
         minmax(1rem, 1fr) minmax(0, var(--max-width)) minmax(1rem, 1fr);
@@ -452,6 +458,8 @@ nav {
 
 .explore__content {
     grid-column: 2/3;
+    position: relative;
+    z-index: 1;
     max-width: 400px;
     padding: 2rem;
     background-color: var(--white);

@@ -34,10 +34,7 @@ function LandingPage() {
                 </ul>
                 <din className="nav__btns">
                     <NavLink to="/signup">
-                        <button class="btn nav__btn">Admin</button>
-                    </NavLink>
-                    <NavLink to="/signup">
-                        <button class="btn nav__btn">User</button>
+                        <button class="btn nav__btn">Login</button>
                     </NavLink>
                 </din>
             </nav>
@@ -175,6 +172,7 @@ function LandingPage() {
                 <p class="section__subheader">EXPLORE</p>
                 <h2 class="section__header">What's New Today.</h2>
                 <div class="explore__bg">
+                    <div className="black-div"></div>
                     <div class="explore__content">
                         <p class="section__description">10th AUG 2024</p>
                         <h4>A New Mess Menu Is Available In Our Hostels.</h4>
