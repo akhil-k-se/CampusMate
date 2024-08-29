@@ -7,6 +7,17 @@
     --max-width: 1200px;
 }
 
+.main_page{
+    position: relative;
+}
+
+.popForm {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
 body {
     background-repeat: no-repeat;
     background-size: cover;
@@ -40,10 +51,6 @@ body {
     margin: 0px 10px 0px 10px;
 }
 
-.align-items-center div{
-    position: relative;
-    z-index: 1;
-}
 
 .banner h1 {
     font-size: 65px;
@@ -65,9 +72,6 @@ body {
     margin-top: 6vh;
 }
 
-.banner img {
-    animation: updown 3s linear infinite;
-}
 
 .section__container {
     max-width: var(--max-width);
@@ -237,6 +241,34 @@ body {
         width: 50%;
         display: flex;
         justify-content: center;
+    }
+
+    .img_holder {
+        position: relative;
+        height: 12vw;
+        width: 12vw;
+    }
+
+    .img_holder img {
+        position: absolute;
+    }
+
+    .over_user {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        height: 100%;
+        width: 100%;
+        background-color: black;
+        opacity: 0;
+        position: absolute;
+        z-index: 1;
+        border-radius: 50%;
+    }
+
+    .over_user:hover {
+        opacity: 50%;
     }
 
     .footer__container {

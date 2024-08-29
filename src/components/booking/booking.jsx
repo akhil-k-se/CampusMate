@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { IoIosArrowRoundForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
+import '../repeatPop.css'
 
 const Bookings = () => {
     const navigate = useNavigate();
@@ -71,14 +71,23 @@ const handlePreviousStep = () => {
 };
 
 const handleSubmit = () => {
-    navigate("/");
+    navigate("/payment");
     if (window.location.pathname === "/") {
         window.location.reload();
     }
 };
 
+function handlePopClose(){
+    const forms = document.getElementsByClassName("popForm");
+    for (let i = 0; i < forms.length; i++) {
+        forms[i].style.transform = 'scale(0)';
+    }    
+}
+
 return (
-    <div className="w-full h-screen bg-[#252525] flex items-center justify-center">
+    <div className="fixer">
+        <div className="black__div"></div>
+        <div className="w-full h-screen bg-transparent flex items-center justify-center main_form">
         <div className="signup-container w-[70%] h-[70%] bg-white rounded-2xl flex overflow-hidden p-2 px-2 relative gap-3">
             <img
                 className="absolute left-0 z-10 top-0"
@@ -86,13 +95,7 @@ return (
                 src="/logo-noback.png"
                 alt=""
             />
-            <button
-                onClick={handleClick}
-                className="absolute flex items-center justify-around z-10 text-white right-[50%] m-4 mt-8 mx-6 text-[15px] gap-2 bg-gray-500/50 p-3 rounded-xl font-montserrat hover:bg-gray-500 transition-all"
-            >
-                <h1>back to website</h1>
-                <IoIosArrowRoundForward />
-            </button>
+            
             <p className="absolute z-10 text-white bottom-0 text-[70px] font-montserrat my-20 mx-[50px] font-bold block text-center">
                 HostelSync
             </p>
@@ -123,7 +126,10 @@ return (
             <div className="w-full h-full flex flex-col justify-between font-montserrat gap-2 p-5">
                 {step === 1 && (
                     <div className="flex flex-col gap-5 justify-between">
-                        <h1 className="text-[40px]">Book a room</h1>
+                        <div className="flex justify-between">
+                            <h1 className="text-[40px]">Book a room</h1>
+                            <button onClick={handlePopClose}>X</button>
+                        </div>
                         <div className="w-full h-full flex flex-col gap-4 justify-between">
                             <div className="flex items-center gap-2">
                                 <input
@@ -281,6 +287,7 @@ return (
                 )}
             </div>
         </div>
+    </div>
     </div>
 );
 };

@@ -9,6 +9,7 @@
     --max-width: 1200px;
 }
 
+
 * {
     padding: 0;
     margin: 0;
@@ -180,7 +181,7 @@ nav {
 .header__container {
     padding-block: 10rem 15rem;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .header__container p {
@@ -459,7 +460,7 @@ nav {
 .explore__content {
     grid-column: 2/3;
     position: relative;
-    z-index: 1;
+    z-index: 0;
     max-width: 400px;
     padding: 2rem;
     background-color: var(--white);

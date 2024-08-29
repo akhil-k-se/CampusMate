@@ -1,0 +1,37 @@
+.full {
+    height: 100vh;
+    background-color: grey;
+}
+.boxNew {
+    position: relative;
+    border-radius: 20px;
+    height: 70vh;
+    width: 30vw;
+    border: 1px solid grey;
+}
+.admin_box {
+    background-image: url(../../../assets/warden.webp);
+}
+.user_box {
+    background-image: url(../../../assets/student.webp);
+}
+.overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: aliceblue;
+    opacity: 70%;
+}
+.overlay:hover {
+    opacity: 10%;
+    transition: 0.8s;
+}
+.illustration {
+    font-size: 20vw;
+}

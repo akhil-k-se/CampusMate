@@ -1,15 +1,18 @@
 import React , {useState, useEffect}from 'react'
-import {Col, Container, Row} from 'react-bootstrap'
-import {ArrowRightCircle} from 'react-bootstrap-icons'
+import {Col, Container, NavLink, Row} from 'react-bootstrap'
 import '../studentLandingPage/studentLandingPage.css'
 import Navbar from '../navbar/navbar'
 import Footer from '../footer/footer'
-import { NavLink } from 'react-router-dom'
+import Bookings from '../booking/booking'
+import '../repeatPop.css'
+import Gatepass from '../gatepass/gatepass'
+import Complaint from '../complaint/complaint'
+import { BsFillPencilFill } from "react-icons/bs";
 
 function StudentLandingPage() {
     const [loopNum, setLoopNum] = useState(0)
     const [isDeleting, setIsDeleting] = useState(false)
-    const toRotate = ["new beginings", "new friends", "new family"]
+    const toRotate = ["beginings", "friends", "family"]
     const [text, setText] = useState('')
     const [delta, setDelta] = useState(300-Math.random()*100);
     const period = 100;
@@ -42,8 +45,31 @@ function StudentLandingPage() {
         }
     } 
 
+    function handlePopBook(){
+        const forms = document.getElementsByClassName("popBook");
+        for (let i = 0; i < forms.length; i++) {
+            forms[i].style.transform = 'scale(1)';
+        }    
+    }
+    function handlePopGate(){
+        const forms = document.getElementsByClassName("popGate");
+        for (let i = 0; i < forms.length; i++) {
+            forms[i].style.transform = 'scale(1)';
+        }    
+    }
+    function handlePopComplaint(){
+        const forms = document.getElementsByClassName("popComplaint");
+        for (let i = 0; i < forms.length; i++) {
+            forms[i].style.transform = 'scale(1)';
+        }    
+    }
+
+
+    const [popedUp, setPopedUp] = useState(true)
+
     return (
-        <section>
+        <div>
+            <section className="main_page">
             <Navbar/>
             <Container className='banner' id='home'>
                 <div className='black-div' ></div>
@@ -51,12 +77,16 @@ function StudentLandingPage() {
                     <div className='user'>
                         <div className="userImg">
                         <span className='tagline'>Welcome Student<span id='pink-bar'></span>{`Akashdeep Singla`}</span>
-                        <h1>{`Say hi to `}<span className='wrap'>{text}</span></h1>
+                        <h1>{`New `}<span className='wrap'>{text}</span></h1>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate dolores eum accusantium sapiente amet! Rerum cupiditate facilis, voluptates ipsam autem voluptate exercitationem, quos corporis iste eum sequi fugit, placeat saepe.</p>
-                        <NavLink to="/booking"><button className='btn'>Book Room</button></NavLink>
+                        <button onClick={handlePopBook} className='btn'>Book Room</button>
                         </div>
+
                         <div className="userName">
-                        <img src="/154800922.jpeg" alt="" />
+                            <div className='img_holder'>
+                                <div className="over_user"><NavLink to="/profile"><BsFillPencilFill/></NavLink></div>
+                                <img src="/154800922.jpeg" alt="" ></img>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -75,7 +105,7 @@ function StudentLandingPage() {
                         excitement.
                     </p>
                     <div class="about__btn">
-                        <button class="btn">Apply Gatepass</button>
+                        <button class="btn" onClick={handlePopGate}>Apply Gatepass</button>
                     </div>
                 </div>
                 <div class="about__image">
@@ -97,7 +127,7 @@ function StudentLandingPage() {
                         excitement.
                     </p>
                     <div class="about__btn">
-                        <button class="btn">Raise a complaint</button>
+                        <button class="btn" onClick={handlePopComplaint}>Raise a complaint</button>
                     </div>
                 </div>
             </section>
@@ -116,7 +146,19 @@ function StudentLandingPage() {
             </section>
 
             <Footer />
-        </section>
+
+            </section>
+
+            <div className="popForm popBook scale-0">
+                <Bookings />
+            </div>
+            <div className="popForm popComplaint scale-0">
+                <Complaint />
+            </div>
+            <div className="popForm popGate scale-0">
+                <Gatepass />
+            </div>
+        </div>
 
         
     )
