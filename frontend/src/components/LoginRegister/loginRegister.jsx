@@ -1,78 +1,62 @@
 import React, { useState } from 'react'
 import './loginRegister.css'
-import {FaEnvelope, FaLock, FaUser} from 'react-icons/fa'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-function LoginRegister() {
-    const[action, setAction] = useState('')
-
-    const registerLink = ()=> {
-        setAction('active')
+function RegisterLogin() {
+    const navigate = useNavigate()
+    const handleClick = ()=> {
+        console.log("clicked");
+        
+        navigate("/user");
     }
 
-    const loginLink = ()=> {
-        setAction('')
-    }
+    const [isActive, setIsActive] = useState(false);
+
+    const makeActive = () => {
+        setIsActive(true);
+    };
+
+    const removeActive = () => {
+        setIsActive(false);
+    };
 
     return (
-        <div className='box'>
-            <div className={`wrapper ${action}`}>
-            <div className="form-box login">
-                
-                <form action="">
-                    <h1>Login</h1>
-                    <div className="input-box">
-                        <input type="text" placeholder='Username' required />
-                        <FaUser className='icon' />
+            <div className="logMain">
+                <div class={isActive ? "logContainer active" : "logContainer"} id="logContainer">
+                <div class="form-logContainer sign-up">
+                    <form>
+                        <h1>Create Account</h1>
+                        <input type="text" placeholder="Name" />
+                        <input type="email" placeholder="Email" />
+                        <input type="password" placeholder="Password" />
+                        <button>Sign Up</button>
+                    </form>
+                </div>
+                <div class="form-logContainer sign-in">
+                    <form>
+                        <h1>Sign In</h1>
+                        <input type="email" placeholder="Email"/>
+                            <input type="password" placeholder="Password"/>
+                                <a href="#">Forget Your Password?</a>
+                                <button onClick={handleClick}>Sign In</button>
+                    </form>
+                </div>
+                    <div class="toggle-logContainer">
+                        <div class="toggle">
+                            <div class="toggle-panel toggle-left">
+                                <h1>Welcome Back!</h1>
+                                <p>Enter your personal details to use all of site features</p>
+                                <button class="hider" id="login" onClick={removeActive}>Sign In</button>
+                            </div>
+                            <div class="toggle-panel toggle-right">
+                                <h1>Hello, Friend!</h1>
+                                <p>Register with your personal details to use all of site features</p>
+                                <button class="hider" id="register" onClick={makeActive}>Sign Up</button>
+                            </div>
+                        </div>
                     </div>
-                    <div className="input-box">
-                        <input type="password" placeholder='Password' required />
-                        <FaLock className='icon' />
-                    </div>
-
-                    <div className="remember-forgot">
-                        <label><input type="checkbox"/>Remember me</label>
-                        <a href="#">Forgot Password ?</a>
-                    </div>
-                    <NavLink to="/user">
-                        <button type="submit">Login</button>
-                    </NavLink>
-
-                    <div className="register-link">
-                        <p>Don't have an account ? <a href="#" onClick={registerLink}>Register</a></p>
-                    </div>
-                </form>
             </div>
-
-            <div className="form-box register">
-                <form action="">
-                    <h1>Register</h1>
-                    <div className="input-box">
-                        <input type="text" placeholder='Username' required />
-                        <FaUser className='icon' />
-                    </div>
-                    <div className="input-box">
-                        <input type="text" placeholder='E-mail' required />
-                        <FaEnvelope className='icon' />
-                    </div>
-                    <div className="input-box">
-                        <input type="password" placeholder='Password' required />
-                        <FaLock className='icon' />
-                    </div>
-
-                    <div className="remember-forgot">
-                        <label><input type="checkbox"/>I agree to Terms & Conditions</label>
-                    </div>
-                    <button type="submit">Login</button>
-
-                    <div className="register-link">
-                        <p>Already have an account ? <a href="#" onClick={loginLink}>Login</a></p>
-                    </div>
-                </form>
             </div>
-        </div>
-        </div>
-    )
+        )
 }
-
-export default LoginRegister
+export default RegisterLogin

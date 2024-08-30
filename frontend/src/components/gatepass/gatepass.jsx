@@ -180,7 +180,10 @@ return (
             </div>
             <div className="w-full h-full flex flex-col justify-between font-montserrat gap-2 p-5">
                     <div className="flex flex-col gap-10 justify-between">
-                        <h1 className="text-[35px]">Applying for Gatepass</h1>
+                        <div className="flex justify-between">
+                                    <h1 className="text-[40px]">Apply Gatepass</h1>
+                                    <button onClick={handlePopClose}>X</button>
+                                </div>
                         <div className="flex flex-col gap-4 justify-between">
                             <div>
                                 <input 
