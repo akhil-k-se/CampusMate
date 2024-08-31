@@ -79,7 +79,7 @@ function StudentLandingPage() {
                 <div className='align-items-center'>
                     <div className='user'>
                         <div className="userImg">
-                        <span className='tagline'>Welcome Student<span id='pink-bar'></span>{`Akashdeep Singla`}</span>
+                        <span className='tagline'>Welcome Student<span id='pink-bar'></span>{`Guest12345`}</span>
                         <h1>{`New `}<span className='wrap'>{text}</span></h1>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate dolores eum accusantium sapiente amet! Rerum cupiditate facilis, voluptates ipsam autem voluptate exercitationem, quos corporis iste eum sequi fugit, placeat saepe.</p>
                         <button onClick={handlePopBook} className='btn'>Book Room</button>
@@ -88,7 +88,7 @@ function StudentLandingPage() {
                         <div className="userName">
                             <div className='img_holder'>
                                 <div className="over_user"><NavLink to="/user/profile"><BsFillPencilFill/></NavLink></div>
-                                <img src="/154800922.jpeg" alt="" ></img>
+                                <img src="/profile.webp" alt="" ></img>
                             </div>
                         </div>
                     </div>
