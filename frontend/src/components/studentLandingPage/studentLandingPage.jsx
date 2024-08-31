@@ -1,5 +1,6 @@
 import React , {useState, useEffect}from 'react'
-import {Col, Container, NavLink, Row} from 'react-bootstrap'
+import {Col, Container, Row} from 'react-bootstrap'
+import {useNavigate, NavLink } from 'react-router-dom'
 import '../studentLandingPage/studentLandingPage.css'
 import Navbar from '../navbar/navbar'
 import Footer from '../footer/footer'
@@ -12,10 +13,12 @@ import { BsFillPencilFill } from "react-icons/bs";
 function StudentLandingPage() {
     const [loopNum, setLoopNum] = useState(0)
     const [isDeleting, setIsDeleting] = useState(false)
-    const toRotate = ["beginings", "friends", "family"]
+    const toRotate = ["beginnings", "friends", "family"]
     const [text, setText] = useState('')
     const [delta, setDelta] = useState(300-Math.random()*100);
     const period = 100;
+
+    const navigate = useNavigate()
 
     useEffect(()=> {
         let ticker = setInterval(()=> {
@@ -84,7 +87,7 @@ function StudentLandingPage() {
 
                         <div className="userName">
                             <div className='img_holder'>
-                                <div className="over_user"><NavLink to="/profile"><BsFillPencilFill/></NavLink></div>
+                                <div className="over_user"><NavLink to="/user/profile"><BsFillPencilFill/></NavLink></div>
                                 <img src="/154800922.jpeg" alt="" ></img>
                             </div>
                         </div>
@@ -94,7 +97,7 @@ function StudentLandingPage() {
                 </div>
             </Container>
 
-            <section class="section__container about__container" id="about">
+            <section class="section__container about__container" id="gatepass">
                 <div class="about__content">
                     <p class="section__subheader">GATEPASS</p>
                     <h2 class="section__header">Ticket to go out of the Campus</h2>
@@ -113,7 +116,7 @@ function StudentLandingPage() {
                 </div>
             </section>
             
-            <section class="section__container about__container" id="about">
+            <section class="section__container about__container" id="complaint">
                 <div class="about__image">
                     <img src="/complaint.jpg" alt="about" />
                 </div>
@@ -140,7 +143,9 @@ function StudentLandingPage() {
                     <div class="explore__content">
                         <p class="section__description">10th AUG 2024</p>
                         <h4>A New Mess Menu Is Available In Our Hostels.</h4>
-                        <button class="btn">View Menu</button>
+                        <NavLink to='/mess'>
+                            <button class="btn">View Menu</button>
+                        </NavLink>
                     </div>
                 </div>
             </section>

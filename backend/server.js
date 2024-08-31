@@ -4,27 +4,20 @@ const cors = require('cors');
 
 const app = express();
 
-const { registerStudent, registerAdmin, registerAdministrator} = require ('./Controllers/signupContrller');
-const {loginStudent, loginAdmin, loginAdministrator } = require('./Controllers/loginController');
 const reserve = require('./Controllers/reservationController');
 const gate = require('./Controllers/gatepassController');
 const gatepass = require('./models/gatepassModel');
+const userRoutes = require('./routes/userRoutes')
 
-app.use(cors({origin: 'http://localhost:3000'}));
+
+app.use(cors());
 app.use(express.json());
 
 const Dbconnect = require('./middlewares/Db');
 Dbconnect();
 
-// Registration Routes
-app.post('/register/student', registerStudent);
-app.post('/register/admin', registerAdmin);
-app.post('/register/administrator', registerAdministrator);
+app.use('/student', userRoutes)
 
-// Login Routes
-app.post('/login/student', loginStudent);
-app.post('/login/admin', loginAdmin);
-app.post('/login/administrator', loginAdministrator);
 
 //Booking Routes
 app.post('/reservation',reserve.reservation);

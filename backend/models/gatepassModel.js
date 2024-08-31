@@ -7,7 +7,7 @@ const GatepassSchema = new mongoose.Schema({
         required: true
     },
     reason: {
-        type: String,
+        type: Date,
         required: true
     },
     outtime: {

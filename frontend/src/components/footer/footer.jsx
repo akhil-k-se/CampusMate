@@ -1,39 +1,24 @@
 import React from 'react'
 import './footer.css'
-import { FaEnvelope, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 function Footer() {
     return (
         <footer class="footer" id="contact">
                 <div class="section__container footer__container">
-                    {/* <div class="footer__col">
-                        <div class="logo">
-                            <a href="#home"><img src="/nameLogo.jpg" alt="logo" /></a>
-                        </div>
-                        <p class="section__description">
-                            Discover a world of comfort, luxury, and adventure as you explore
-                            our curated selection of hotels, making every moment of your getaway
-                            truly extraordinary.
-                        </p>
-                        <button class="btn">Book Now</button>
-                    </div> */}
-                    {/* <span className='footer_divider'></span> */}
                     <div class="footer__col">
                         <h4>QUICK LINKS</h4>
                         <ul class="footer__links">
-                            <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">My Reservation</a></li>
-                            <li><a href="#">View Rooms</a></li>
-                            <li><a href="#">Manage Profile</a></li>
-                            <li><a href="#">About</a></li>
+                            <li><a href="/reservation">My Reservation</a></li>
+                            <li><a href="#">View Room</a></li>
+                            <li><a href="/user/profile">Manage Profile</a></li>
                         </ul>
                     </div>
                     <div class="footer__col">
                         <h4>OUR SERVICES</h4>
                         <ul class="footer__links">
-                            <li><a href="#">Complaints</a></li>
-                            <li><a href="#">Feedback & Help</a></li>
-                            <li><a href="#">Mess Card</a></li>
+                            <li><a href="/complaints">Complaints</a></li>
+                            <li><a href="/gatepasses">Gatepass</a></li>
+                            <li><a href="/mess">Mess Card</a></li>
                         </ul>
                     </div>
                     <div class="footer__col">

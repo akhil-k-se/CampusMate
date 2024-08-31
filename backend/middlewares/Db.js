@@ -1,14 +1,11 @@
-const express=require ('express');
 const mongoose=require('mongoose');
 
-const app=express();
-
-const url = 'mongodb+srv://Ananya:ananya123@cluster0.cccoiol.mongodb.net/backendtesting?retryWrites=true&w=majority&appName=Cluster0';
+const url = 'mongodb+srv://AkashdeepSingla:akashdeep241103@cluster.wgrp8v7.mongodb.net/hostellers?retryWrites=true&w=majority&appName=Cluster';
 
 const Dbconnect=async()=>
     {
         try{
-            const data=await mongoose.connect(url)
+            await mongoose.connect(url)
             console.log('Db connected');
         }
         catch(err)

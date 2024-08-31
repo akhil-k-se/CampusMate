@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import './LandingPage.css';
-import {useNavigate} from 'react-router-dom' 
+import {useNavigate, NavLink} from 'react-router-dom' 
 import Footer from '../footer/footer';
 import AdminOrUser from '../adminOrUser/adminOrUser';
+import './LandingPage.css';
 import '../adminOrUser/adminOrUser.css'
 import '../popup.css'
 function LandingPage() {
@@ -32,8 +32,8 @@ function LandingPage() {
                 <ul className="nav__links" id="nav-links" onClick={handleNavLinkClick}>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
                     <li><a href="#service">Services</a></li>
-                    <li><a href="#explore">Explore</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <div className="nav__btns">
@@ -68,59 +68,35 @@ function LandingPage() {
                 </div>
             </section>
 
-            <section className="section__container room__container">
-                <p className="section__subheader">OUR LIVING ROOM</p>
+            <section className="section__container room__container" id='rooms'>
+                <p className="section__subheader">ROOM OPTIONS AVAILABLE</p>
                 <h2 className="section__header">The Most Memorable Stay Time Starts Here.</h2>
                 <div className="room__grid">
                     <div className="room__card">
-                        <div className="room__card__image">
-                            <div className="room__card__icons">
-                                <span><i className="ri-heart-fill"></i></span>
-                                <span><i className="ri-paint-fill"></i></span>
-                                <span><i className="ri-shield-star-line"></i></span>
-                            </div>
-                        </div>
                         <div className="room__card__details">
                             <h4>Common Rooms</h4>
                             <p>
                                 4-Seater/3-Seater rooms with common washrooms for the hostellers 
                             </p>
                             <h5>Starting from <span>₹ 60,000/Sem</span></h5>
-                            <button className="btn">Book Now</button>
                         </div>
                     </div>
                     <div className="room__card">
-                        <div className="room__card__image">
-                            <div className="room__card__icons">
-                                <span><i className="ri-heart-fill"></i></span>
-                                <span><i className="ri-paint-fill"></i></span>
-                                <span><i className="ri-shield-star-line"></i></span>
-                            </div>
-                        </div>
                         <div className="room__card__details">
                             <h4>Standard Rooms</h4>
                             <p>
                                 4/3/2-Seater Rooms with personal washroom for the roomates.
                             </p>
                             <h5>Starting from <span>₹ 75,000/Sem</span></h5>
-                            <button className="btn">Book Now</button>
                         </div>
                     </div>
                     <div className="room__card">
-                        <div className="room__card__image">
-                            <div className="room__card__icons">
-                                <span><i className="ri-heart-fill"></i></span>
-                                <span><i className="ri-paint-fill"></i></span>
-                                <span><i className="ri-shield-star-line"></i></span>
-                            </div>
-                        </div>
                         <div className="room__card__details">
                             <h4>AC-Rooms</h4>
                             <p>
                                 4/3/2/1-Seater rooms with personal washroom and air-conditioner facilities.
                             </p>
                             <h5>Starting from <span>₹ 87,499/Sem</span></h5>
-                            <button className="btn">Book Now</button>
                         </div>
                     </div>
                 </div>
@@ -134,7 +110,7 @@ function LandingPage() {
                         <ul className="service__list">
                             <li>
                                 <span><i className="ri-shield-star-line"></i></span>
-                                High className Security
+                                High class Security
                             </li>
                             <li>
                                 <span><i className="ri-24-hours-line"></i></span>
@@ -166,19 +142,6 @@ function LandingPage() {
                     <div className="banner__card">
                         <h4>4.6 *</h4>
                         <p>Ratings</p>
-                    </div>
-                </div>
-            </section>
-
-            <section className="explore" id="explore">
-                <p className="section__subheader">EXPLORE</p>
-                <h2 className="section__header">What's New Today.</h2>
-                <div className="explore__bg">
-                    <div className="black-div"></div>
-                    <div className="explore__content">
-                        <p className="section__description">10th AUG 2024</p>
-                        <h4>A New Mess Menu Is Available In Our Hostels.</h4>
-                        <button className="btn">View Menu</button>
                     </div>
                 </div>
             </section>
