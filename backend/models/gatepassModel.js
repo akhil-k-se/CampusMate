@@ -7,7 +7,7 @@ const GatepassSchema = new mongoose.Schema({
         required: true
     },
     reason: {
-        type: Date,
+        type: String,
         required: true
     },
     outtime: {
@@ -35,7 +35,6 @@ const GatepassSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['Pending', 'Approved', 'Rejected'],
-        default: 'Pending'
     },
     createdAt: {
         type: Date,

@@ -7,7 +7,7 @@ function AdminLogin() {
     const handleClick = ()=> {
         console.log("clicked");
         
-        navigate("/user");
+        navigate("/account");
     }
 
     const [isActive, setIsActive] = useState(false);

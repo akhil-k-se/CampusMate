@@ -6,6 +6,13 @@ import Bookings from './components/booking/booking';
 import AdminOrUser from './components/adminOrUser/adminOrUser'
 import RegisterLogin from './components/LoginRegister/loginRegister';
 import AdminLogin from './components/adminLogin/adminLogin';
+import Dashboard from './components/Dashboard/Dashboard'
+import Studentdetails from './components/Dashboard/Studentdetails'
+import Account from './components/Dashboard/Account'
+import Hosteldetails from './components/Dashboard/Hosteldetails'
+import Complaintbox from './components/Dashboard/Complaintbox'
+import Gatepassdetails from './components/Dashboard/Gatepassdetails'
+import Studentgatepass from './components/studentLandingPage/Studentgatepass';
 
 function App() {
   return (
@@ -18,6 +25,13 @@ function App() {
           <Route path='/admin-signup' element={<AdminLogin/>}/>
           <Route path='/user' element={<StudentLandingPage/>} />
           <Route path='/booking' element={<Bookings/>}/>
+          <Route path="/dashboard" element={<Dashboard />}/>
+          <Route path="studentdetails" element={<Studentdetails />} />
+          <Route path="gatepasses" element={<Gatepassdetails />} />
+          <Route path="complaintbox" element={<Complaintbox />} />
+          <Route path="hostelrooms" element={<Hosteldetails />} />
+          <Route path="account" element={<Account />} />
+          <Route path='/my-passes' element={<Studentgatepass/>}/>
         </Routes>
       </Router>
     </>

@@ -34,6 +34,8 @@ app.get('/gatepasseslist', async (req, res) => {
     }
 });
 
+app.patch('/gatepass/status', gate.updateGatepassStatus);
+
 app.listen(3005, () => {
     console.log('Server started on 3005');
 });

@@ -1,58 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
+import axios from "axios";
 import '../repeatPop.css'
 
 const Gatepass = () => {
     const navigate = useNavigate();
     const [currentImage, setCurrentImage] = useState(0);
     const [step, setStep] = useState(1);
+    const [student, setStudent] = useState(null);
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        enrollmentNumber: '',
-        gender:'',
-        phone: '',
-        address: '',
-        city: '',
-        state: '',
-        country: '',
-        parentname: '',
-        parentphone: '',
-        parentEmail: '',
-        roomtype: '',
-        hostelname: '',
-        roomseater:'',
-        roomfloor:'',
+        enrollmentNumber:'',
+        outday:'',
+        reason:'',
+        outtime:'',
+        intime:'',
+        outdate:'',
+        indate:''
     });
-    const [termsAgreed, setTermsAgreed] = useState(false);
-
-    const hostelNames = {
-        Female: {
-          'Attach Bathroom Non AC': ['IBN-A','IBN-B','IBN-C'],
-          'Common Bathroom Non AC': ['Pie-A', 'Pie-B','Pie-C'],
-          'Attach Bathroom With AC': ['Nightingale-A', 'Nightingale-B'],
-          'Common Bathroom With AC': ['Vasco'],
-        },
-        Male: {
-          'Attach Bathroom Non AC': ['Colambus'],
-          'Common Bathroom Non AC': ['Armstrong'],
-          'Attach Bathroom With AC': ['Franklin'],
-          'Common Bathroom With AC': ['Marco Polo'],
-        }
-      };
-
+    
     const images = [
         {
-            src: "https://images.pexels.com/photos/7969098/pexels-photo-7969098.jpeg?auto=compress&cs=tinysrgb&w=600",
+            src: "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             title: "Capture the Beauty",
         },
         {
-            src: "https://images.pexels.com/photos/4907235/pexels-photo-4907235.jpeg?auto=compress&cs=tinysrgb&w=600",
+            src: "https://images.pexels.com/photos/697244/pexels-photo-697244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
         },
         {
-            src: "https://images.pexels.com/photos/7969094/pexels-photo-7969094.jpeg?auto=compress&cs=tinysrgb&w=600",
+            src: "https://images.pexels.com/photos/3811011/pexels-photo-3811011.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
         },
     ];
 
@@ -97,41 +74,26 @@ const Gatepass = () => {
         }
     };
 
-    const handleNextStep = () => {
-        setStep(step + 1);
-    };
-
-    const handlePreviousStep = () => {
-        setStep(step - 1);
-    };
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+
     };
 
-    const handleCheckboxChange = () => {
-        setTermsAgreed(!termsAgreed);
-    };
-
-    const handleSubmit = async () => {
-    
-        if (!termsAgreed) {
-            alert("You must agree to the terms and conditions.");
-            return;
-        }
-    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3005/reservation", formData);
-            console.log("Booking successful", response);
-            alert('Your request has been sent will let you know about the room');
-            navigate("/");
-        } catch (error) {
-            console.error("Error booking", error);
-            alert("Failed to book. Please try again.");
+            const response = await axios.post("http://localhost:3005/gatepass", formData);
+            alert('Gate Pass Applied Successfully');
+            navigate('/user');
+        } catch (err) {
+            console.error(err);
+            
+            const errorMessage = err.response?.data || 'An error occurred';
+            alert(errorMessage);
         }
     };
-
+    
     function handlePopClose(){
         const forms = document.getElementsByClassName("popForm");
         for (let i = 0; i < forms.length; i++) {
@@ -143,7 +105,7 @@ return (
     <div className="fixer">
         <div className="black__div"></div>
         <div className="w-full h-screen bg-transparent flex items-center justify-center main_form">
-        <div className="signup-container w-[70%] h-[70%] bg-white rounded-2xl flex overflow-hidden p-2 px-2 relative gap-3">
+        <div className="signup-container w-[70%] h-[90%] bg-white rounded-2xl flex overflow-hidden p-2 px-2 relative gap-3">
             <img
                 className="absolute left-0 z-10 top-0"
                 width={150}

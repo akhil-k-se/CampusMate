@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
+import axios from 'axios'
 import '../repeatPop.css'
 
 const Bookings = () => {
@@ -123,12 +124,12 @@ const Bookings = () => {
 
         try {
             const response = await axios.post("http://localhost:3005/reservation", formData);
-            console.log("Booking successful", response);
             alert('Your request has been sent will let you know about the room');
             navigate("/");
         } catch (error) {
-            console.error("Error booking", error);
-            alert("Failed to book. Please try again.");
+            console.error("Error in Booking",error);
+            const errorMessage = error.response?.data || 'An error occurred';
+            alert(errorMessage);
         }
     };
 
