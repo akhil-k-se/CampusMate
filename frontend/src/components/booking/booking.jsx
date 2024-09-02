@@ -85,13 +85,6 @@ const Bookings = () => {
             });
     }, [currentImage]);
 
-    const handleClick = () => {
-        navigate("/user");
-        if (window.location.pathname === "/") {
-            window.location.reload();
-        }
-    };
-
     const handleSlide = (index) => {
         if (index !== currentImage) {
             setCurrentImage(index);
@@ -125,7 +118,7 @@ const Bookings = () => {
         try {
             const response = await axios.post("http://localhost:3005/reservation", formData);
             alert('Your request has been sent will let you know about the room');
-            navigate("/user");
+            navigate("/payment");
         } catch (error) {
             console.error("Error in Booking",error);
             const errorMessage = error.response?.data || 'An error occurred';

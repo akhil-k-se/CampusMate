@@ -13,6 +13,7 @@ import Hosteldetails from './components/Dashboard/Hosteldetails'
 import Complaintbox from './components/Dashboard/Complaintbox'
 import Gatepassdetails from './components/Dashboard/Gatepassdetails'
 import Studentgatepass from './components/studentLandingPage/Studentgatepass';
+import PaymentPage from './components/payment/PaymentForm';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="hostelrooms" element={<Hosteldetails />} />
           <Route path="account" element={<Account />} />
           <Route path='/my-passes' element={<Studentgatepass/>}/>
+          <Route path='/payment' element={<PaymentPage/>}/>
         </Routes>
       </Router>
     </>
