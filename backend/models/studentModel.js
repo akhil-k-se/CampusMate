@@ -18,7 +18,17 @@ const studentSchema = new mongoose.Schema({
         type: Number, 
         required: true,
         unique: true
+        },
+    avatar : {
+        public_id : {
+            type : String,
+            default : ''
+        },
+        url : {
+            type : String,
+            default : ''
         }
+    }
 },{timestamps:true});
 
 module.exports = mongoose.model('Student', studentSchema);

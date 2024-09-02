@@ -39,7 +39,7 @@ function RegisterLogin() {
         }
         try {
             const response = await axios.post(
-                "http://localhost:3005/register/student",
+                "http://localhost:3005/student/signup",
                 formData
             )
             console.log(response);
@@ -74,15 +74,16 @@ function RegisterLogin() {
         e.preventDefault()
         try {
             const response = await axios.post(
-                "http://localhost:3005/login/student",
+                "http://localhost:3005/student/login",
                 loginData
             )
             console.log(response);
             alert("Login successfull !")
+            navigate('/user')
         } catch(e) {
             console.log(e);
             
-            alert ("error !")
+            alert ("error from login")
         }
     }
 
@@ -114,7 +115,7 @@ function RegisterLogin() {
                         <input type="number" name ="enrollmentID" id='enrollmentID' onChange={handleChangeAgain} value={loginData.enrollmentID} placeholder="Enrollment ID"/>
                             <input type="password" name ="password" id='password' onChange={handleChangeAgain} value={loginData.password} placeholder="Password"/>
                                 <a href="#">Forget Your Password?</a>
-                                <button onClick={handleClick}>Sign In</button>
+                                <button onClick={handleSignIn}>Sign In</button>
                     </form>
                 </div>
                     <div class="toggle-logContainer">

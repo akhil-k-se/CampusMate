@@ -1,6 +1,6 @@
 const User = require("../models/studentModel");
 const jwt = require("jsonwebtoken");
-// const { JWT_SECRET } = require("../config");
+const JWT_SECRET  = "123"
 const bcrypt = require("bcrypt");
 // const { sendGreetMail } = require("../helper/mailServices");
 const register = async (req, res) => {
@@ -46,7 +46,8 @@ const login = async (req, res) => {
     try {
         console.log('Received login request:', req.body); // Debug log to see what is coming in
 
-        const { email, password } = req.body;
+        const { enrollmentID, password } = req.body;
+        console.log(enrollmentID,password)
 
         // Ensure all fields are filled
         for (const key in req.body) {
@@ -58,7 +59,8 @@ const login = async (req, res) => {
                 });
             }
         }
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ enrollmentID })
+        console.log(user)
 
         if (!user) {
             console.log("User not found with the provided enrollmentID")
@@ -70,19 +72,24 @@ const login = async (req, res) => {
             console.log("Password does not match");
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
+        const token = jwt.sign({email : user.email , _id : user._id} , JWT_SECRET , {expiresIn : "1h"})
+        console.log(token);
 
-        // Generate JWT token if authentication is successful
-        const token = jwt.sign({ email: user.email }, JWT_SECRET, {
-            expiresIn: "1h",
-        });
+        res.cookie("token" , token ,{
+            httpOnly : false,
+            maxAge : 60*60*1000
+            }
+        )
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            maxAge: 60 * 60 * 1000,
-        });
+        // khunger
+        res.cookie("userDetails",{name: user.name},{
+            httpOnly : true,
+            maxAge : 60*60*1000
+            })
+
 
         console.log("Login successful, returning token")
-        return res.status(200).json({ token });
+        return res.status(200).json({msg:"done"});
 
     } catch (err) {
         console.error("Error during login:", err)

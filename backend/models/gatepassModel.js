@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const GatepassSchema = new mongoose.Schema({
     outday: {
         type: String,

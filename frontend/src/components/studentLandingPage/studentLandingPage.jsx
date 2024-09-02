@@ -9,6 +9,9 @@ import '../repeatPop.css'
 import Gatepass from '../gatepass/gatepass'
 import Complaint from '../complaint/complaint'
 import { BsFillPencilFill } from "react-icons/bs";
+import Cookies from 'js-cookie';
+import axios from 'axios'
+// import studentModel from '../../../../backend/models/studentModel'
 
 function StudentLandingPage() {
     const [loopNum, setLoopNum] = useState(0)
@@ -66,6 +69,7 @@ function StudentLandingPage() {
             forms[i].style.transform = 'scale(1)';
         }    
     }
+    
 
 
     const [popedUp, setPopedUp] = useState(true)
@@ -79,7 +83,7 @@ function StudentLandingPage() {
                 <div className='align-items-center'>
                     <div className='user'>
                         <div className="userImg">
-                        <span className='tagline'>Welcome Student<span id='pink-bar'></span>{`Guest12345`}</span>
+                        <span className='tagline'>Welcome Student<span id='pink-bar'></span>{`${Cookies.get('name')}`}</span>
                         <h1>{`New `}<span className='wrap'>{text}</span></h1>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate dolores eum accusantium sapiente amet! Rerum cupiditate facilis, voluptates ipsam autem voluptate exercitationem, quos corporis iste eum sequi fugit, placeat saepe.</p>
                         <button onClick={handlePopBook} className='btn'>Book Room</button>

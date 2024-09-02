@@ -125,7 +125,7 @@ const Bookings = () => {
         try {
             const response = await axios.post("http://localhost:3005/reservation", formData);
             alert('Your request has been sent will let you know about the room');
-            navigate("/");
+            navigate("/user");
         } catch (error) {
             console.error("Error in Booking",error);
             const errorMessage = error.response?.data || 'An error occurred';
@@ -144,13 +144,7 @@ const Bookings = () => {
         <div className="fixer">
             <div className="black__div"></div>
             <div className="w-full h-screen bg-transparent flex items-center justify-center main_form">
-                <div className="signup-container w-[70%] h-[70%] bg-white rounded-2xl flex overflow-hidden p-2 px-2 relative gap-3">
-                    <img
-                        className="absolute left-0 z-10 top-0"
-                        width={150}
-                        src="/logo-noback.png"
-                        alt=""
-                    />
+                <div className="signup-container w-[70%] h-[70%] bg-white rounded-2xl flex p-2 px-2 relative gap-3">
 
                     <p className="absolute z-10 text-white bottom-0 text-[70px] font-montserrat my-20 mx-[50px] font-bold block text-center">
                         HostelSync

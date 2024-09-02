@@ -6,10 +6,6 @@ const userController = require("../Controllers/userController");
 
 router.post("/signup", userController.register);
 router.post("/login", userController.login);
-// forgot password api
-
-// delete user
-router.post("/delete-user/:_id", userController.deleteUser);
 // update info of user
 router.post("/update-user/:_id", userController.updateUser);
 
