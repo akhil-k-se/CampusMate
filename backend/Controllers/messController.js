@@ -8,12 +8,12 @@ const bcrypt = require("bcrypt");
  */
 const register = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { name, password } = req.body;
 
-    // Check if the username already exists
-    const existingUser = await MessSecurity.findOne({ username });
+    // Check if the name already exists
+    const existingUser = await MessSecurity.findOne({ name });
     if (existingUser) {
-      return res.status(400).json({ msg: "Username already exists" });
+      return res.status(400).json({ msg: "name already exists" });
     }
 
     // Hash the password
@@ -21,7 +21,7 @@ const register = async (req, res) => {
 
     // Create new MessSecurity user
     const user = await MessSecurity.create({
-      username,
+      name,
       password: hashedPassword,
     });
 
@@ -29,7 +29,7 @@ const register = async (req, res) => {
       msg: "MessSecurity user registered successfully",
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         role: user.role,
       },
     });
@@ -46,10 +46,10 @@ const register = async (req, res) => {
  */
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { name, password } = req.body;
 
     // Check if the user exists
-    const user = await MessSecurity.findOne({ username });
+    const user = await MessSecurity.findOne({ name });
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }

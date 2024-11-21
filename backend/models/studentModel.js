@@ -1,23 +1,43 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const studentSchema = new mongoose.Schema({
-    name: { 
-        type: String, 
-        required: true 
+    name: {
+        type: String,
+        required: [true, 'Name is required'],
+        trim: true,
+        minlength: [2, 'Name must be at least 2 characters long'],
+        maxlength: [50, 'Name cannot exceed 50 characters']
     },
-    email: { 
-        type: String, 
-        required: true, 
-        unique: true 
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        unique: true,
+        lowercase: true,
+        validate: {
+            validator: function (v) {
+                const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+                return emailRegex.test(v);
+            },
+            message: 'Please provide a valid email address'
+        }
     },
-    password: { 
-        type: String, 
-        required: true
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [8, 'Password must be at least 8 characters long'],
+        select: false
     },
     enrollmentID: {
-        type: String, 
-        required: true,
-        unique: true
+        type: Number,
+        required: [true, 'Enrollment ID is required'],
+        unique: true,
+        validate: {
+            validator: function (v) {
+                return /^\d{8}$/.test(v.toString());
+            },
+            message: 'Enrollment ID must be an 8-digit number'
+        }
     },
     avatar: {
         public_id: {
@@ -26,18 +46,39 @@ const studentSchema = new mongoose.Schema({
         },
         url: {
             type: String,
-            default: ''
+            validate: {
+                validator: function (v) {
+                    return v === '' || /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(v);
+                },
+                message: 'Invalid avatar URL'
+            }
         }
     },
     qrCode: {
         type: String,
-        required: true
+        required: [true, 'QR Code is required'],
+        unique: true
     },
-    messEntry:{
-        type:String,
-        enum:['IN','OUT'],
-        default:'OUT'
+    messEntry: {
+        type: String,
+        enum: {
+            values: ['IN', 'OUT'],
+            message: 'Mess entry must be either IN or OUT'
+        },
+        default: 'OUT'
     }
 }, { timestamps: true });
+
+// Password hashing middleware
+studentSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 12);
+    next();
+});
+
+// Method to check password
+studentSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+};
 
 module.exports = mongoose.model('Student', studentSchema);
