@@ -43,7 +43,13 @@ function RegisterLogin() {
                 formData
             )
             console.log(response);
-            alert("User registered successfully !")
+            await alert("User registered successfully !")
+            
+            localStorage.setItem('enrollmentID', formData.enrollmentID); // Store username in localStorage
+            console.log('Logged in:', response.data);
+
+            handleClick();
+
         } catch(e) {
             console.log(e);
             

@@ -2,6 +2,8 @@ const User = require("../models/studentModel");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET  = "123"
 const bcrypt = require("bcrypt");
+
+const QRcode = require("../helpers/qrCodeGenerator");
 // const { sendGreetMail } = require("../helper/mailServices");
 const register = async (req, res) => {
     try {
@@ -12,7 +14,8 @@ const register = async (req, res) => {
             password,
         } = req.body;
         const existingUser = await User.findOne({
-            $or: [{ email: email }, { enrollmentID: enrollmentID }],
+            email,
+            enrollmentID
         });
 
         // const requiredFields = Object.keys(Admin.schema.paths).filter(field => Admin.schema.paths[field].isRequired);
@@ -25,16 +28,31 @@ const register = async (req, res) => {
         }
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        newData = {
+            name,
+            enrollmentID,
+            email,
+        }
+
+        qrData = await QRcode(enrollmentID);
+
         const user = await User.create({
             name,
             enrollmentID,
             email,
             password: hashedPassword,
+            qrCode: qrData
         });
         console.log(user);
-        return res.status(201).json({
-            msg: "User created successfully",
-        });
+         return res.status(200).send(`
+            <html>
+              <body>
+                <h1>Generated QR Code</h1>
+                <img src="${qrData}" alt="QR Code" />
+              </body>
+            </html>
+          `);
     } catch (err) {
         console.error(err);
         return res.status(500).json({

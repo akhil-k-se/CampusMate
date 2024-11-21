@@ -121,7 +121,7 @@ const Bookings = () => {
             navigate("/payment");
         } catch (error) {
             console.error("Error in Booking",error);
-            const errorMessage = error.response?.data || 'An error occurred';
+            const errorMessage = error.response?.data?.message || 'An error occurred';
             alert(errorMessage);
         }
     };

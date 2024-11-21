@@ -1,8 +1,13 @@
 import React from 'react'
 import './navbar.css'
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 
 function Navbar() {
+    const navigate = useNavigate();
+
+    const handleQR = ()=>{
+        navigate("/QRcode")
+    }
     return (
         <>
             <nav>
@@ -20,6 +25,7 @@ function Navbar() {
                         <li><a href="#gatepass">Gatepass</a></li>
                         <li><a href="#complaint">Complaint</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a onClick={handleQR}>Your QR</a></li>
                     </ul>
                     <NavLink to="/"><button class="btn nav__btn">Logout</button></NavLink>
                 </nav>

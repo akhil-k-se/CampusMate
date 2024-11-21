@@ -78,7 +78,16 @@ const getreservation = async (req, res) => {
     }
 };
 
+const addbooking = async(req,res)=>{
+    const inputData = req.body;
+    if(!inputData.firstname)
+    {
+        return res.send({message: 'fill firstName'});
+    }
+}
+
 module.exports = {
     reservation,
     getreservation,
+    addbooking,
 };
