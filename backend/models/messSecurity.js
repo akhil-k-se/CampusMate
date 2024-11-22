@@ -6,6 +6,7 @@ const messSecuritySchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, default: "MessSecurity" },
   createdAt: { type: Date, default: Date.now },
+  jwtToken: { type: String, default: null },
 });
 
 const MessSecurity = mongoose.model("MessSecurity", messSecuritySchema);

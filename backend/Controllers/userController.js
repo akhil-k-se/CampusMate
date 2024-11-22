@@ -93,18 +93,6 @@ const login = async (req, res) => {
         const token = jwt.sign({email : user.email , _id : user._id} , JWT_SECRET , {expiresIn : "1h"})
         console.log(token);
 
-        res.cookie("token" , token ,{
-            httpOnly : false,
-            maxAge : 60*60*1000
-            }
-        )
-
-        // khunger
-        res.cookie("userDetails",{name: user.name},{
-            httpOnly : true,
-            maxAge : 60*60*1000
-            })
-
 
         console.log("Login successful, returning token")
         return res.status(200).json({msg:"done"});

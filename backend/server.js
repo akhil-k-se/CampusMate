@@ -1,13 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const cookie = require('cookie-parser');
+
+
 
 const mess = require("./Controllers/messController").verifyMessSecurity;
 
 
 
 const app = express();
+
+
 
 const complaint = require('./Controllers/complaintController')
 const reserve = require('./Controllers/reservationController')
@@ -21,27 +24,65 @@ const getQRcode = require("./helpers/qrCodeGetter");
 
 const student = require('./models/studentModel');
 
+const qrScan = require('./routes/qr')
 
-app.use(cors());
+// const session = require('express-session');
+
+app.use(cors({
+    origin: 'http://localhost:3000', // Client URL
+    credentials: true, // Allow sending cookies
+}));
 app.use(express.json());
 
 const Dbconnect = require('./middlewares/Db');
 const cookieParser = require('cookie-parser');
 Dbconnect();
 
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use('/student', userRoutes)
 app.use('/admin', adminRoutes)
-app.use('/mess',messRoutes);;
+app.use('/mess',messRoutes);
+app.post('/qrscanner',qrScan.processQR);
+
+
+app.post('/getTokenForSecurity', (req,res) => {
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+    // console.log("Received Token:",token);
+    if (token) {
+        res.cookie("jwtToken", token, {
+            httpOnly: true,  // Make cookie accessible only through HTTP requests, not JavaScript
+            secure: process.env.NODE_ENV === "production", // Secure flag: only for HTTPS in production
+            maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
+        });
+
+        // Send a response back to the client
+        return res.status(200).json({ msg: "Token stored in cookie" });
+    } else {
+        return res.status(400).json({ msg: "No token provided in Authorization header" });
+    }
+});
+
+
+// app.use(session({
+//     secret: '1234',
+//     resave: false,
+//     saveUninitialized: true,
+//   }));
+
+
 
 app.get('/get-qrcode/:enrollmentID',getQRcode)
 app.get("/qr-scan/:enrollmentID",mess,async (req,res)=>{
     const {enrollmentID} = req.params;
     const user = await student.findOne({enrollmentID});
-    user.messEntry = user.messEntry === "IN" ? "OUT" : "IN";
+    user.messEntry = user.messEntry === "OUT" ? "IN" : "OUT";
     user.save();
     return res.json(user.messEntry);
+})
+
+app.get("/no-reload",(req,res)=>{
+    res.render("No Reload ALlowed");
 })
 
 //Booking Routes
@@ -67,4 +108,3 @@ app.post('/usercomplaints',complaint.createComplaint);
 app.listen(3005, () => {
     console.log('Server started on 3005');
 });
-
