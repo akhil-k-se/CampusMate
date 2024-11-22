@@ -1,7 +1,7 @@
 const MessSecurity = require("../models/messSecurity");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "123";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 /**
  * Register a new MessSecurity user
@@ -62,10 +62,14 @@ const login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: user._id, role: user.role },
+      {id:user._id,role: user.role },
       JWT_SECRET,
       { expiresIn: "1d" }
     );
+
+    user.jwtToken = token;
+
+    user.save();
 
     res.json({ token });
   } catch (err) {
@@ -137,27 +141,45 @@ const deleteUser = async (req, res) => {
 /**
  * Middleware to verify JWT and role
  */
+
 const verifyMessSecurity = async (req, res, next) => {
-  const token = req.headers.authorization;;
+  const token = req.cookies.jwtToken;
   console.log(token);
+
   if (!token) {
-    return res.status(403).json({ msg: "Access denied" });
+    console.log("Token Not Found");
+    return res.status(403).json({ msg: "Unauthorized access: Invalid role" });
   }
-
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token,JWT_SECRET); 
 
-    // Verify user and role
+    // Find the user (MessSecurity) associated with the token's user ID
     const messSecurity = await MessSecurity.findById(decoded.id);
-    if (!messSecurity || messSecurity.role !== "MessSecurity") {
-      return res.status(403).json({ msg: "Unauthorized access" });
+    console.log(messSecurity);
+    if (!messSecurity) {
+      console.log("MessSecurity not found");
+      return res.status(403).json({ msg: "Unauthorized access: MessSecurity not found" });
     }
 
-    req.messSecurity = messSecurity;
+    // Check if the role is 'MessSecurity'
+    if (messSecurity.role !== "MessSecurity") {
+      console.log("Unauthorized access: Incorrect role");
+      return res.status(403).json({ msg: "Unauthorized access: Invalid role" });
+    }
+
+    // Attach the messSecurity user to the request object
+    // req.messSecurity = messSecurity;
     next();
   } catch (err) {
-    console.error(err);
-    res.status(401).json({ msg: "Invalid or expired token" });
+    console.error("Error verifying token:", err);
+
+    if (err.name === "JsonWebTokenError") {
+      return res.status(401).json({ msg: "Invalid token" });
+    } else if (err.name === "TokenExpiredError") {
+      return res.status(401).json({ msg: "Token expired" });
+    } else {
+      return res.status(500).json({ msg: "Internal server error" });
+    }
   }
 };
 

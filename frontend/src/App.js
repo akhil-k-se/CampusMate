@@ -16,6 +16,7 @@ import Studentgatepass from './components/studentLandingPage/Studentgatepass';
 import PaymentPage from './components/payment/PaymentForm';
 import QRcode from "./components/QRCode/QRcode";
 import MessLogin from './components/messLogin/messLogin';
+import QRScanner from './components/QRCode/QRreader';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/QRcode' element={<QRcode />} />
           <Route path='/mess' element={<MessLogin />} />
+          <Route path='/qrscanner' element={<QRScanner/>} />
+
 
         </Routes>
       </Router>

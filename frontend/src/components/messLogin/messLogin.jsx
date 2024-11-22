@@ -49,7 +49,7 @@ function MessLogin() {
                 signupData
             );
             alert("User registered successfully!");
-            navigate('/account');
+            navigate('/qrscanner');
         } catch (error) {
             alert(error.response?.data?.message || "Registration failed");
         }
@@ -77,7 +77,7 @@ function MessLogin() {
             );
             localStorage.setItem('token', response.data.token);  // Store token
             alert("Login successful!");
-            navigate('/account');
+            navigate('/qrscanner');
         } catch (error) {
             alert(error.response?.data?.message || "Login failed");
         }
