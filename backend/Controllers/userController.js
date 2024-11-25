@@ -1,6 +1,6 @@
 const User = require("../models/studentModel");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET  = "123"
+const JWT_SECRET = "123"
 const bcrypt = require("bcrypt");
 
 
@@ -27,7 +27,7 @@ const register = async (req, res) => {
         const qrData = await QRcode(enrollmentID);
 
         // Create user
-        console.log("The Pssword is :",password);
+        console.log("The Pssword is :", password);
         const user = await User.create({
             name,
             enrollmentID,
@@ -48,13 +48,13 @@ const register = async (req, res) => {
         await user.save();
 
         // Set token in HTTP-only cookie
-        await res.cookie("stdToken", token, {
+        await res.cookie("token", token, {
             httpOnly: true,  // Make cookie accessible only through HTTP requests, not JavaScript
             secure: false, // Secure flag: only for HTTPS in production
             maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
         });
 
-        console.log("The token in cookie is",req.cookies.stdToken);
+        console.log("The token in cookie is", req.cookies.token);
 
         console.log("User registered successfully:", user);
 
@@ -98,16 +98,15 @@ const login = async (req, res) => {
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
 
-        const matched = bcrypt.compare(password,user.password);
-        if(!matched)
-        {
+        const matched = bcrypt.compare(password, user.password);
+        if (!matched) {
             console.log("Password Does not match");
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
 
         const token = user.token;
 
-        res.cookie("stdToken", token, { httpOnly: true });
+        res.cookie("token", token, { httpOnly: true });
         console.log("Generated Token:", token);
 
         console.log("Login successful, returning token");
@@ -194,7 +193,7 @@ const deleteUser = async (req, res) => {
 };
 const showData = async (req, res) => {
     try {
-        const token = req.cookies.stdToken;
+        const token = req.cookies.token;
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized: No token provided' });
         }
@@ -209,4 +208,4 @@ const showData = async (req, res) => {
     }
 };
 
-module.exports = { register, login, updateUser, deleteUser ,showData};
+module.exports = { register, login, updateUser, deleteUser, showData };

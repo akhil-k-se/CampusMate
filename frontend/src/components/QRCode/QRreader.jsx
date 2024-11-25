@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { Html5QrcodeScanner } from "html5-qrcode";
+import axios from 'axios'
 
 const QRScanner = () => {
   const [error, setError] = useState("");
@@ -82,11 +84,30 @@ const QRScanner = () => {
     };
   }, []);
 
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
+
+      if (response.status === 200) {
+        localStorage.removeItem("authToken");
+        navigate("/mess");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-slate-900">
-    <h1 className="text-3xl font-bold mb-4 text-white">QR Code Scanner</h1>
+      <div className="grid grid-cols-3">
+        <div className="col-span-1/3"></div>
+        <h1 className="text-3xl font-bold mb-4 text-white">QR Code Scanner</h1>
+        <button className="bg-pink-500" onClick={handleLogout}>Hello</button>
+      </div>
       <div className="bg-white w-[98%] h-[70%] flex flex-col items-center justify-center rounded-[10px]">
-        
+
         <div id="reader" className="w-full max-w-sm mb-4"></div>
         {error && (
           <div className="mt-4 p-4 bg-red-100 text-red-800 rounded">

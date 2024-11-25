@@ -54,7 +54,7 @@ app.post('/getTokenForSecurity', (req, res) => {
     const token = req.header("Authorization")?.replace("Bearer ", "");
     // console.log("Received Token:",token);
     if (token) {
-        res.cookie("jwtToken", token, {
+        res.cookie("token", token, {
             httpOnly: true,  // Make cookie accessible only through HTTP requests, not JavaScript
             secure: process.env.NODE_ENV === "production", // Secure flag: only for HTTPS in production
             maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
@@ -76,8 +76,8 @@ app.post('/getTokenForSecurity', (req, res) => {
 //   }));
 
 app.post('/logout', (req, res) => {
-     res.clearCookie("stdToken");
-     res.status(200).send({ message: 'Logged out successfully' });
+    res.clearCookie("token");
+    res.status(200).send({ message: 'Logged out successfully' });
 });
 
 
