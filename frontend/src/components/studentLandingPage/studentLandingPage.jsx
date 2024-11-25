@@ -9,9 +9,7 @@ import '../repeatPop.css'
 import Gatepass from '../gatepass/gatepass'
 import Complaint from '../complaint/complaint'
 import { BsFillPencilFill } from "react-icons/bs";
-import Cookies from 'js-cookie';
 import axios from 'axios'
-// import studentModel from '../../../../backend/models/studentModel'
 
 function StudentLandingPage() {
     const [loopNum, setLoopNum] = useState(0)
@@ -72,30 +70,20 @@ function StudentLandingPage() {
 
     const [userData, setUserData] = useState(null)
 
-    // useEffect(async () => {
-    //     try {
-    //         const userResponse = await axios.get(
-    //             "http://localhost:3005/student/showData",
-    //             {
-    //                 withCredentials: true, // Include credentials for cookies
-    //             }
-    //         );
-    //         console.log(userResponse);
-    //         setUserData(userResponse.data.user);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // })
 
     const getUserData = async () => {
-        const userResponse = await axios.get(
-            "http://localhost:3005/student/showdata",
-            {
-                withCredentials: true, // Include credentials for cookies
-            }
-        );
-        // console.log(userResponse);
-        setUserData(userResponse.data.user.name);
+        try {
+            const userResponse = await axios.get(
+                "http://localhost:3005/student/showdata",
+                {
+                    withCredentials: true, // Include credentials for cookies
+                }
+            );
+            // console.log(userResponse);
+            setUserData(userResponse.data.user.name);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     if (!userData) getUserData();
