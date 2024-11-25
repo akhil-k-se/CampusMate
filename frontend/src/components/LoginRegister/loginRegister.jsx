@@ -40,7 +40,10 @@ function RegisterLogin() {
         try {
             const response = await axios.post(
                 "http://localhost:3005/student/signup",
-                formData
+                formData,{
+                    withCredentials: true, // Ensures cookies are sent and received
+                }
+            
             )
             console.log(response);
             await alert("User registered successfully !")
@@ -81,7 +84,9 @@ function RegisterLogin() {
         try {
             const response = await axios.post(
                 "http://localhost:3005/student/login",
-                loginData
+                loginData,{
+                    withCredentials: true, // Ensures cookies are sent and received
+                }
             )
             console.log(response);
             alert("Login successfull !")

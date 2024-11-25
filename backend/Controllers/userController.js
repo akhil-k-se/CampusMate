@@ -3,22 +3,18 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET  = "123"
 const bcrypt = require("bcrypt");
 
+
+
 const QRcode = require("../helpers/qrCodeGenerator");
 // const { sendGreetMail } = require("../helper/mailServices");
 const register = async (req, res) => {
     try {
-        const {
-            name,
-            enrollmentID,
-            email,
-            password,
-        } = req.body;
-        const existingUser = await User.findOne({
-            email,
-            enrollmentID
-        });
+        const { name, enrollmentID, email, password } = req.body;
 
-        // const requiredFields = Object.keys(Admin.schema.paths).filter(field => Admin.schema.paths[field].isRequired);
+        // Check if the user already exists
+        const existingUser = await User.findOne({
+            $or: [{ email }, { enrollmentID }]
+        });
 
         if (existingUser) {
             console.log("User already exists");
@@ -26,46 +22,65 @@ const register = async (req, res) => {
                 msg: "User already exists with this email or enrollment ID",
             });
         }
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        newData = {
-            name,
-            enrollmentID,
-            email,
-        }
+        // Generate QR code
+        const qrData = await QRcode(enrollmentID);
 
-        qrData = await QRcode(enrollmentID);
-
+        // Create user
+        console.log("The Pssword is :",password);
         const user = await User.create({
             name,
             enrollmentID,
             email,
-            password: hashedPassword,
-            qrCode: qrData
+            password,
+            qrCode: qrData,
         });
-        console.log(user);
-         return res.status(200).send(`
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { email: user.email, _id: user._id },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        // Save token in the database (optional)
+        user.token = token; // Assuming your User model has a `token` field
+        await user.save();
+
+        // Set token in HTTP-only cookie
+        await res.cookie("stdToken", token, {
+            httpOnly: true,  // Make cookie accessible only through HTTP requests, not JavaScript
+            secure: false, // Secure flag: only for HTTPS in production
+            maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
+        });
+
+        console.log("The token in cookie is",req.cookies.stdToken);
+
+        console.log("User registered successfully:", user);
+
+        return res.status(200).send(`
             <html>
               <body>
-                <h1>Generated QR Code</h1>
+                <h1>Registration Successful</h1>
+                <h2>Generated QR Code</h2>
                 <img src="${qrData}" alt="QR Code" />
               </body>
             </html>
           `);
     } catch (err) {
-        console.error(err);
+        console.error("Error during registration:", err);
         return res.status(500).json({
             msg: "Please check the details you have entered or try again later",
         });
     }
 };
+
 const login = async (req, res) => {
     try {
-        console.log('Received login request:', req.body); // Debug log to see what is coming in
+        console.log('Received login request:', req.body);
 
         const { enrollmentID, password } = req.body;
-        console.log(enrollmentID,password)
+        console.log(enrollmentID, password);
 
         // Ensure all fields are filled
         for (const key in req.body) {
@@ -77,31 +92,38 @@ const login = async (req, res) => {
                 });
             }
         }
-        const user = await User.findOne({ enrollmentID })
-        console.log(user)
 
+        // Find the user by enrollmentID
+        const user = await User.findOne({ enrollmentID });
         if (!user) {
-            console.log("User not found with the provided enrollmentID")
+            console.log("User not found with the provided enrollmentID");
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
-        const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch) {
-            console.log("Password does not match");
+        // Compare the password directly (as it's not hashed in the database)
+        const matched = bcrypt.compare(password,user.password);
+        if(!matched)
+        {
+            console.log("Password Does not match");
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
-        const token = jwt.sign({email : user.email , _id : user._id} , JWT_SECRET , {expiresIn : "1h"})
-        console.log(token);
 
+        // Generate a JWT token
+        const token = user.token;
 
-        console.log("Login successful, returning token")
-        return res.status(200).json({msg:"done"});
+        // Set the token in a cookie
+        res.cookie("stdToken", token, { httpOnly: true }); // Use 'studentToken' as the cookie name
+        console.log("Generated Token:", token);
+
+        console.log("Login successful, returning token");
+        return res.status(200).json({ msg: "Login successful" });
 
     } catch (err) {
-        console.error("Error during login:", err)
+        console.error("Error during login:", err);
         return res.status(500).json({ msg: "An error occurred during login" });
     }
 };
+
 const updateUser = async (req, res) => {
     try {
         const id = req.params._id;
@@ -175,4 +197,21 @@ const deleteUser = async (req, res) => {
         console.log(error);
     }
 };
-module.exports = { register, login, updateUser, deleteUser };
+const showData = async (req, res) => {
+    try {
+        const token = req.cookies.stdToken;
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized: No token provided' });
+        }
+        const user = await User.findOne({ token });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json({ user });
+    } catch (err) {
+        console.error('Error in showData:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+module.exports = { register, login, updateUser, deleteUser ,showData};
