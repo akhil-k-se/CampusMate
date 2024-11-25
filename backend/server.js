@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -32,7 +33,7 @@ const messScheduler = require("./helpers/messScheduler");
 app.use(cors({
     origin: 'http://localhost:3000', // Replace with your frontend URL
     credentials: true, // This allows cookies to be sent
-  }));
+}));
 app.use(express.json());
 
 const Dbconnect = require('./middlewares/Db');
@@ -43,13 +44,13 @@ app.use(cookieParser());
 
 app.use('/student', userRoutes)
 app.use('/admin', adminRoutes)
-app.use('/mess',messRoutes);
-app.post('/qrscanner',qrScan.processQR);
+app.use('/mess', messRoutes);
+app.post('/qrscanner', qrScan.processQR);
 
 messScheduler();
 
 
-app.post('/getTokenForSecurity', (req,res) => {
+app.post('/getTokenForSecurity', (req, res) => {
     const token = req.header("Authorization")?.replace("Bearer ", "");
     // console.log("Received Token:",token);
     if (token) {
@@ -76,25 +77,25 @@ app.post('/getTokenForSecurity', (req,res) => {
 
 
 
-app.get('/get-qrcode/:enrollmentID',getQRcode)
-app.get("/qr-scan/:enrollmentID",mess,async (req,res)=>{
-    const {enrollmentID} = req.params;
-    const user = await student.findOne({enrollmentID});
+app.get('/get-qrcode/:enrollmentID', getQRcode)
+app.get("/qr-scan/:enrollmentID", mess, async (req, res) => {
+    const { enrollmentID } = req.params;
+    const user = await student.findOne({ enrollmentID });
     user.messEntry = user.messEntry === "OUT" ? "IN" : "OUT";
     user.save();
     return res.json(user.messEntry);
 })
 
-app.get("/no-reload",(req,res)=>{
+app.get("/no-reload", (req, res) => {
     res.render("No Reload ALlowed");
 })
 
 //Booking Routes
-app.post('/reservation',reserve.reservation);
-app.get('/reservationlist',reserve.getreservation);
+app.post('/reservation', reserve.reservation);
+app.get('/reservationlist', reserve.getreservation);
 
 //GatePass Routes
-app.post('/gatepass',gate.createGatepass)
+app.post('/gatepass', gate.createGatepass)
 app.get('/gatepasseslist', async (req, res) => {
     try {
         const gatepasses = await gatepass.find().populate('studentId');
@@ -107,8 +108,8 @@ app.get('/gatepasseslist', async (req, res) => {
 app.patch('/gatepass/status', gate.updateGatepassStatus);
 
 //Complaints Routes
-app.post('/usercomplaints',complaint.createComplaint);
+app.post('/usercomplaints', complaint.createComplaint);
 
-app.listen(3005, () => {
+app.listen(process.env.PORT, () => {
     console.log('Server started on 3005');
 });
