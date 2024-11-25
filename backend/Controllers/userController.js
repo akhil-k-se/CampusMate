@@ -82,10 +82,9 @@ const login = async (req, res) => {
         const { enrollmentID, password } = req.body;
         console.log(enrollmentID, password);
 
-        // Ensure all fields are filled
         for (const key in req.body) {
             if (!req.body[key] || req.body[key].trim() === "") {
-                console.log(`Field ${key} is missing or empty`); // Debug log
+                console.log(`Field ${key} is missing or empty`);
                 return res.status(400).json({
                     status: 400,
                     msg: `Field ${key} is missing or empty`,
@@ -93,14 +92,12 @@ const login = async (req, res) => {
             }
         }
 
-        // Find the user by enrollmentID
         const user = await User.findOne({ enrollmentID });
         if (!user) {
             console.log("User not found with the provided enrollmentID");
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
 
-        // Compare the password directly (as it's not hashed in the database)
         const matched = bcrypt.compare(password,user.password);
         if(!matched)
         {
@@ -108,11 +105,9 @@ const login = async (req, res) => {
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
 
-        // Generate a JWT token
         const token = user.token;
 
-        // Set the token in a cookie
-        res.cookie("stdToken", token, { httpOnly: true }); // Use 'studentToken' as the cookie name
+        res.cookie("stdToken", token, { httpOnly: true });
         console.log("Generated Token:", token);
 
         console.log("Login successful, returning token");

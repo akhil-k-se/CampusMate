@@ -75,6 +75,12 @@ app.post('/getTokenForSecurity', (req, res) => {
 //     saveUninitialized: true,
 //   }));
 
+app.post('/logout', (req, res) => {
+     res.clearCookie("stdToken");
+     res.status(200).send({ message: 'Logged out successfully' });
+});
+
+
 
 
 app.get('/get-qrcode/:enrollmentID', getQRcode)
