@@ -25,8 +25,7 @@ const studentSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
-        minlength: [8, 'Password must be at least 8 characters long'],
-        select: false
+        minlength: [8, 'Password must be at least 8 characters long']
     },
     enrollmentID: {
         type: Number,
@@ -34,9 +33,9 @@ const studentSchema = new mongoose.Schema({
         unique: true,
         validate: {
             validator: function (v) {
-                return /^\d{8}$/.test(v.toString());
+                return /^\d{10}$/.test(v.toString());
             },
-            message: 'Enrollment ID must be an 8-digit number'
+            message: 'Enrollment ID must be an 10-digit number'
         }
     },
     avatar: {
@@ -58,6 +57,9 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: [true, 'QR Code is required'],
         unique: true
+    },
+    token: { 
+        type: String 
     },
     messEntry: {
         type: String,

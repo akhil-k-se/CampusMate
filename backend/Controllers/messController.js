@@ -1,7 +1,7 @@
 const MessSecurity = require("../models/messSecurity");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "123";
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 /**
  * Register a new MessSecurity user
@@ -22,17 +22,10 @@ const register = async (req, res) => {
     // Create new MessSecurity user
     const user = await MessSecurity.create({
       name,
-      password: hashedPassword,
+      password:hashedPassword
     });
 
-    res.status(201).json({
-      msg: "MessSecurity user registered successfully",
-      user: {
-        id: user._id,
-        name: user.name,
-        role: user.role,
-      },
-    });
+    res.json(user);
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -51,14 +44,17 @@ const login = async (req, res) => {
     // Check if the user exists
     const user = await MessSecurity.findOne({ name });
     if (!user) {
+      console.log("User not found");
       return res.status(404).json({ msg: "User not found" });
     }
 
     // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
+    console.log("hello");
       return res.status(401).json({ msg: "Invalid credentials" });
     }
+
 
     // Generate JWT token
     const token = jwt.sign(
@@ -144,7 +140,7 @@ const deleteUser = async (req, res) => {
 
 const verifyMessSecurity = async (req, res, next) => {
   const token = req.cookies.jwtToken;
-  console.log(token);
+  console.log("The token is ", token);
 
   if (!token) {
     console.log("Token Not Found");

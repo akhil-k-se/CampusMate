@@ -26,12 +26,13 @@ const student = require('./models/studentModel');
 
 const qrScan = require('./routes/qr')
 
+const messScheduler = require("./helpers/messScheduler");
 // const session = require('express-session');
 
 app.use(cors({
-    origin: 'http://localhost:3000', // Client URL
-    credentials: true, // Allow sending cookies
-}));
+    origin: 'http://localhost:3000', // Replace with your frontend URL
+    credentials: true, // This allows cookies to be sent
+  }));
 app.use(express.json());
 
 const Dbconnect = require('./middlewares/Db');
@@ -45,6 +46,8 @@ app.use('/admin', adminRoutes)
 app.use('/mess',messRoutes);
 app.post('/qrscanner',qrScan.processQR);
 
+messScheduler();
+
 
 app.post('/getTokenForSecurity', (req,res) => {
     const token = req.header("Authorization")?.replace("Bearer ", "");
@@ -55,6 +58,7 @@ app.post('/getTokenForSecurity', (req,res) => {
             secure: process.env.NODE_ENV === "production", // Secure flag: only for HTTPS in production
             maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
         });
+        console.log(token);
 
         // Send a response back to the client
         return res.status(200).json({ msg: "Token stored in cookie" });
