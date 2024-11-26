@@ -9,13 +9,17 @@ const Studentdetails = () => {
   const [studentData, setStudentData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3005/reservationlist')
+    fetch('http://localhost:3005/reservationlist', {
+      method: 'GET',
+      credentials: 'include', // Include credentials for cookies
+    })
       .then(response => response.json())
       .then(data => {
-        setStudentData(data.data); 
+        setStudentData(data.data);
       })
       .catch(error => console.error('Error fetching student data:', error));
   }, []);
+  
 
   if (!studentData.length) {
     return <div>Loading...</div>;
