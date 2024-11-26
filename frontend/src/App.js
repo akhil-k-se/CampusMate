@@ -18,6 +18,7 @@ import PaymentPage from './components/payment/PaymentForm'
 import QRcode from "./components/QRCode/QRcode"
 import MessLogin from './components/messLogin/messLogin'
 import QRScanner from './components/QRCode/QRreader'
+import StudentComplaints from './components/studentLandingPage/StudentComplaints'
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function App() {
           <Route path="complaintbox" element={<Complaintbox />} />
           <Route path="hostelrooms" element={<Hosteldetails />} />
           <Route path="account" element={<Account />} />
-          <Route path='/my-passes' element={<Studentgatepass />} />
+          <Route path='/my-gatepasses' element={<Studentgatepass />} />
+          <Route path='/my-complaints' element={<StudentComplaints />} />
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/QRcode' element={<QRcode />} />
           <Route path='/mess' element={<MessLogin />} />
