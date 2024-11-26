@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const GatepassSchema = new mongoose.Schema({
+    hostel:{
+        type:String
+    },
     outday: {
         type: String,
         enum: ['Day Out', 'Night Out'],
