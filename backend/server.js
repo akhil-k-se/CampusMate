@@ -125,6 +125,7 @@ app.patch('/gatepass/status', gate.updateGatepassStatus);
 
 //Complaints Routes
 app.post('/usercomplaints', complaint.createComplaint);
+app.get('/complaintList',complaint.complaintList)
 
 app.listen(process.env.PORT, () => {
     console.log('Server started on 3005');
