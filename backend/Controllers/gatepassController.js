@@ -5,6 +5,7 @@ const reservation = require('../models/reservationModel');
 
 const createGatepass = async (req, res) => {
     try {
+        const token = req.cookies.token;
         const inputData = req.body;
         console.log('Input Data', inputData);
 
@@ -30,6 +31,8 @@ const createGatepass = async (req, res) => {
             ...inputData,
             studentId: studentReservation._id
         });
+
+        newGatePass.hostel=studentReservation.hostelname;
         
         const data = await newGatePass.save();
         console.log('data', data);
