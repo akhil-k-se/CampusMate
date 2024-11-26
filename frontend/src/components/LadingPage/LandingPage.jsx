@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {useNavigate, NavLink} from 'react-router-dom' 
+import React, { useState } from 'react'
+import { useNavigate, NavLink } from 'react-router-dom'
 import Footer from '../footer/footer';
 import AdminOrUser from '../adminOrUser/adminOrUser';
 import './LandingPage.css';
@@ -9,14 +9,19 @@ function LandingPage() {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleMenuButtonClick = () => {
-    setIsOpen(!isOpen);
+        setIsOpen(!isOpen);
     };
 
     const handleNavLinkClick = () => {
-    setIsOpen(false);
+        setIsOpen(false);
     };
 
     const [buttonPop, setButtonPop] = useState(false)
+
+    const navigate = useNavigate()
+    const handleClick = () => {
+        navigate('/about')
+    }
 
     return (
         <>
@@ -37,12 +42,12 @@ function LandingPage() {
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <div className="nav__btns">
-                    <button className="btn nav__btn" onClick={()=> setButtonPop(true)}>Login</button>
+                    <button className="btn nav__btn" onClick={() => setButtonPop(true)}>Login</button>
                 </div>
             </nav>
 
             <header className="header">
-            <div className='black-div' ></div>
+                <div className='black-div' ></div>
                 <div className="section__container header__container" id="home">
                     <p>Simple - Unique - Friendly</p>
                     <h1>Make Yourself At Home<br />In Our <span>Hostels</span>.</h1>
@@ -63,7 +68,7 @@ function LandingPage() {
                         excitement.
                     </p>
                     <div className="about__btn">
-                        <button className="btn">Read More</button>
+                        <button className="btn" onClick={handleClick}>Read More</button>
                     </div>
                 </div>
             </section>
@@ -76,7 +81,7 @@ function LandingPage() {
                         <div className="room__card__details">
                             <h4>Common Rooms</h4>
                             <p>
-                                4-Seater/3-Seater rooms with common washrooms for the hostellers 
+                                4-Seater/3-Seater rooms with common washrooms for the hostellers
                             </p>
                             <h5>Starting from <span>₹ 60,000/Sem</span></h5>
                         </div>
@@ -149,7 +154,7 @@ function LandingPage() {
             <Footer />
 
             <AdminOrUser trigger={buttonPop}>
-                <button className="close_btn" onClick={()=>setButtonPop(false)}>Close</button>
+                <button className="close_btn" onClick={() => setButtonPop(false)}>Close</button>
             </AdminOrUser>
         </>
     )

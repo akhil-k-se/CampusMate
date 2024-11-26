@@ -169,7 +169,7 @@ return (
                                 <option value="Food and Dining">Food and Dining</option>
                                 <option value="Safety and Security">Safety and Security</option>
                                 <option value="Facilities and Amenities">Facilities and Amenities</option>
-                                <option value="Hostel Administration">Hostel Administration</option>
+                                <option value="Hostel wardenistration">Hostel wardenistration</option>
                                 <option value="Other">Other</option>
                             </select>
                             <input

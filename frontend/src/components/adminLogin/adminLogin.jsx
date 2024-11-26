@@ -37,9 +37,13 @@ function AdminLogin() {
         try {
             const response = await axios.post(
                 "http://localhost:3005/admin/signup",
-                formData
+                formData,
+                {
+                    withCredentials:true
+                }
             )
             console.log(response);
+            navigate("/account");
             alert("User registered successfully !")
         } catch (e) {
             console.log(e);
@@ -71,7 +75,9 @@ function AdminLogin() {
         try {
             const response = await axios.post(
                 "http://localhost:3005/admin/login",
-                loginData
+                loginData,{
+                    withCredentials:true
+                }
             )
             console.log(response);
             alert("Login successfull !")

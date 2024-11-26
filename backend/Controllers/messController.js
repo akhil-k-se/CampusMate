@@ -22,7 +22,7 @@ const register = async (req, res) => {
     // Create new MessSecurity user
     const user = await MessSecurity.create({
       name,
-      password:hashedPassword
+      password: hashedPassword
     });
 
     res.json(user);
@@ -51,14 +51,14 @@ const login = async (req, res) => {
     // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-    console.log("hello");
+      console.log("hello");
       return res.status(401).json({ msg: "Invalid credentials" });
     }
 
 
     // Generate JWT token
     const token = jwt.sign(
-      {id:user._id,role: user.role },
+      { id: user._id, role: user.role },
       JWT_SECRET,
       { expiresIn: "1d" }
     );
@@ -139,7 +139,7 @@ const deleteUser = async (req, res) => {
  */
 
 const verifyMessSecurity = async (req, res, next) => {
-  const token = req.cookies.jwtToken;
+  const token = req.cookies.token;
   console.log("The token is ", token);
 
   if (!token) {
@@ -147,7 +147,7 @@ const verifyMessSecurity = async (req, res, next) => {
     return res.status(403).json({ msg: "Unauthorized access: Invalid role" });
   }
   try {
-    const decoded = jwt.verify(token,JWT_SECRET); 
+    const decoded = jwt.verify(token, JWT_SECRET);
 
     // Find the user (MessSecurity) associated with the token's user ID
     const messSecurity = await MessSecurity.findById(decoded.id);

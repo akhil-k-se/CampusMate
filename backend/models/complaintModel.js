@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const complaintSchema = new mongoose.Schema({
     issuetype: {
         type: String,
-        enum: ['Room Maintenance', 'Cleanliness and Hygiene', 'Food and Dining', 'Safety and Security', 'Facilities and Amenities', 'Hostel Administration', 'Other'],
+        enum: ['Room Maintenance', 'Cleanliness and Hygiene', 'Food and Dining', 'Safety and Security', 'Facilities and Amenities', 'Hostel wardenistration', 'Other'],
         required: true
     },
     issue: {

@@ -11,7 +11,7 @@ function Navbar() {
       const response = await axios.post("http://localhost:3005/logout",{},{withCredentials:true});
 
       if (response.status === 200) {
-        localStorage.removeItem("authToken");
+        localStorage.clear();
         navigate("/");
       }
     } catch (error) {

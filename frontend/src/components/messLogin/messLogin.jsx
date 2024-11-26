@@ -45,7 +45,9 @@ function MessLogin() {
     try {
       const response = await axios.post(
         "http://localhost:3005/mess/signup",
-        signupData
+        signupData,{
+          withCredentials:true
+        }
       );
       alert("User registered successfully!");
       navigate("/qrscanner");
@@ -73,7 +75,9 @@ function MessLogin() {
     try {
       const response = await axios.post(
         "http://localhost:3005/mess/login",
-        loginData
+        loginData,{
+          withCredentials:true
+        }
       );
       localStorage.setItem("token", response.data.token); // Store token
       alert("Login successful!");
@@ -82,6 +86,10 @@ function MessLogin() {
       alert(error.response?.data?.message || "Login failed");
     }
   };
+
+  const handleHomeClick=()=>{
+    navigate("/");
+  }
 
   const handleChangeAgain = (e) => {
     const { name, value } = e.target;
@@ -97,6 +105,7 @@ function MessLogin() {
         class={isActive ? "messContainer active " : "messContainer"}
         id="messContainer"
       >
+      <div className="flex items-center justify-center"><button onClick={handleHomeClick}>Go to Home</button></div>
         {/* <div class="form-messContainer sign-in"> */}
           <form onSubmit={handleSignIn} className="w-[500px]">
             <h1>Sign In</h1>

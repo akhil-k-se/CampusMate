@@ -11,7 +11,7 @@ const Navbar = ({ isShrunk }) => {
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">
           <img src="https://via.placeholder.com/30" alt="Profile" className="w-8 h-8 rounded-full" />
-          <span className="font-semibold">Admin</span>
+          <span className="font-semibold">warden</span>
         </div>
       </div>
     </div>

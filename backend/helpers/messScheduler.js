@@ -7,7 +7,7 @@ const updateMessEntries = async () => {
       { messEntry: { $ne: "OUT" } }, // Only update if the current entry isn't already "OUT"
       { $set: { messEntry: "OUT" } }
     );
-    console.log(`${result.nModified} mess entries updated to "OUT"`);
+    console.log(`${result.modifiedCount} mess entries updated to "OUT"`);
   } catch (error) {
     console.error("Error updating mess entries:", error);
   }

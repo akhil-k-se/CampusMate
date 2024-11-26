@@ -2,15 +2,23 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 
 
-const mess = require("./Controllers/messController").verifyMessSecurity;
+
 
 
 
 const app = express();
+app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:3000', // Replace with your frontend URL
+    credentials: true, // This allows cookies to be sent
+}));
 
+
+const mess = require("./Controllers/messController").verifyMessSecurity;
 
 
 const complaint = require('./Controllers/complaintController')
@@ -30,17 +38,12 @@ const qrScan = require('./routes/qr')
 const messScheduler = require("./helpers/messScheduler");
 // const session = require('express-session');
 
-app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your frontend URL
-    credentials: true, // This allows cookies to be sent
-}));
+
 app.use(express.json());
 
 const Dbconnect = require('./middlewares/Db');
-const cookieParser = require('cookie-parser');
 Dbconnect();
 
-app.use(cookieParser());
 
 app.use('/student', userRoutes)
 app.use('/admin', adminRoutes)
@@ -54,7 +57,7 @@ app.post('/getTokenForSecurity', (req, res) => {
     const token = req.header("Authorization")?.replace("Bearer ", "");
     // console.log("Received Token:",token);
     if (token) {
-        res.cookie("jwtToken", token, {
+        res.cookie("token", token, {
             httpOnly: true,  // Make cookie accessible only through HTTP requests, not JavaScript
             secure: process.env.NODE_ENV === "production", // Secure flag: only for HTTPS in production
             maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
@@ -76,8 +79,8 @@ app.post('/getTokenForSecurity', (req, res) => {
 //   }));
 
 app.post('/logout', (req, res) => {
-     res.clearCookie("stdToken");
-     res.status(200).send({ message: 'Logged out successfully' });
+    res.clearCookie("token");
+    res.status(200).send({ message: 'Logged out successfully' });
 });
 
 
