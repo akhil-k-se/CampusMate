@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const reserve = require('../models/reservationModel'); 
+const Admin = require('../models/adminModel');
 
 app.use(bodyParser.json());
 
@@ -67,7 +68,12 @@ const reservation = async (req, res) => {
 
 const getreservation = async (req, res) => {
     try {
-        const reservations = await reserve.find();
+        const token = req.cookies.token;
+        console.log(token);
+        const admin = await Admin.findOne({token});
+        console.log(admin);
+        const hostelName = admin.hostel;
+        const reservations = await reserve.find({hostelname:hostelName});
         return res.status(200).json({
             message: 'Bookings retrieved successfully',
             data: reservations
