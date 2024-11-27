@@ -29,7 +29,7 @@ const studentSchema = new mongoose.Schema({
         minlength: [8, 'Password must be at least 8 characters long']
     },
     enrollmentID: {
-        type: Number,
+        type: String,
         required: [true, 'Enrollment ID is required'],
         unique: true,
         validate: {
