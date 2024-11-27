@@ -76,7 +76,7 @@ const StudentComplaints = () => {
                 </div>
 
                 <div className="nav__btns ml-auto">
-                    <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500" onClick={() => handleLogout}>Logout</button>
+                    <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500" onClick={handleLogout}>Logout</button>
                 </div>
             </nav>
             {complaints.map((complaint, index) => {
