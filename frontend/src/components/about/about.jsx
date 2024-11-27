@@ -12,10 +12,11 @@ const About = () => {
 
             <div class="container mx-auto py-12 px-4">
                 <div class="mb-16">
-                    <h2 class="text-3xl font-semibold text-pink-800 mb-6">Our Story</h2>
+                    <h2 class="mb-2 text-xl">OUR STORY <span className='text-pink-500'>-</span></h2>
+                    <h1 className='font-semibold text-3xl'>How we Started ?</h1>
                     <div class="grid md:grid-cols-2 gap-8 items-center">
                         <div>
-                            <p class="text-gray-600 mb-4">Founded in 2010, StudentStay Hostel has been providing quality accommodation to students from across the country. We understand the importance of a comfortable and conducive environment for academic success.</p>
+                            <p class="text-gray-600 mb-4">Founded in 2024, CampusMate has been providing quality accommodation to students from across the country. We understand the importance of a comfortable and conducive environment for academic success.</p>
                             <p class="text-gray-600">Our mission is to create a safe, inclusive, and supportive community where students can thrive both academically and personally.</p>
                         </div>
                         <div class="bg-gray-200 h-64 rounded-lg">
@@ -25,7 +26,8 @@ const About = () => {
                 </div>
 
                 <div class="mb-16">
-                    <h2 class="text-3xl font-semibold text-pink-800 mb-8">Why Choose Us</h2>
+                    <h2 class="mb-2 text-xl">WHY CHOOSE US <span className='text-pink-500'>-</span></h2>
+                    <h1 className='font-semibold text-3xl'>What makes us different from others ?</h1>
                     <div class="grid md:grid-cols-3 gap-8">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-semibold text-pink-600 mb-4">Safe & Secure</h3>
@@ -43,28 +45,26 @@ const About = () => {
                 </div>
 
                 <div>
-                    <h2 class="text-3xl font-semibold text-pink-800 mb-8">Our Team</h2>
+                    <h2 class="mb-2 text-xl">OUR TEAM <span className='text-pink-500'>-</span></h2>
+                    <h1 className='font-semibold text-3xl mb-5'>Meet our team members</h1>
                     <div class="grid md:grid-cols-4 gap-6">
                         <div class="text-center">
                             <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
                                 <img src="/api/placeholder/128/128" alt="Team Member" class="w-full h-full object-cover rounded-full" />
                             </div>
                             <h3 class="font-semibold text-pink-600">Akashdeep Singla</h3>
-                            <p class="text-gray-600">Administrator</p>
                         </div>
                         <div class="text-center">
                             <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
                                 <img src="/api/placeholder/128/128" alt="Team Member" class="w-full h-full object-cover rounded-full" />
                             </div>
                             <h3 class="font-semibold text-pink-600">Akhil Kumar</h3>
-                            <p class="text-gray-600">Maintenance Head</p>
                         </div>
                         <div class="text-center">
                             <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
                                 <img src="/api/placeholder/128/128" alt="Team Member" class="w-full h-full object-cover rounded-full" />
                             </div>
                             <h3 class="font-semibold text-pink-600">Aryan Suri</h3>
-                            <p class="text-gray-600">Student Coordinator</p>
                         </div>
                     </div>
                 </div>
