@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWrench, faExclamationCircle, faInfoCircle, faCheckCircle, faSpinner, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faWrench, faExclamationCircle, faInfoCircle, faCheckCircle, faSpinner, faClock,faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 const StudentComplaints = () => {
     const [complaints, setComplaints] = useState([]);
