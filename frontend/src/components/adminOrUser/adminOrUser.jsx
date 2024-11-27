@@ -30,7 +30,7 @@ function AdminOrUser(props) {
         <div className="popup_holder">
           <div className="popup flex items-center justify-center m-3 flex-1 flex-col position-fixed">
             <div
-              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer hover:scale-110 transition-all"
+              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
               onClick={handleMessClick}
             >
               <img
@@ -41,7 +41,7 @@ function AdminOrUser(props) {
             </div>
             <div
               onClick={handleAdminClick}
-              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer hover:scale-110 transition-all"
+              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
             >
               <img
                 className="absolute w-full h-full object-cover -z-10 rounded-[10px]"
@@ -51,7 +51,7 @@ function AdminOrUser(props) {
             </div>
             <div
               onClick={handleUserClick}
-              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer hover:scale-110 transition-all"
+              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
             >
               <img
                 className="absolute w-full h-full object-cover -z-10 rounded-[10px]"
