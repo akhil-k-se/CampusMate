@@ -2,110 +2,12 @@ import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 
 const PaymentPage = () => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
-  const [cvc, setCvc] = useState('');
-  const [notification, setNotification] = useState('');
-
-  const handleCardNumberChange = (e) => {
-    const value = e.target.value.replace(/\s+/g, ''); // Remove spaces
-    if (/^\d{0,16}$/.test(value)) {
-      const formattedValue = value
-        .replace(/(\d{4})(?=\d)/g, '$1 ')
-        .trim();
-      setCardNumber(formattedValue);
-    }
-  };
-
-  const handleCvcChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-    if (value.length <= 3) {
-      setCvc(value);
-    }
-  };
-
-  const handlePayment = () => {
-    setNotification('Payment Successful!');
-  };
-
-  // Get today's date in YYYY-MM format for the min attribute of the expiry date input
-  const getCurrentDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-    return `${year}-${month}`;
-  };
-
+  
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-yellow-300 to-red-300">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full transform hover:-translate-y-2 transition-transform">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Payment Page</h2>
-        <div className="mb-4">
-          <label className="block text-gray-600 font-semibold mb-2">User Name</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-600 font-semibold mb-2">Address</label>
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-600 font-semibold mb-2">Credit/Debit Card Number</label>
-          <input
-            type="text"
-            value={cardNumber}
-            onChange={handleCardNumberChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-600 font-semibold mb-2">Expiry Date</label>
-          <input
-            type="month"
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
-            min={getCurrentDate()} // Set the minimum date to the current month and year
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-            required
-          />
-        </div>
-        <div className="mb-6">
-          <label className="block text-gray-600 font-semibold mb-2">CVC</label>
-          <input
-            type="password" // Hide the CVC input
-            value={cvc}
-            onChange={handleCvcChange}
-            maxLength={3} // Limit the input to 3 characters
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-            required
-          />
-        </div>
-        <button
-          className="w-full py-3 bg-gradient-to-r from-orange-400 to-red-500 text-white font-bold rounded-lg shadow-lg hover:from-orange-500 hover:to-red-600 transform hover:-translate-y-1 transition-transform"
-          onClick={handlePayment}
-        >
-          Make Payment
-        </button>
-        {notification && (
-          <div className="mt-6 p-4 bg-green-500 text-white font-semibold rounded-lg shadow-lg">
-            <span>✓ {notification}</span>
-          </div>
-        )}
-      </div>
+    <div className='flex h-[100vh] items-center justify-center'>
+    <img src="https://imgs.search.brave.com/RuQglsvyf0dJBxSc67QEyb5qDnTXlWsN8ybsWBppvbw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9jYXJ0b29uLXdv/cmttYW4td2l0aC1w/bmV1bWF0aWMtZHJp/bGwtd29ya3MtcHJv/Z3Jlc3MtY29uY2Vw/dF83NjQ2NjQtMjg2/NS5qcGc_c2VtdD1h/aXNfaHlicmlk" alt="Work in Progress" 
+    className='h-[100vh] w-[80vw]'
+    />
     </div>
   );
 };
