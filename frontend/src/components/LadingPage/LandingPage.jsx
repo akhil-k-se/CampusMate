@@ -94,7 +94,7 @@ function LandingPage() {
                 enableZoom={false}
               />
               <PerspectiveCamera makeDefault position={[0, 0, 20]} />
-              <Hostel scale={0.9} position={[0,-5,0]} />
+              <Hostel scale={1} position={[0,-5,0]} />
               <ambientLight intensity={1} />
               <directionalLight intensity={1} position={[10, 10, 10]} />
             </Canvas>

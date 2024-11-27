@@ -87,6 +87,7 @@ const Gatepass = () => {
             alert('Gate Pass Applied Successfully');
             navigate('/user');
         } catch (err) {
+            console.log("Error in fronteend");
             console.error(err);
             
             const errorMessage = err.response?.data || 'An error occurred';
