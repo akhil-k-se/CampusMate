@@ -26,7 +26,7 @@ const reservationSchema = new mongoose.Schema({
         }
     },
     enrollmentNumber: {
-        type: String,
+        type: Number,
         required: true,
         unique: true,
         index: true

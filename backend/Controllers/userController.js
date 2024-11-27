@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 
 
 const QRcode = require("../helpers/qrCodeGenerator");
+const Reservation = require("../models/reservationModel");
 // const { sendGreetMail } = require("../helper/mailServices");
 const register = async (req, res) => {
     try {
@@ -208,4 +209,32 @@ const showData = async (req, res) => {
     }
 };
 
-module.exports = { register, login, updateUser, deleteUser, showData };
+const isBooked = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized: No token provided' });
+        }
+        const user = await User.findOne({ token });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        const enrollmentID = user.enrollmentID;
+        console.log(enrollmentID);
+        const registerStatus = await Reservation.findOne({ enrollmentNumber:enrollmentID });
+        let isRoomBooked = false;
+        if(registerStatus)
+            {
+                 isRoomBooked = true;
+            }
+        console.log(isRoomBooked);
+        
+        res.json({ isRoomBooked, user: user.name }); // Send booking status and user info
+    } catch (err) {
+        console.error('Error in isBooked:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+module.exports = { register, login, updateUser, deleteUser, showData ,isBooked};

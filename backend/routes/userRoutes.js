@@ -7,6 +7,7 @@ const userController = require("../Controllers/userController");
 router.post("/signup", userController.register);
 router.post("/login", userController.login);
 router.get("/showdata",userController.showData)
+router.get("/isBooked",userController.isBooked)
 // update info of user
 router.post("/update-user/:_id", userController.updateUser);
 

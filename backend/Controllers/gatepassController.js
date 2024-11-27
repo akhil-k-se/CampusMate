@@ -22,15 +22,18 @@ const createGatepass = async (req, res) => {
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
+        console.log("Hello");
         
         if (!studentReservation) {
             return res.status(404).send({ message: 'No reservation found' });
         }
 
+
         const newGatePass = new gatepass({
             ...inputData,
             studentId: studentReservation._id
         });
+
 
         newGatePass.hostel=studentReservation.hostelname;
         
