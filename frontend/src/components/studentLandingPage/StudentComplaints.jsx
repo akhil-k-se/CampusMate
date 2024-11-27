@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWrench, faExclamationCircle, faInfoCircle, faCheckCircle, faSpinner, faClock,faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faWrench, faExclamationCircle, faInfoCircle, faCheckCircle, faSpinner, faClock, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios'
 
 const StudentComplaints = () => {
     const [complaints, setComplaints] = useState([]);
 
     const navigate = useNavigate()
-    const handleLogout = () => {
-        navigate('/')
-    }
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
+            if (response.status === 200) {
+                localStorage.clear();
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     useEffect(() => {
         fetch('http://localhost:3005/complaintList', {
