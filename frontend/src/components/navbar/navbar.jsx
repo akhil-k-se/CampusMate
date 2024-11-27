@@ -8,7 +8,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post("http://localhost:3005/logout",{},{withCredentials:true});
+      const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
 
       if (response.status === 200) {
         localStorage.clear();
@@ -27,7 +27,7 @@ function Navbar() {
         <div className="nav__bar">
           <div className="logo">
             <a href="#">
-              <img src="/nameLogo.jpg" alt="logo" />
+              <img src="https://res.cloudinary.com/dhwaifalx/image/upload/v1732710122/logo-campusMate_m90scm.png" alt="logo" />
             </a>
           </div>
           <div className="nav__menu__btn" id="menu-btn">

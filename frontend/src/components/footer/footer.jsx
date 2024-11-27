@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 const Footer = ({ page }) => {
   return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 bg-pink-100'>
+    <div id='contact' className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 bg-pink-100'>
       <div className='flex flex-col items-center justify-between'>
         <div className='w-full h-full flex flex-col items-center justify-center my-5'>
           <img width={300} className='' src="/logo-black-nobg.png" alt="" />
@@ -45,23 +45,22 @@ const Footer = ({ page }) => {
           <div className='flex gap-5 items-center justify-center'>
             <div>
               <h4 className='text-[15px]'>CampusMate Founders</h4>
-              <h1 className='text-[20px] font-bold'>Team XlRaTe</h1>
+              <h1 className='text-[20px] font-bold'>Team StackMasters</h1>
             </div>
           </div>
           <div className='text-[25px] font-semibold text-center'>
             We are here to change your future.
           </div>
           <div className='flex gap-7'>
-            <button className='w-[100px] h-[50px] border-0 rounded-xl font-montserrat text-white bg-gray-900'>Contact us</button>
-            <IoMail className='text-[50px]' />
-            <FaLinkedin className='text-[50px]' />
+            <NavLink to={'mailto:campusmate@gmail.com'}><IoMail className='text-[50px]' /></NavLink>
+            <NavLink to={"https://www.linkedin.com/in/campusmate"}><FaLinkedin className='text-[50px]' /></NavLink>
           </div>
           <div className='text-[20px] text-gray-500'>Copyright @ 2024 CampusMate</div>
           <div className='flex gap-5'>
           </div>
         </div>
         <div className='flex flex-col items-center my-5'>
-          <img src="/namelogo.jpg" alt="" className='w-10' />
+          <img src="https://res.cloudinary.com/dhwaifalx/image/upload/v1732708826/ghtr1yd7kfaxxihuzfwv.png" alt="" className='w-20 mix-blend-color-burn' />
           <p className='text-[20px] font-semibold'>Terms of Policies</p>
           <p className='text-[20px] font-semibold'>Privacy Policy</p>
         </div>

@@ -28,7 +28,7 @@ function LandingPage() {
             <nav>
                 <div className="nav__bar">
                     <div className="logo">
-                        <a href="#"><img src="./nameLogo.jpg" alt="logo" /></a>
+                        <a href="#"><img src="https://res.cloudinary.com/dhwaifalx/image/upload/v1732710122/logo-campusMate_m90scm.png" alt="logo" /></a>
                     </div>
                     <div className="nav__menu__btn" id="menu-btn" onClick={handleMenuButtonClick}>
                         <i className="ri-menu-line"></i>
