@@ -33,13 +33,14 @@ function AdminLogin() {
         if (!passwordMatch) {
             alert("Passwords dont match")
             console.log(formData);
+            return
         }
         try {
             const response = await axios.post(
                 "http://localhost:3005/admin/signup",
                 formData,
                 {
-                    withCredentials:true
+                    withCredentials: true
                 }
             )
             console.log(response);
@@ -48,7 +49,7 @@ function AdminLogin() {
         } catch (e) {
             console.log(e);
 
-            alert("error !")
+            alert("Invalid Inputs")
         }
     }
     const handleChange = (e) => {
@@ -75,16 +76,16 @@ function AdminLogin() {
         try {
             const response = await axios.post(
                 "http://localhost:3005/admin/login",
-                loginData,{
-                    withCredentials:true
-                }
+                loginData, {
+                withCredentials: true
+            }
             )
             console.log(response);
             alert("Login successfull !")
             navigate('/account')
         } catch (e) {
             console.log(e);
-            alert("error from login")
+            alert("Invalid Inputs !")
         }
     }
 

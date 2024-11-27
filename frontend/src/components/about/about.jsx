@@ -9,7 +9,7 @@ const About = () => {
             <div class="py-16">
                 <div class="container mx-auto text-center">
                     <h1 class="text-4xl font-bold mb-4">Welcome to <span className='text-pink-500'>CampusMate</span></h1>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Your home away from home, providing comfortable and secure accommodation for students since 2010.</p>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Your home away from home, providing comfortable and secure accommodation for students since 2024.</p>
                 </div>
             </div>
 

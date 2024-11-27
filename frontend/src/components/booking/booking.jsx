@@ -120,9 +120,9 @@ const Bookings = () => {
             alert('Your request has been sent will let you know about the room');
             navigate("/payment");
         } catch (error) {
-            console.error("Error in Booking",error);
+            console.error("Error in Booking", error);
             const errorMessage = error.response?.data?.message || 'An error occurred';
-            alert(errorMessage);
+            alert("Invalid Inputs");
         }
     };
 
