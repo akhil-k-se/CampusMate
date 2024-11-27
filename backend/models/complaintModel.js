@@ -10,8 +10,8 @@ const complaintSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    hostel:{
-        type:String
+    hostel: {
+        type: String
     },
     description: {
         type: String,

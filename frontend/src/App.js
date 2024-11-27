@@ -19,6 +19,7 @@ import QRcode from "./components/QRCode/QRcode"
 import MessLogin from './components/messLogin/messLogin'
 import QRScanner from './components/QRCode/QRreader'
 import StudentComplaints from './components/studentLandingPage/StudentComplaints'
+import MessMenu from './components/MessMenu/MessMenu'
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/QRcode' element={<QRcode />} />
           <Route path='/mess' element={<MessLogin />} />
+          <Route path='/mess-menu' element={<MessMenu />} />
           <Route path='/qrscanner' element={<QRScanner />} />
           <Route path='/about' element={<About />} />
         </Routes>

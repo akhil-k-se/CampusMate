@@ -120,7 +120,7 @@ function StudentLandingPage() {
                                 <span className='tagline'>Welcome Student<span id='pink-bar'></span>{userData}</span>
                                 <h1>{`New `}<span className='wrap'>{text}</span></h1>
                                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate dolores eum accusantium sapiente amet! Rerum cupiditate facilis, voluptates ipsam autem voluptate exercitationem, quos corporis iste eum sequi fugit, placeat saepe.</p>
-                                {!isRoomBooked && ( // Conditionally display the button
+                                {!isRoomBooked && ( 
                                     <button onClick={handlePopBook} className='btn'>Book Room</button>
                                 )}
                             </div>
