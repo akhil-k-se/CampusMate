@@ -3,9 +3,12 @@ const app = express();
 const complaint = require('../models/complaintModel');
 const reservation = require('../models/reservationModel');
 const Admin = require('../models/adminModel');
+const User = require("../models/studentModel");
 
 const createComplaint = async (req, res) => {
     try {
+        const token = req.cookies.token;
+        if(!token) console.log("No token");
         const inputData = req.body;
         console.log('Input Data', inputData);
 
@@ -26,11 +29,23 @@ const createComplaint = async (req, res) => {
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
-        const hostelName = studentReservation.hostelname;
-        
         if (!studentReservation) {
+            console.log("No reservation");
             return res.status(404).send({ message: 'No reservation found in the database.' });
         }
+        
+        const hostelName = studentReservation.hostelname;
+        console.log("the token is ",token);
+        const user = await User.findOne({token});
+        console.log("the rollNo is ",user.enrollmentID);
+        
+        
+
+        if(inputData.enrollmentNumber!= user.enrollmentID )
+            {
+                console.log("Not your roll Number");
+                return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
+            }
 
 
         const newComplaint = new complaint({

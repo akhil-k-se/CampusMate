@@ -83,7 +83,7 @@ const Gatepass = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3005/gatepass", formData);
+            const response = await axios.post("http://localhost:3005/gatepass", formData,{withCredentials:true});
             alert('Gate Pass Applied Successfully');
             navigate('/user');
         } catch (err) {
@@ -91,7 +91,7 @@ const Gatepass = () => {
             console.error(err);
             
             const errorMessage = err.response?.data || 'An error occurred';
-            alert(errorMessage);
+            alert("Invalid Inputs");
         }
     };
     
