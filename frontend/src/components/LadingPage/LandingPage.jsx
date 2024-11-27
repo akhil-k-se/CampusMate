@@ -215,7 +215,7 @@ function LandingPage() {
       <Footer page="main" />
 
       <AdminOrUser trigger={buttonPop}>
-        <button className="close_btn" onClick={() => setButtonPop(false)}>
+        <button className="mt-5 bg-pink-600 px-8 py-3 text-white rounded-[10px] hover:text-pink-600 hover:bg-white transition-colors duration-100" onClick={() => setButtonPop(false)}>
           Close
         </button>
       </AdminOrUser>
