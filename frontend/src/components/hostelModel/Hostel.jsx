@@ -9,8 +9,9 @@ Title: Hostel
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Model(props) {
-  const { nodes, materials } = useGLTF('/scene.gltf')
+const Hostel = (props) => {
+  const { nodes, materials } = useGLTF('/models/hostel.glb')  // Corrected the path here
+
   return (
     <group {...props} dispose={null}>
       <group position={[0, 0.313, 0]} scale={[18.014, 0.427, 18.014]}>
@@ -320,4 +321,6 @@ export function Model(props) {
   )
 }
 
-useGLTF.preload('/scene.gltf')
+useGLTF.preload('/models/hostel.glb') // Corrected path here
+
+export default Hostel;
