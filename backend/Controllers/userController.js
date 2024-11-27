@@ -38,7 +38,7 @@ const register = async (req, res) => {
 
         // Generate JWT token
         const token = jwt.sign(
-            { email: user.email, _id: user._id },
+            { email: user.email, _id: user._id,enrollmentID: user.enrollmentID },
             JWT_SECRET,
             { expiresIn: "1h" }
         );

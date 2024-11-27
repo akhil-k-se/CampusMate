@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const gatepass = require('../models/gatepassModel');
 const reservation = require('../models/reservationModel');
+const User = require("../models/studentModel");
 
 const createGatepass = async (req, res) => {
     try {
@@ -22,12 +23,16 @@ const createGatepass = async (req, res) => {
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
-        console.log("Hello");
         
         if (!studentReservation) {
             return res.status(404).send({ message: 'No reservation found' });
         }
+        const user = await User.findOne({token});
 
+        if(inputData.enrollmentNumber!= user.enrollmentID)
+        {
+            return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
+        }
 
         const newGatePass = new gatepass({
             ...inputData,
