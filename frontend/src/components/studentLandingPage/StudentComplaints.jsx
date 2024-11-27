@@ -90,7 +90,7 @@ const StudentComplaints = () => {
                         <p>Reason: {complaint.reason}</p>
                     </div>
                     <div className="right-side w-full md:w-1/2 flex items-center justify-center md:justify-end">
-                        <p><strong>Status:</strong> {getStatusIconAndText(gatepass.status)}</p>
+                        <p><strong>Status:</strong> {getStatusIconAndText(complaint.status)}</p>
                     </div>
                 </div>
             })}
