@@ -28,27 +28,39 @@ function AdminOrUser(props) {
       <div className="full">
         <div className="black_div"></div>
         <div className="popup_holder">
-          <div className="popup">
-            <div className="boxNew user_box">
-              <div className="overlay over_user" onClick={handleMessClick}>
-                <PiStudentBold className="illustration" />
-                <h1>Mess</h1>
-              </div>
+          <div className="popup flex items-center justify-center m-3 flex-1 flex-col position-fixed">
+            <div
+              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer hover:scale-110 transition-all"
+              onClick={handleMessClick}
+            >
+              <img
+                className="absolute w-full h-full object-cover -z-10 rounded-[10px]"
+                src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              />
+              <h1 className="text-white">MessSecurity</h1>
             </div>
-            <div className="boxNew admin_box">
-              <div className="overlay over_admin" onClick={handleAdminClick}>
-                <BsPersonVcard className="illustration" />
-                <h1>Warden</h1>
-              </div>
+            <div
+              onClick={handleAdminClick}
+              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer hover:scale-110 transition-all"
+            >
+              <img
+                className="absolute w-full h-full object-cover -z-10 rounded-[10px]"
+                src="https://images.pexels.com/photos/3771110/pexels-photo-3771110.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              />
+              <h1 className="text-white">Warden</h1>
             </div>
-            <div className="boxNew user_box">
-              <div className="overlay over_user" onClick={handleUserClick}>
-                <PiStudentBold className="illustration" />
-                <h1>Student</h1>
-              </div>
+            <div
+              onClick={handleUserClick}
+              className="rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer hover:scale-110 transition-all"
+            >
+              <img
+                className="absolute w-full h-full object-cover -z-10 rounded-[10px]"
+                src="https://images.pexels.com/photos/733856/pexels-photo-733856.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              />
+              <h1 className="text-white">Student</h1>
             </div>
+            {props.children}
           </div>
-          {props.children}
         </div>
       </div>
     </>
