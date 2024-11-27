@@ -2,9 +2,9 @@
 const student = require("../models/studentModel");
 
 const QRgetter = async (req,res) => {
-    const {enrollmentID} = req.params;
+    const token = req.cookies.token;
     
-    const user = await student.findOne({enrollmentID})
+    const user = await student.findOne({token})
     if(user!=null)
     {
         return res.json(user.qrCode);
