@@ -151,7 +151,7 @@ function LandingPage() {
                 </div>
             </section>
 
-            <Footer />
+            <Footer page='main' />
 
             <AdminOrUser trigger={buttonPop}>
                 <button className="close_btn" onClick={() => setButtonPop(false)}>Close</button>

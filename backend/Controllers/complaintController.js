@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const complaint = require('../models/complaintModel');
 const reservation = require('../models/reservationModel');
+const Admin = require('../models/adminModel');
 
 const createComplaint = async (req, res) => {
     try {
@@ -25,6 +26,7 @@ const createComplaint = async (req, res) => {
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
+        const hostelName = studentReservation.hostelname;
         
         if (!studentReservation) {
             return res.status(404).send({ message: 'No reservation found in the database.' });
@@ -34,6 +36,8 @@ const createComplaint = async (req, res) => {
             ...inputData,
             studentId: studentReservation._id
         });
+
+        newComplaint.hostel = hostelName;
         const data = await newComplaint.save();
         console.log('data', data);
 
@@ -44,6 +48,20 @@ const createComplaint = async (req, res) => {
     }
 };
 
+const complaintList = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        const admin = await Admin.findOne({ token });
+        const hostelName = admin.hostel;
+        const Complaints = await complaint.find({ hostel:hostelName });
+        res.json(Complaints);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 module.exports = {
-    createComplaint
+    createComplaint,
+    complaintList
 };

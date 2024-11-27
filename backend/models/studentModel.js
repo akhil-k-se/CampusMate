@@ -7,7 +7,8 @@ const studentSchema = new mongoose.Schema({
         required: [true, 'Name is required'],
         trim: true,
         minlength: [2, 'Name must be at least 2 characters long'],
-        maxlength: [50, 'Name cannot exceed 50 characters']
+        maxlength: [50, 'Name cannot exceed 50 characters'],
+        match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
     },
     email: {
         type: String,
@@ -28,7 +29,7 @@ const studentSchema = new mongoose.Schema({
         minlength: [8, 'Password must be at least 8 characters long']
     },
     enrollmentID: {
-        type: Number,
+        type: String,
         required: [true, 'Enrollment ID is required'],
         unique: true,
         validate: {
@@ -58,8 +59,8 @@ const studentSchema = new mongoose.Schema({
         required: [true, 'QR Code is required'],
         unique: true
     },
-    token: { 
-        type: String 
+    token: {
+        type: String
     },
     messEntry: {
         type: String,

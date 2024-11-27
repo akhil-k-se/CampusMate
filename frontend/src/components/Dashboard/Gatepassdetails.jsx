@@ -10,16 +10,18 @@ const Gatepassdetails = () => {
   const [selectedStatuses, setSelectedStatuses] = useState({});
 
   useEffect(() => {
-    // Fetch all gatepass details when the component mounts
-    fetch('http://localhost:3005/gatepasseslist')
+    fetch('http://localhost:3005/gatepasseslist', {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(data => {
-        // Sort gatepasses by createdAt date in descending order
         const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setGatepassData(sortedData);
       })
       .catch(error => console.error('Error fetching gatepass data:', error));
   }, []);
+  
 
   const handleStatusChange = (e, id) => {
     const newStatus = e.target.value;

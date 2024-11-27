@@ -20,6 +20,7 @@ app.use(cors({
 
 const mess = require("./Controllers/messController").verifyMessSecurity;
 
+const admin = require("./models/adminModel");
 
 const complaint = require('./Controllers/complaintController')
 const reserve = require('./Controllers/reservationController')
@@ -107,7 +108,13 @@ app.get('/reservationlist', reserve.getreservation);
 app.post('/gatepass', gate.createGatepass)
 app.get('/gatepasseslist', async (req, res) => {
     try {
-        const gatepasses = await gatepass.find().populate('studentId');
+        const token =req.cookies.token;
+        // console.log(token);
+        const Admin = await admin.findOne({token});
+        // console.log(Admin.hostel);
+        const hostelName = Admin.hostel;
+        console.log(hostelName);
+        const gatepasses = await gatepass.find({hostel:hostelName}).populate('studentId');
         res.json(gatepasses);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -118,7 +125,8 @@ app.patch('/gatepass/status', gate.updateGatepassStatus);
 
 //Complaints Routes
 app.post('/usercomplaints', complaint.createComplaint);
+app.get('/complaintList',complaint.complaintList)
 
-app.listen(process.env.PORT, () => {
+app.listen(3005,() => {
     console.log('Server started on 3005');
 });
