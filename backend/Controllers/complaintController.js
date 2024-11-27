@@ -32,9 +32,11 @@ const createComplaint = async (req, res) => {
             return res.status(404).send({ message: 'No reservation found in the database.' });
         }
 
+
         const newComplaint = new complaint({
             ...inputData,
-            studentId: studentReservation._id
+            studentId: studentReservation._id,
+            enrollmentId: inputData.enrollmentNumber
         });
 
         newComplaint.hostel = hostelName;

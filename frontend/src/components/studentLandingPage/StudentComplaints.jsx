@@ -21,7 +21,7 @@ const StudentComplaints = () => {
     };
 
     useEffect(() => {
-        fetch('http://localhost:3005/complaintList', {
+        fetch('http://localhost:3005/student/complaintList', {
             method: 'GET',
             credentials: 'include',
         })

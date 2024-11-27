@@ -6,8 +6,8 @@ import axios from 'axios'
 
 const Studentgatepass = () => {
     const [gatepassData, setGatepassData] = useState([]);
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
     const handleLogout = async () => {
         try {
             const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
@@ -21,16 +21,19 @@ const Studentgatepass = () => {
     };
 
     useEffect(() => {
-        fetch('http://localhost:3005/gatepasseslist', {
-            method: 'GET',
-            credentials: 'include',
-        })
-            .then(response => response.json())
-            .then(data => {
-                const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        const fetchGatePasses = async () => {
+            try {
+                const response = await axios.get('http://localhost:3005/student/stdGatePassList', {
+                    withCredentials: true,
+                });
+                const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setGatepassData(sortedData);
-            })
-            .catch(error => console.error('Error fetching gatepass data:', error));
+            } catch (error) {
+                console.error('Error fetching gatepass data:', error);
+            }
+        };
+
+        fetchGatePasses();
     }, []);
 
     const getStatusIconAndText = (status) => {
@@ -67,30 +70,31 @@ const Studentgatepass = () => {
                 <div className="logo mb-4 md:mb-0">
                     <a href="#"><img src="./nameLogo.jpg" alt="logo" /></a>
                 </div>
-
                 <div className="nav__btns ml-auto">
                     <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"
                         onClick={handleLogout}>Logout</button>
                 </div>
             </nav>
-            {gatepassData.map((gatepass, index) => {
-                <div key={index} className="gatepass-details-box flex flex-col md:flex-row justify-between m-5 p-5 bg-gray-200 rounded-lg shadow-md text-black">
-                    <div className="left-side w-full md:w-1/2 mb-4 md:mb-0">
-                        <p>Time of Gatepass: {gatepass.outday}</p>
-                        <p>Out Time: {gatepass.outtime}</p>
-                        <p>In Time: {gatepass.intime}</p>
-                        <p>Out Date: {new Date(gatepass.outdate).toLocaleDateString()}</p>
-                        {gatepass.indate && <p>In Date: {new Date(gatepass.indate).toLocaleDateString()}</p>}
-                        <p>Reason: {gatepass.reason}</p>
+            <div className="gatepass-container">
+                {gatepassData.map((gatepass, index) => (
+                    <div key={index} className="gatepass-details-box flex flex-col md:flex-row justify-between m-5 p-5 bg-gray-200 rounded-lg shadow-md text-black">
+                        <div className="left-side w-full md:w-1/2 mb-4 md:mb-0">
+                            <p>Time of Gatepass: {gatepass.outday}</p>
+                            <p>Out Time: {gatepass.outtime}</p>
+                            <p>In Time: {gatepass.intime}</p>
+                            <p>Out Date: {new Date(gatepass.outdate).toLocaleDateString()}</p>
+                            {gatepass.indate && <p>In Date: {new Date(gatepass.indate).toLocaleDateString()}</p>}
+                            <p>Reason: {gatepass.reason}</p>
+                        </div>
+                        <div className="right-side w-full md:w-1/2 flex items-center justify-center md:justify-end">
+                            <p><strong>Status:</strong> {getStatusIconAndText(gatepass.status)}</p>
+                        </div>
                     </div>
-                    <div className="right-side w-full md:w-1/2 flex items-center justify-center md:justify-end">
-                        <p><strong>Status:</strong> {getStatusIconAndText(gatepass.status)}</p>
-                    </div>
-                </div>
-            })}
-
+                ))}
+            </div>
         </>
     );
 };
 
 export default Studentgatepass;
+

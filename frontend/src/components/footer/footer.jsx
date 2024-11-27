@@ -60,7 +60,7 @@ const Footer = ({ page }) => {
           </div>
         </div>
         <div className='flex flex-col items-center my-5'>
-          <img src="https://res.cloudinary.com/dhwaifalx/image/upload/v1732708826/ghtr1yd7kfaxxihuzfwv.png" alt="" className='w-20 mix-blend-color-burn' />
+          <img src="https://res.cloudinary.com/dhwaifalx/image/upload/v1732710122/logo-campusMate_m90scm.png" alt="" className='w-20 mix-blend-color-burn' />
           <p className='text-[20px] font-semibold'>Terms of Policies</p>
           <p className='text-[20px] font-semibold'>Privacy Policy</p>
         </div>

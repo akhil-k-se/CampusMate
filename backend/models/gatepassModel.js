@@ -3,6 +3,10 @@ const GatepassSchema = new mongoose.Schema({
     hostel:{
         type:String
     },
+    enrollmentId:{
+        type:Number,
+        required:true
+    },
     outday: {
         type: String,
         enum: ['Day Out', 'Night Out'],

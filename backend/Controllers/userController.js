@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 
 const QRcode = require("../helpers/qrCodeGenerator");
 const Reservation = require("../models/reservationModel");
+const GatePass = require("../models/gatepassModel");
 // const { sendGreetMail } = require("../helper/mailServices");
 const register = async (req, res) => {
     try {
@@ -236,5 +237,24 @@ const isBooked = async (req, res) => {
     }
 };
 
+const gatePassList = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) return res.status(401).json({ error: "Unauthorized access" });
 
-module.exports = { register, login, updateUser, deleteUser, showData ,isBooked};
+        const user = await User.findOne({ token });
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        const rollNumber = user.enrollmentID;
+        const gatePasses = await GatePass.find({ enrollmentId: rollNumber });
+
+        res.status(200).json(gatePasses);
+    } catch (error) {
+        console.error("Error fetching gate passes:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+
+
+module.exports = { register, login, updateUser, deleteUser, showData ,isBooked,gatePassList};

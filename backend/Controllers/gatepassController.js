@@ -31,6 +31,7 @@ const createGatepass = async (req, res) => {
 
         const newGatePass = new gatepass({
             ...inputData,
+            enrollmentId:inputData.enrollmentNumber,
             studentId: studentReservation._id
         });
 
