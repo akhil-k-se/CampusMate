@@ -1,8 +1,9 @@
-import React from 'react';
-import { IoMail } from "react-icons/io5";
-import { FaLinkedin } from "react-icons/fa";
+import React from 'react'
+import { IoMail } from "react-icons/io5"
+import { FaLinkedin } from "react-icons/fa"
+import { NavLink } from 'react-router-dom'
 
-const Footer = () => {
+const Footer = ({ page }) => {
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 bg-pink-100'>
       <div className='flex flex-col items-center justify-between'>
@@ -23,11 +24,15 @@ const Footer = () => {
           <div>
             <h4 className='text-[25px] font-montserrat' >Quick Navigation</h4>
           </div>
-          <div className='flex flex-col font-montserrat text-[35px] font-bold gap-3'>
-            <h1>Home</h1>
-            <h1>GatePasses</h1>
-            <h1>Complaint</h1>
-          </div>
+          {page == 'main' ? <div className='flex flex-col font-montserrat text-[35px] font-bold gap-3'>
+            <h1><a href="#">Home</a></h1>
+            <h1><a href="#about">About</a></h1>
+            <h1><a href="#rooms">Rooms</a></h1>
+          </div> : <div className='flex flex-col font-montserrat text-[35px] font-bold gap-3'>
+            <h1><NavLink to={'/'}>Home</NavLink></h1>
+            <h1><NavLink to={'/my-gatepasses'}>Gatepasses</NavLink></h1>
+            <h1><NavLink to={'/my-complaints'}>Complaints</NavLink></h1>
+          </div>}
         </div>
         <div className='flex flex-col font-montserrat my-5'>
           <h1 className='text-[25px]'>Address :</h1>

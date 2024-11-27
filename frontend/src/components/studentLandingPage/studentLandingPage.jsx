@@ -168,7 +168,7 @@ function StudentLandingPage() {
                     </div>
                 </section>
 
-                <Footer />
+                <Footer page='subpage' />
 
             </section>
 
