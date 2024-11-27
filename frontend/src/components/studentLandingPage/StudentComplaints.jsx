@@ -21,20 +21,19 @@ const StudentComplaints = () => {
     };
 
     useEffect(() => {
-        fetch('http://localhost:3005/student/complaintList', {
-            method: 'GET',
-            credentials: 'include',
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (Array.isArray(data)) {
-                    console.log(data);
-                    setComplaints(data);
-                } else {
-                    console.error('Received data is not an array:', data);
-                }
-            })
-            .catch(error => console.error('Error fetching complaints:', error));
+        const fetchComplaints = async () => {
+            try {
+                const response = await axios.get('http://localhost:3005/student/stdComplaintList', {
+                    withCredentials: true,
+                });
+                const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setComplaints(sortedData);
+            } catch (error) {
+                console.error('Error fetching complaints data:', error);
+            }
+        };
+
+        fetchComplaints();
     }, []);
 
     const getStatusIconAndText = (status) => {
@@ -83,27 +82,25 @@ const StudentComplaints = () => {
                 <div className="logo mb-4 md:mb-0">
                     <a href="#"><img src="./nameLogo.jpg" alt="logo" /></a>
                 </div>
-
                 <div className="nav__btns ml-auto">
-                    <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500" onClick={handleLogout}>Logout</button>
+                    <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"
+                        onClick={handleLogout}>Logout</button>
                 </div>
             </nav>
-            {complaints.map((complaint, index) => {
-                <div key={index} className="gatepass-details-box flex flex-col md:flex-row justify-between m-5 p-5 bg-gray-200 rounded-lg shadow-md text-black">
-                    <div className="left-side w-full md:w-1/2 mb-4 md:mb-0">
-                        <p>Time of Gatepass: {complaint.outday}</p>
-                        <p>Out Time: {complaint.outtime}</p>
-                        <p>In Time: {complaint.intime}</p>
-                        <p>Out Date: {new Date(complaint.outdate).toLocaleDateString()}</p>
-                        {complaint.indate && <p>In Date: {new Date(complaint.indate).toLocaleDateString()}</p>}
-                        <p>Reason: {complaint.reason}</p>
+            <div className="complaint-container">
+                {complaints.map((complaint, index) => (
+                    <div key={index} className="complaint-details-box flex flex-col md:flex-row justify-between m-5 p-5 bg-gray-200 rounded-lg shadow-md text-black">
+                        <div className="left-side w-full md:w-1/2 mb-4 md:mb-0">
+                            <p><strong>Type of complaint:</strong> {complaint.issuetype}</p>
+                            <p><strong>Issue:</strong> {complaint.issue}</p>
+                            <p><strong>Description:</strong> {complaint.description}</p>
+                        </div>
+                        <div className="right-side w-full md:w-1/2 flex items-center justify-center md:justify-end">
+                            <p><strong>Status:</strong> {getStatusIconAndText(complaint.status)}</p>
+                        </div>
                     </div>
-                    <div className="right-side w-full md:w-1/2 flex items-center justify-center md:justify-end">
-                        <p><strong>Status:</strong> {getStatusIconAndText(complaint.status)}</p>
-                    </div>
-                </div>
-            })}
-
+                ))}
+            </div>
         </>
     );
 };

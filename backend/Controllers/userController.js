@@ -2,12 +2,10 @@ const User = require("../models/studentModel");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "123"
 const bcrypt = require("bcrypt");
-
-
-
 const QRcode = require("../helpers/qrCodeGenerator");
 const Reservation = require("../models/reservationModel");
 const GatePass = require("../models/gatepassModel");
+const Complaint = require('../models/complaintModel')
 // const { sendGreetMail } = require("../helper/mailServices");
 const register = async (req, res) => {
     try {
@@ -222,14 +220,13 @@ const isBooked = async (req, res) => {
         }
         const enrollmentID = user.enrollmentID;
         console.log(enrollmentID);
-        const registerStatus = await Reservation.findOne({ enrollmentNumber:enrollmentID });
+        const registerStatus = await Reservation.findOne({ enrollmentNumber: enrollmentID });
         let isRoomBooked = false;
-        if(registerStatus)
-            {
-                 isRoomBooked = true;
-            }
+        if (registerStatus) {
+            isRoomBooked = true;
+        }
         console.log(isRoomBooked);
-        
+
         res.json({ isRoomBooked, user: user.name }); // Send booking status and user info
     } catch (err) {
         console.error('Error in isBooked:', err);
@@ -255,6 +252,23 @@ const gatePassList = async (req, res) => {
     }
 };
 
+const complaintList = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) return res.status(401).json({ error: "Unauthorized access" });
+
+        const user = await User.findOne({ token });
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        const rollNumber = user.enrollmentID;
+        const complaints = await Complaint.find({ enrollmentId: rollNumber });
+
+        res.status(200).json(complaints);
+    } catch (error) {
+        console.error("Error fetching gate passes:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
 
 
-module.exports = { register, login, updateUser, deleteUser, showData ,isBooked,gatePassList};
+module.exports = { register, login, updateUser, deleteUser, showData, isBooked, gatePassList, complaintList };
