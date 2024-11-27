@@ -23,7 +23,6 @@ const register = async (req, res) => {
             });
         }
 
-        // Generate QR code
         const qrData = await QRcode(enrollmentID);
 
         // Create user
@@ -98,11 +97,13 @@ const login = async (req, res) => {
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
 
-        const matched = bcrypt.compare(password, user.password);
+
+        const matched =await bcrypt.compare(password, user.password);
         if (!matched) {
             console.log("Password Does not match");
             return res.status(401).json({ msg: "Incorrect credentials" });
         }
+        console.log(matched);
 
         const token = user.token;
 
