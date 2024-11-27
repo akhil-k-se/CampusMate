@@ -2,14 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios'
 
 const Studentgatepass = () => {
     const [gatepassData, setGatepassData] = useState([]);
 
     const navigate = useNavigate()
-    const handleLogout = () => {
-        navigate('/')
-    }
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
+            if (response.status === 200) {
+                localStorage.clear();
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     useEffect(() => {
         fetch('http://localhost:3005/gatepasseslist', {
@@ -60,7 +69,8 @@ const Studentgatepass = () => {
                 </div>
 
                 <div className="nav__btns ml-auto">
-                    <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500" onClick={() => handleLogout}>Logout</button>
+                    <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"
+                        onClick={handleLogout}>Logout</button>
                 </div>
             </nav>
             {gatepassData.map((gatepass, index) => {
