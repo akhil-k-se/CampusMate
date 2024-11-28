@@ -11,7 +11,6 @@ const register = async (req, res) => {
     try {
         const { name, enrollmentID, email, password } = req.body;
 
-        // Check if the user already exists
         const existingUser = await User.findOne({
             $or: [{ email }, { enrollmentID }]
         });
@@ -25,7 +24,6 @@ const register = async (req, res) => {
 
         const qrData = await QRcode(enrollmentID);
 
-        // Create user
         console.log("The Pssword is :", password);
         const user = await User.create({
             name,
@@ -35,22 +33,19 @@ const register = async (req, res) => {
             qrCode: qrData,
         });
 
-        // Generate JWT token
         const token = jwt.sign(
             { email: user.email, _id: user._id,enrollmentID: user.enrollmentID },
             JWT_SECRET,
             { expiresIn: "1h" }
         );
 
-        // Save token in the database (optional)
-        user.token = token; // Assuming your User model has a `token` field
+        user.token = token;
         await user.save();
 
-        // Set token in HTTP-only cookie
         await res.cookie("token", token, {
-            httpOnly: true,  // Make cookie accessible only through HTTP requests, not JavaScript
-            secure: false, // Secure flag: only for HTTPS in production
-            maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
+            httpOnly: true,
+            secure: false,
+            maxAge: 60 * 60 * 1000, 
         });
 
         console.log("The token in cookie is", req.cookies.token);
@@ -124,10 +119,10 @@ const updateUser = async (req, res) => {
         const id = req.params._id;
         const update = req.body;
 
-        // Get the schema paths (field names)
+
         const schemaFields = Object.keys(User.schema.paths);
 
-        // Check for any unknown fields
+   
         for (const key in update) {
             if (!schemaFields.includes(key)) {
                 return res.status(400).json({

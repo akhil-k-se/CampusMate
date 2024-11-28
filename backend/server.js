@@ -13,8 +13,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your frontend URL
-    credentials: true, // This allows cookies to be sent
+    origin: 'http://localhost:3000', 
+    credentials: true, 
 }));
 
 
@@ -59,13 +59,13 @@ app.post('/getTokenForSecurity', (req, res) => {
     // console.log("Received Token:",token);
     if (token) {
         res.cookie("token", token, {
-            httpOnly: true,  // Make cookie accessible only through HTTP requests, not JavaScript
-            secure: process.env.NODE_ENV === "production", // Secure flag: only for HTTPS in production
-            maxAge: 60 * 60 * 1000, // Cookie expiration time (1 hour here)
+            httpOnly: true,  
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 60 * 60 * 1000,
         });
         console.log(token);
 
-        // Send a response back to the client
+     
         return res.status(200).json({ msg: "Token stored in cookie" });
     } else {
         return res.status(400).json({ msg: "No token provided in Authorization header" });

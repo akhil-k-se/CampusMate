@@ -72,14 +72,13 @@ const studentSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// Password hashing middleware
+
 studentSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 12);
     next();
 });
 
-// Method to check password
 studentSchema.methods.comparePassword = async function (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 };

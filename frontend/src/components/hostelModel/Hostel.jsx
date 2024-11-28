@@ -10,7 +10,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 const Hostel = (props) => {
-  const { nodes, materials } = useGLTF('/models/hostel.glb')  // Corrected the path here
+  const { nodes, materials } = useGLTF('/models/hostel.glb')  
 
   return (
     <group {...props} dispose={null}>

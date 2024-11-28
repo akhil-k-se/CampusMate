@@ -83,10 +83,10 @@ const login = async (req, res) => {
     console.log("The token of the user is ", token)
 
     res.cookie("token", token, {
-      httpOnly: true, // Prevent access via JavaScript
-      secure: false, // Use secure cookies in production
-      sameSite: "strict", // Prevent CSRF
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
   });  
 
     console.log("Login successful, returning token ",req.cookies.token);
@@ -103,10 +103,8 @@ const updateUser = async (req, res) => {
     const id = req.params._id;
     const update = req.body;
 
-    // Get the schema paths (field names)
     const schemaFields = Object.keys(User.schema.paths);
 
-    // Check for any unknown fields
     for (const key in update) {
       if (!schemaFields.includes(key)) {
         return res.status(400).json({

@@ -14,10 +14,10 @@ const Account = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get("http://localhost:3005/admin/showData", {
-          withCredentials: true, // This ensures the cookie is sent along with the request
+          withCredentials: true,
         });
         console.log(response.data);
-        setWardenProfile(response.data.admin); // Set user data in state
+        setWardenProfile(response.data.admin); 
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

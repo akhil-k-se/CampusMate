@@ -4,7 +4,7 @@ const Student = require("../models/studentModel");
 const updateMessEntries = async () => {
   try {
     const result = await Student.updateMany(
-      { messEntry: { $ne: "OUT" } }, // Only update if the current entry isn't already "OUT"
+      { messEntry: { $ne: "OUT" } }, 
       { $set: { messEntry: "OUT" } }
     );
     console.log(`${result.modifiedCount} mess entries updated to "OUT"`);
@@ -14,9 +14,9 @@ const updateMessEntries = async () => {
 };
 
 const scheduleCronJobs = () => {
-  cron.schedule("30 10 * * *", updateMessEntries); // 10:30 AM every day
-  cron.schedule("30 14 * * *", updateMessEntries); // 2:30 PM every day
-  cron.schedule("30 22 * * *", updateMessEntries); // 10:30 PM every day
+  cron.schedule("30 10 * * *", updateMessEntries);
+  cron.schedule("30 14 * * *", updateMessEntries);
+  cron.schedule("30 22 * * *", updateMessEntries);
 };
 
 module.exports = scheduleCronJobs; 
