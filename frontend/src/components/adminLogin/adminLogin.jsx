@@ -46,10 +46,10 @@ function AdminLogin() {
             console.log(response);
             navigate("/account");
             alert("User registered successfully !")
-        } catch (e) {
-            console.log(e);
-
-            alert("Invalid Inputs")
+        } catch (err) {
+            console.log(err);
+            const errorMessage = err.response?.data?.msg || "An error occurred";
+            alert(errorMessage);
         }
     }
     const handleChange = (e) => {
@@ -83,9 +83,10 @@ function AdminLogin() {
             console.log(response);
             alert("Login successfull !")
             navigate('/account')
-        } catch (e) {
-            console.log(e);
-            alert("Invalid Inputs !")
+        } catch (err) {
+            console.log(err);
+            const errorMessage = err.response?.data?.message || "An error occurred";
+            alert(errorMessage);
         }
     }
 

@@ -10,6 +10,13 @@ const createGatepass = async (req, res) => {
         const inputData = req.body;
         console.log('Input Data', inputData);
 
+        const user = await User.findOne({token});
+
+        if(inputData.enrollmentNumber!= user.enrollmentID)
+        {
+            return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
+        }
+
         if (!inputData.outday) {
             return res.status(403).send({ message: 'Please Select Out Day Time' });
         }
@@ -27,12 +34,7 @@ const createGatepass = async (req, res) => {
         if (!studentReservation) {
             return res.status(404).send({ message: 'No reservation found' });
         }
-        const user = await User.findOne({token});
-
-        if(inputData.enrollmentNumber!= user.enrollmentID)
-        {
-            return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
-        }
+        
 
         const newGatePass = new gatepass({
             ...inputData,

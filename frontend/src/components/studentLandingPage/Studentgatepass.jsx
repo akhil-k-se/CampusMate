@@ -28,10 +28,14 @@ const Studentgatepass = () => {
                 });
                 const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setGatepassData(sortedData);
-            } catch (error) {
-                console.error('Error fetching gatepass data:', error);
+            } catch (err) 
+            {
+                const errorMssg =  err.response?.data?.msg || "An error occurred";
+                console.error('Error fetching gatepass data:', errorMssg );
+                alert(errorMssg);
             }
-        };
+            
+            }
 
         fetchGatePasses();
     }, []);

@@ -90,8 +90,8 @@ const Gatepass = () => {
             console.log("Error in fronteend");
             console.error(err);
             
-            const errorMessage = err.response?.data || 'An error occurred';
-            alert("Invalid Inputs");
+            const errorMessage = err.response?.data.message || 'An error occurred';
+            alert(errorMessage);
         }
     };
     
@@ -152,7 +152,7 @@ return (
                                 <input 
                                     name="enrollmentNumber"
                                     className="border-black border-solid border-[2px] p-5 rounded-2xl w-full"
-                                    type="text"
+                                    type="number"
                                     placeholder="University RollNo."
                                     value={formData.enrollmentNumber}
                                     onChange={handleChange}

@@ -12,6 +12,17 @@ const createComplaint = async (req, res) => {
         const inputData = req.body;
         console.log('Input Data', inputData);
 
+        const user = await User.findOne({token});
+        console.log("the rollNo is ",user.enrollmentID);
+        
+        
+
+        if(inputData.enrollmentNumber!= user.enrollmentID )
+            {
+                console.log("Not your roll Number");
+                return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
+            }
+
         if (!inputData.issuetype) {
             return res.status(403).send({ message: 'Please Select Issue' });
         }
@@ -36,16 +47,7 @@ const createComplaint = async (req, res) => {
         
         const hostelName = studentReservation.hostelname;
         console.log("the token is ",token);
-        const user = await User.findOne({token});
-        console.log("the rollNo is ",user.enrollmentID);
         
-        
-
-        if(inputData.enrollmentNumber!= user.enrollmentID )
-            {
-                console.log("Not your roll Number");
-                return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
-            }
 
 
         const newComplaint = new complaint({

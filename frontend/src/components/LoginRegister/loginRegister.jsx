@@ -42,22 +42,23 @@ function RegisterLogin() {
             const response = await axios.post(
                 "http://localhost:3005/student/signup",
                 formData, {
-                withCredentials: true, // Ensures cookies are sent and received
+                withCredentials: true,
             }
 
             )
             console.log(response);
             await alert("User registered successfully !")
 
-            localStorage.setItem('enrollmentID', formData.enrollmentID); // Store username in localStorage
+            localStorage.setItem('enrollmentID', formData.enrollmentID);
             console.log('Logged in:', response.data);
 
             handleClick();
 
-        } catch (e) {
-            console.log(e);
+        } catch (err) {
+            console.log(err);
+            const errorMssg =  err.response?.data?.msg || "An error occurred";
 
-            alert("Invalid Inputs !")
+            alert(errorMssg);
         }
     }
 
@@ -86,16 +87,16 @@ function RegisterLogin() {
             const response = await axios.post(
                 "http://localhost:3005/student/login",
                 loginData, {
-                withCredentials: true, // Ensures cookies are sent and received
+                withCredentials: true,
             }
             )
             console.log(response);
             alert("Login successfull !")
             navigate('/user')
-        } catch (e) {
-            console.log(e);
-
-            alert("Invalid Inputs")
+        } catch (err) {
+            console.log(err);
+            const errorMssg =  err.response?.data?.msg || "An error occurred";
+            alert(errorMssg);
         }
     }
 

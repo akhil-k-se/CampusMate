@@ -89,7 +89,7 @@ const Complaint = () => {
     } catch (err) {
       console.error(err);
       const errorMessage = err.response?.data?.message || "An error occurred";
-      alert("Invalid Inputs");
+      alert(errorMessage);
     }
   };
 
@@ -153,7 +153,7 @@ const Complaint = () => {
                   <input
                     name="enrollmentNumber"
                     className="border-black border-solid border-[2px] p-5 rounded-2xl w-full"
-                    type="text"
+                    type="number"
                     placeholder="University RollNo."
                     value={formData.enrollmentNumber}
                     onChange={handleChange}
