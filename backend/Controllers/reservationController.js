@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const reserve = require('../models/reservationModel'); 
 const Admin = require('../models/adminModel');
+const User = require("../models/studentModel");
 
 app.use(bodyParser.json());
 
@@ -10,6 +11,17 @@ const reservation = async (req, res) => {
     try {
         const inputData = req.body;
         console.log('Input Data',inputData)
+
+        const token =  req.cookies.token;
+        console.log("the token is ",token);
+
+        const user = await User.findOne({token});
+        console.log("The user is ",user);
+
+        if(inputData.enrollmentNumber != user.enrollmentID || inputData.email!= user.email)
+        { 
+            return res.status(400).send({ message: 'Fill your Own Credentials' });
+        }
         
         if (!inputData.firstName || !inputData.email || !inputData.enrollmentNumber || !inputData.gender || !inputData.phone || !inputData.address || !inputData.city || !inputData.state || !inputData.country || !inputData.roomtype || !inputData.hostelname || !inputData.roomseater || !inputData.roomfloor || !inputData.parentname || !inputData.parentphone || !inputData.parentEmail) {
             return res.status(400).send({ message: 'Must fill all fields' });

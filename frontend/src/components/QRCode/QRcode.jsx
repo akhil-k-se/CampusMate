@@ -4,37 +4,35 @@ import gsap from "gsap";
 
 const QRcode = () => {
   const enrollmentID = localStorage.getItem("enrollmentID");
-  const [QRurl, setQRurl] = useState(null); // Store QR code URL
-  const [userData, setUserData] = useState(null); // Store user data
+  const [QRurl, setQRurl] = useState(null); 
+  const [userData, setUserData] = useState(null); 
 
-  // Fetch QR code and user data
   const fetchQRCodeAndData = async () => {
     try {
-      // Fetch QR code
+
       const qrResponse = await axios.get(
         `http://localhost:3005/get-qrcode/${enrollmentID}`,
         {
-          withCredentials: true, // Include credentials for cookies
+          withCredentials: true,
         }
       );
-      setQRurl(qrResponse.data); // Assuming backend sends QR code in `qrCodeUrl`
+      setQRurl(qrResponse.data);
       console.log("QR Code:", qrResponse.data);
 
-      // Fetch user data
       const userResponse = await axios.get(
         "http://localhost:3005/student/showData",
         {
-          withCredentials: true, // Include credentials for cookies
+          withCredentials: true,
         }
       );
-      setUserData(userResponse.data.user); // Assuming backend sends user data under `user`
+      setUserData(userResponse.data.user);
       console.log("User Data:", userResponse.data);
     } catch (err) {
       console.error("Failed to fetch data:", err);
     }
   };
 
-  // Apply GSAP animation when QRurl or userData changes
+
   useEffect(() => {
     if (QRurl || userData) {
       gsap.to(".animated-div", { opacity: 1, duration: 1 });
@@ -43,7 +41,7 @@ const QRcode = () => {
 
   return (
     <div className="h-screen w-full bg-slate-900 flex flex-col items-center justify-center p-4">
-      {/* Button to fetch and display QR code and user data */}
+
       {userData == null ? (
         <button
           className="fetch-button mb-4 px-4 py-2 bg-white text-black rounded"
@@ -77,7 +75,6 @@ const QRcode = () => {
               <p>
                 <strong>Email:</strong> {userData.email}
               </p>
-              {/* Add more fields if needed */}
             </div>
           ) : null}
         </div>
