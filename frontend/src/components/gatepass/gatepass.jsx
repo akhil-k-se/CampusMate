@@ -82,18 +82,44 @@ const Gatepass = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
+        // Validate out time and in time
+        const outTime = new Date(`2024-01-01T${formData.outtime}:00`);
+        const inTime = new Date(`2024-01-01T${formData.intime}:00`);
+        if (outTime >= inTime && formData.outday !== "Night Out") {
+            alert("Out time cannot be later than or equal to in time for a Day Out.");
+            return;
+        }
+    
+        // Validate duration for night out
+        if (formData.outday === "Night Out") {
+            const outDate = new Date(formData.outdate);
+            const inDate = new Date(formData.indate);
+            const timeDifference = inDate.getTime() - outDate.getTime();
+            const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+    
+            if (dayDifference > 7) {
+                alert("A Night Out gatepass cannot span more than 7 days.Talk to Warden for more no. of days");
+                return;
+            }
+    
+            if (dayDifference < 0) {
+                alert("In date cannot be earlier than out date.");
+                return;
+            }
+        }
+    
         try {
-            const response = await axios.post("http://localhost:3005/gatepass", formData,{withCredentials:true});
-            alert('Gate Pass Applied Successfully');
-            navigate('/user');
+            const response = await axios.post("http://localhost:3005/gatepass", formData, { withCredentials: true });
+            alert("Gate Pass Applied Successfully");
+            navigate("/user");
         } catch (err) {
-            console.log("Error in fronteend");
             console.error(err);
-            
-            const errorMessage = err.response?.data.message || 'An error occurred';
+            const errorMessage = err.response?.data.message || "An error occurred";
             alert(errorMessage);
         }
     };
+    
     
     function handlePopClose(){
         const forms = document.getElementsByClassName("popForm");

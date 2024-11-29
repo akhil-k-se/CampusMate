@@ -69,6 +69,9 @@ const studentSchema = new mongoose.Schema({
             message: 'Mess entry must be either IN or OUT'
         },
         default: 'OUT'
+    },
+    image:{
+        type:String,
     }
 }, { timestamps: true });
 

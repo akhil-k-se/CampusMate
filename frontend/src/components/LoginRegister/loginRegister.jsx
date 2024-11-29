@@ -119,6 +119,7 @@ function RegisterLogin() {
                         <input type="email" name="email" id='email' onChange={handleChange} value={formData.email} placeholder="Email" />
                         <input type="password" name="password" id='password' onChange={handleChange} value={formData.password} placeholder="Password" />
                         <input type="password" name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirm_password} placeholder="Confirm Password" />
+                        {/* <input type='file'/> */}
                         <button>Sign Up</button>
                     </form>
                 </div>

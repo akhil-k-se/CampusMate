@@ -11,6 +11,8 @@ const register = async (req, res) => {
     try {
         const { name, enrollmentID, email, password } = req.body;
 
+        const image = req.body.image;
+
         const existingUser = await User.findOne({
             $or: [{ email }, { enrollmentID }]
         });
@@ -23,6 +25,7 @@ const register = async (req, res) => {
         }
 
         const qrData = await QRcode(enrollmentID);
+        const imageUrl = req.file?.path;
 
         console.log("The Pssword is :", password);
         const user = await User.create({
