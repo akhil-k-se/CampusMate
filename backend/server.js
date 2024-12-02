@@ -179,6 +179,8 @@ app.patch('/gatepass/status', gate.updateGatepassStatus);
 app.post('/usercomplaints', complaint.createComplaint);
 app.get('/complaintList',complaint.complaintList)
 
+app.post('/gatePass/checkGatePass',gate.checkGatePass)
+
 app.listen(3005,() => {
     console.log('Server started on 3005');
 });
