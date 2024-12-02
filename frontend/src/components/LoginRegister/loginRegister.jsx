@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './loginRegister.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 function RegisterLogin() {
     const [formData, setFormData] = useState({
@@ -22,7 +24,14 @@ function RegisterLogin() {
     }
 
     const [isActive, setIsActive] = useState(false);
-
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+    const toggleConfirmPasswordVisibility = () => {
+        setConfirmPasswordVisible(!confirmPasswordVisible);
+    };
     const makeActive = () => {
         setIsActive(true);
     };
@@ -56,7 +65,7 @@ function RegisterLogin() {
 
         } catch (err) {
             console.log(err);
-            const errorMssg =  err.response?.data?.msg || "An error occurred";
+            const errorMssg = err.response?.data?.msg || "An error occurred";
 
             alert(errorMssg);
         }
@@ -95,7 +104,7 @@ function RegisterLogin() {
             navigate('/user')
         } catch (err) {
             console.log(err);
-            const errorMssg =  err.response?.data?.msg || "An error occurred";
+            const errorMssg = err.response?.data?.msg || "An error occurred";
             alert(errorMssg);
         }
     }
@@ -117,8 +126,22 @@ function RegisterLogin() {
                         <input type="text" name="name" id='name' onChange={handleChange} value={formData.name} placeholder="Name" />
                         <input type='number' name="enrollmentID" id='enrollmentID' onChange={handleChange} value={formData.enrollmentID} placeholder='Enrollment ID' />
                         <input type="email" name="email" id='email' onChange={handleChange} value={formData.email} placeholder="Email" />
-                        <input type="password" name="password" id='password' onChange={handleChange} value={formData.password} placeholder="Password" />
-                        <input type="password" name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirm_password} placeholder="Confirm Password" />
+                        <div className='relative w-[100%]'>
+                            <input type={passwordVisible ? "text" : "password"} name="password" id='password' onChange={handleChange} value={formData.password} placeholder="Password" />
+                            <FontAwesomeIcon
+                                icon={passwordVisible ? faEyeSlash : faEye}
+                                onClick={togglePasswordVisibility}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                            />
+                        </div>
+                        <div className='relative w-[100%]'>
+                            <input type={confirmPasswordVisible ? "text" : "password"} name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirm_password} placeholder="Confirm Password" />
+                            <FontAwesomeIcon
+                                icon={confirmPasswordVisible ? faEyeSlash : faEye}
+                                onClick={toggleConfirmPasswordVisibility}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                            />
+                        </div>
                         {/* <input type='file'/> */}
                         <button>Sign Up</button>
                     </form>
@@ -127,7 +150,14 @@ function RegisterLogin() {
                     <form onSubmit={handleSignIn}>
                         <h1>Sign In</h1>
                         <input type="number" name="enrollmentID" id='enrollmentID' onChange={handleChangeAgain} value={loginData.enrollmentID} placeholder="Enrollment ID" />
-                        <input type="password" name="password" id='password' onChange={handleChangeAgain} value={loginData.password} placeholder="Password" />
+                        <div className='relative w-[100%]'>
+                            <input type={passwordVisible ? "text" : "password"} name="password" id='password' onChange={handleChangeAgain} value={loginData.password} placeholder="Password" />
+                            <FontAwesomeIcon
+                                icon={passwordVisible ? faEyeSlash : faEye}
+                                onClick={togglePasswordVisibility}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                            />
+                        </div>
                         <a href="#">Forget Your Password?</a>
                         <button onClick={handleSignIn}>Sign In</button>
                     </form>

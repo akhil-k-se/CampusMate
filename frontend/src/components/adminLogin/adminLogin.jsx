@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../LoginRegister/loginRegister.css'
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 function AdminLogin() {
     const [formData, setFormData] = useState({
@@ -12,22 +14,25 @@ function AdminLogin() {
         password: '',
         confirmPassword: ''
     })
-
-    const navigate = useNavigate()
-
-
     const [isActive, setIsActive] = useState(false);
-
     const makeActive = () => {
         setIsActive(true);
     };
-
     const removeActive = () => {
         setIsActive(false);
     };
 
     const [passwordMatch, setPasswordMatch] = useState(true)
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+    const toggleConfirmPasswordVisibility = () => {
+        setConfirmPasswordVisible(!confirmPasswordVisible);
+    };
 
+    const navigate = useNavigate()
     const handleSignUp = async (e) => {
         e.preventDefault()
         if (!passwordMatch) {
@@ -109,8 +114,22 @@ function AdminLogin() {
                         <input type="text" name="hostel" id='hostel' onChange={handleChange} value={formData.hostel} placeholder="Hostel" />
                         <input type="text" name="role" id='role' onChange={handleChange} value={formData.role} placeholder="Role" />
                         <input type="email" name="email" id='email' onChange={handleChange} value={formData.email} placeholder="Email" />
-                        <input type="password" name="password" id='password' onChange={handleChange} value={formData.password} placeholder="Password" />
-                        <input type="password" name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirm_password} placeholder="Confirm Password" />
+                        <div className='relative w-[100%]'>
+                            <input type={passwordVisible ? "text" : "password"} name="password" id='password' onChange={handleChange} value={formData.password} placeholder="Password" />
+                            <FontAwesomeIcon
+                                icon={passwordVisible ? faEyeSlash : faEye}
+                                onClick={togglePasswordVisibility}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                            />
+                        </div>
+                        <div className='relative w-[100%]'>
+                            <input type={confirmPasswordVisible ? "text" : "password"} name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirm_password} placeholder="Confirm Password" />
+                            <FontAwesomeIcon
+                                icon={confirmPasswordVisible ? faEyeSlash : faEye}
+                                onClick={toggleConfirmPasswordVisibility}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                            />
+                        </div>
                         <button>Sign Up</button>
                     </form>
                 </div>
@@ -118,7 +137,14 @@ function AdminLogin() {
                     <form onSubmit={handleSignIn}>
                         <h1>Sign In</h1>
                         <input type="email" name="email" id='email' onChange={handleChangeAgain} value={loginData.email} placeholder="Email" />
-                        <input type="password" name="password" id='password' onChange={handleChangeAgain} value={loginData.password} placeholder="Password" />
+                        <div className='relative w-[100%]'>
+                            <input type={passwordVisible ? "text" : "password"} name="password" id='password' onChange={handleChangeAgain} value={loginData.password} placeholder="Password" />
+                            <FontAwesomeIcon
+                                icon={passwordVisible ? faEyeSlash : faEye}
+                                onClick={togglePasswordVisibility}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                            />
+                        </div>
                         <a href="#">Forget Your Password?</a>
                         <button>Sign In</button>
                     </form>
