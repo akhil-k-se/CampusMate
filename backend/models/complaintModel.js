@@ -8,6 +8,7 @@ const complaintSchema = new mongoose.Schema({
     },
     issue: {
         type: String,
+        trim: true,
         required: true
     },
     hostel: {
@@ -15,6 +16,7 @@ const complaintSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+        trim: true,
         required: true
     },
     status: {
@@ -25,9 +27,9 @@ const complaintSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'reservation',
     },
-    enrollmentId:{
-        type:Number,
-        required:true
+    enrollmentId: {
+        type: Number,
+        required: true
     },
     createdAt: {
         type: Date,

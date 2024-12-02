@@ -7,9 +7,6 @@ import "../repeatPop.css";
 const Complaint = () => {
   const navigate = useNavigate();
   const [currentImage, setCurrentImage] = useState(0);
-  const [step, setStep] = useState(1);
-  const [student, setStudent] = useState(null);
-  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     enrollmentNumber: "",
     issuetype: "",
@@ -82,7 +79,7 @@ const Complaint = () => {
       const response = await axios.post(
         "http://localhost:3005/usercomplaints",
         formData,
-        { withCredentials:true }
+        { withCredentials: true }
       );
       alert("Complaint Registered Successfully");
       navigate("/user");
@@ -121,9 +118,8 @@ const Complaint = () => {
                 key={index}
                 src={image.src}
                 alt={`Slide ${index + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity rounded-2xl signup-image ${
-                  currentImage === index ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity rounded-2xl signup-image ${currentImage === index ? "opacity-100" : "opacity-0"
+                  }`}
                 style={{
                   transition:
                     "opacity 0.5s ease-in-out, transform 0.5s ease-in-out",
@@ -135,9 +131,8 @@ const Complaint = () => {
                 <button
                   key={index}
                   onClick={() => handleSlide(index)}
-                  className={`w-6 h-3 rounded-full ${
-                    currentImage === index ? "bg-white" : "bg-white/50"
-                  } transition-all duration-300`}
+                  className={`w-6 h-3 rounded-full ${currentImage === index ? "bg-white" : "bg-white/50"
+                    } transition-all duration-300`}
                 ></button>
               ))}
             </div>
