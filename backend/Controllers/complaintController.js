@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const complaint = require('../models/complaintModel');
 const reservation = require('../models/reservationModel');
 const Admin = require('../models/adminModel');

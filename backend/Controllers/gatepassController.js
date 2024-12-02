@@ -89,10 +89,74 @@ const updateGatepassStatus = async (req, res) => {
     }
 };
 
+const checkGatePass = async (req, res) => {
+    try {
+        console.log("Hello");
+        const { enrollmentNumber, date } = req.body;
+
+        if (!enrollmentNumber || !date) {
+            return res.status(400).json({ message: "Enrollment number and date are required" });
+        }
+
+        console.log("The things are ", enrollmentNumber, " ", date);
+
+        const existingGatePasses = await gatepass.find({
+            enrollmentId: enrollmentNumber,
+        });
+
+        console.log("The Array is ", existingGatePasses);
+
+        if (existingGatePasses.length > 0) {
+            const currentDate = new Date();
+
+            const hasActiveGatePass = existingGatePasses.some((gatepass) => {
+                const gatePassDate = new Date(gatepass.outdate); 
+                const gatePassInDate = gatepass.indate ? new Date(gatepass.indate) : null;
+
+                if (gatepass.outday === "Day Out") {
+                    return !(
+                        gatepass.gateEntry === "IN-OUT" || 
+                        gatepass.status === "Rejected" || currentDate>gatePassDate
+                    );
+                }
+
+                if (gatepass.type === "Night Out") {
+                    
+                    return !(
+                        (gatepass.gateEntry === "IN-OUT" || 
+                         gatepass.status === "Rejected")
+                    );
+                }
+
+                return false;
+            });
+
+            if (hasActiveGatePass) {
+                return res.json({
+                    exists: true,
+                    message: "You can Apply only One GatePass at a Time.",
+                });
+            }
+        }
+
+        return res.json({
+            exists: false,
+            message: "No active or incomplete gatepass found. User can apply.",
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: "An error occurred while checking the gatepass.",
+        });
+    }
+};
+
+
 
 
 module.exports = {
     createGatepass,
     getGatepasses,
-    updateGatepassStatus, 
+    updateGatepassStatus,
+    checkGatePass
 };

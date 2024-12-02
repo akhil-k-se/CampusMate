@@ -7,6 +7,10 @@ const messSecuritySchema = new mongoose.Schema({
     trim: true,
     match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
   },
+  email:{
+    type:String,
+    required:true
+  },
   password: {
     type: String,
     required: true

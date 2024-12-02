@@ -23,6 +23,10 @@ const studentSchema = new mongoose.Schema({
             message: 'Please provide a valid email address'
         }
     },
+    role: {
+        type: String,
+        default: 'Student'
+    },
     password: {
         type: String,
         required: [true, 'Password is required'],
@@ -70,8 +74,13 @@ const studentSchema = new mongoose.Schema({
         },
         default: 'OUT'
     },
-    image:{
-        type:String,
+    gateEntry:{
+        type: String,
+        enum: {
+            values: ['IN', 'OUT','IN-OUT'],
+            message: 'Mess entry must be either IN , OUT or IN-OUT'
+        },
+        default: 'IN'
     }
 }, { timestamps: true });
 

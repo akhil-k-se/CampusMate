@@ -20,8 +20,27 @@ import MessLogin from './components/messLogin/messLogin'
 import QRScanner from './components/QRCode/QRreader'
 import StudentComplaints from './components/studentLandingPage/StudentComplaints'
 import MessMenu from './components/MessMenu/MessMenu'
+import GateLogin from './components/GateSecurity/gateLogin'
+import GateSign from './components/GateSecurity/gateSign'
+import MessSign from './components/messLogin/messSignup'
+import { useEffect } from 'react'
+import axios from 'axios'
+
 
 function App() {
+
+  useEffect(() => {
+    const reponse = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/getUserRole', {}, {
+          withCredentials: true
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  })
+
   return (
     <>
       <Router>
@@ -42,10 +61,15 @@ function App() {
           <Route path='/my-complaints' element={<StudentComplaints />} />
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/QRcode' element={<QRcode />} />
-          <Route path='/mess' element={<MessLogin />} />
+          <Route path='/messLogin' element={<MessLogin />} />
           <Route path='/mess-menu' element={<MessMenu />} />
           <Route path='/qrscanner' element={<QRScanner />} />
           <Route path='/about' element={<About />} />
+          <Route path='/gateLogin' element={<GateLogin />} />
+          <Route path='/gateSignin' element={<GateSign />} />
+          <Route path='/messSignIn' element={<MessSign />} />
+
+
         </Routes>
       </Router>
     </>

@@ -86,7 +86,7 @@ const QRScanner = () => {
 
       if (response.status === 200) {
         localStorage.clear();
-        navigate("/mess");
+        navigate("/messLogin");
       }
     } catch (error) {
       console.error("Logout failed:", error);

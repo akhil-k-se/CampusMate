@@ -5,18 +5,21 @@ const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { name, email,password } = req.body;
 
-    const existingUser = await MessSecurity.findOne({ name });
+    const existingUser = await MessSecurity.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ msg: "name already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const token = jwt.sign({email},JWT_SECRET);
 
     const user = await MessSecurity.create({
       name,
-      password: hashedPassword
+      email,
+      password: hashedPassword,
+      jwtToken:token
     });
 
     res.json(user);
@@ -31,10 +34,10 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { email, password } = req.body;
 
 
-    const user = await MessSecurity.findOne({ name });
+    const user = await MessSecurity.findOne({ email });
     if (!user) {
       console.log("User not found");
       return res.status(404).json({ msg: "User not found" });
@@ -47,15 +50,11 @@ const login = async (req, res) => {
     }
 
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+    const token = user.jwtToken;
 
-    user.jwtToken = token;
-
-    user.save();
+    res.cookie("token",token,{
+      httpOnly:true
+    })
 
     res.json({ token });
   } catch (err) {
@@ -118,7 +117,7 @@ const deleteUser = async (req, res) => {
 };
 
 
-const verifyMessSecurity = async (req, res, next) => {
+const checkSecurity = async (req, res, next) => {
   const token = req.cookies.token;
   console.log("The token is ", token);
 
@@ -127,9 +126,8 @@ const verifyMessSecurity = async (req, res, next) => {
     return res.status(403).json({ msg: "Unauthorized access: Invalid role" });
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
 
-    const messSecurity = await MessSecurity.findById(decoded.id);
+    const messSecurity = await MessSecurity.findOne({jwtToken:token});
     console.log(messSecurity);
     if (!messSecurity) {
       console.log("MessSecurity not found");
@@ -160,5 +158,5 @@ module.exports = {
   login,
   updateUser,
   deleteUser,
-  verifyMessSecurity,
+  checkSecurity,
 };

@@ -39,7 +39,6 @@ const register = async (req, res) => {
         const token = jwt.sign(
             { email: user.email, _id: user._id,enrollmentID: user.enrollmentID },
             JWT_SECRET,
-            { expiresIn: "1h" }
         );
 
         user.token = token;
@@ -48,7 +47,6 @@ const register = async (req, res) => {
         await res.cookie("token", token, {
             httpOnly: true,
             secure: false,
-            maxAge: 60 * 60 * 1000, 
         });
 
         console.log("The token in cookie is", req.cookies.token);

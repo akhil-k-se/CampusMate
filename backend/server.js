@@ -18,9 +18,12 @@ app.use(cors({
 }));
 
 
-const mess = require("./Controllers/messController").verifyMessSecurity;
+const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
+
+const gateSecurity = require("./routes/gateSecurity");
 
 const admin = require("./models/adminModel");
+const reservation = require("./models/gatepassModel");
 
 const complaint = require('./Controllers/complaintController')
 const reserve = require('./Controllers/reservationController')
@@ -49,6 +52,7 @@ Dbconnect();
 app.use('/student', userRoutes)
 app.use('/admin', adminRoutes)
 app.use('/mess', messRoutes);
+app.use("/gateSecurity",gateSecurity);
 app.post('/qrscanner', qrScan.processQR);
 
 messScheduler();
@@ -88,13 +92,61 @@ app.post('/logout', (req, res) => {
 
 
 app.get('/get-qrcode/:enrollmentID', getQRcode)
-app.get("/qr-scan/:enrollmentID", mess, async (req, res) => {
-    const { enrollmentID } = req.params;
-    const user = await student.findOne({ enrollmentID });
-    user.messEntry = user.messEntry === "OUT" ? "IN" : "OUT";
-    user.save();
-    return res.json(user.messEntry);
-})
+app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
+    try {
+        const { enrollmentID } = req.params;
+        const role = req.securityRole;
+        const user = await student.findOne({ enrollmentID });
+
+        if (!user) {
+            return res.status(404).json({ msg: "Student not found" });
+        }
+
+        if (role == "MessSecurity") {
+            user.messEntry = user.messEntry === "OUT" ? "IN" : "OUT";
+            await user.save();
+            return res.json({ entryType: "MessEntry", status: user.messEntry });
+        } else if (role == "GateSecurity") {
+            const gatePasses = await reservation
+                .find({ enrollmentId: enrollmentID })
+                .sort({ createdAt: -1 });
+
+            if (!gatePasses || gatePasses.length === 0) {
+                return res.status(404).json({ msg: "No gatepass found for the student" });
+            }
+
+            const latestGatePass = gatePasses[0];
+
+            if (latestGatePass.status != "Approved") {
+                return res.status(403).json({ gatePass:latestGatePass,msg: "Cannot update entry for unApproved gatepass" });
+            }
+
+            user.gateEntry = user.gateEntry === "IN" ? "OUT" : "OUT" ? "IN-OUT" :"IN-OUT";
+            await user.save();
+            return res.json({ entryType: "GateEntry",GatePass:latestGatePass, status: user.gateEntry });
+
+            // if (user.gateEntry == "IN") {
+            //     user.gateEntry = "OUT";
+            //     await user.save();
+            //     return res.json({ 
+            //         entryType: "GateEntry", 
+            //         status: user.gateEntry, 
+            //         gatePass: latestGatePass,
+            //         gatePassStatus: latestGatePass.status 
+            //     });
+            // } else {
+            //     return res.status(403).json({ msg: "Gate entry status is not 'IN', cannot update" });
+            // }
+        } else {
+            return res.status(403).json({ msg: "Unauthorized access: Invalid role" });
+        }
+    } catch (error) {
+        console.error("Error updating entry status:", error);
+        res.status(500).json({ msg: "Internal server error" });
+    }
+});
+
+
 
 app.get("/no-reload", (req, res) => {
     res.render("No Reload ALlowed");

@@ -11,7 +11,7 @@ function MessLogin() {
   });
 
   const [loginData, setLoginData] = useState({
-    name: "", // Changed from name to match backend
+    email: "", // Changed from name to match backend
     password: "",
   });
 
@@ -27,48 +27,6 @@ function MessLogin() {
     setIsActive(false);
   };
 
-  const [passwordMatch, setPasswordMatch] = useState(true);
-
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    // Add more robust password validation
-    if (formData.password.length < 8) {
-      alert("Password must be at least 8 characters long");
-      return;
-    }
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match");
-      return;
-    }
-    // Remove confirmPassword before sending to backend
-    const { confirmPassword, ...signupData } = formData;
-    try {
-      const response = await axios.post(
-        "http://localhost:3005/mess/signup",
-        signupData,{
-          withCredentials:true
-        }
-      );
-      alert("User registered successfully!");
-      navigate("/qrscanner");
-    } catch (error) {
-      alert(error.response?.data?.message || "Registration failed");
-    }
-  };
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(() => ({
-      ...formData,
-      [name]: value,
-    }));
-    if (name === "password" || name === "confirm_password") {
-      setPasswordMatch(
-        name === "password"
-          ? value === formData.confirmPassword
-          : value === formData.password
-      );
-    }
-  };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -110,12 +68,12 @@ function MessLogin() {
           <form onSubmit={handleSignIn} className="w-[500px]">
             <h1>Sign In</h1>
             <input
-              type="text"
-              name="name"
-              id="name"
+              type="email"
+              name="email"
+              id="email"
               onChange={handleChangeAgain}
-              value={loginData.name}
-              placeholder="name"
+              value={loginData.email}
+              placeholder="Email"
             />
             <input
               type="password"
