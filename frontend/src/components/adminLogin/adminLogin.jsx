@@ -130,6 +130,8 @@ function AdminLogin() {
                                 className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
                             />
                         </div>
+                        <input type="password" name="password" id='password' onChange={handleChange} value={formData.password} placeholder="Password" />
+                        <input type="password" name="confirmPassword" id='confirmPassword' onChange={handleChange} value={formData.confirmPassword} placeholder="Confirm Password" />
                         <button>Sign Up</button>
                     </form>
                 </div>

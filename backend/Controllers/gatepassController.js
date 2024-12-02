@@ -39,11 +39,13 @@ const createGatepass = async (req, res) => {
         const newGatePass = new gatepass({
             ...inputData,
             enrollmentId:inputData.enrollmentNumber,
-            studentId: studentReservation._id
+            studentId: studentReservation._id,
+            hostel:studentReservation.hostelname
         });
 
+        user.gateEntry = "IN";
+        await user.save();
 
-        newGatePass.hostel=studentReservation.hostelname;
         
         const data = await newGatePass.save();
         console.log('data', data);
@@ -104,6 +106,8 @@ const checkGatePass = async (req, res) => {
             enrollmentId: enrollmentNumber,
         });
 
+        const user = await User.findOne({enrollmentID:enrollmentNumber})
+
         console.log("The Array is ", existingGatePasses);
 
         if (existingGatePasses.length > 0) {
@@ -115,7 +119,7 @@ const checkGatePass = async (req, res) => {
 
                 if (gatepass.outday === "Day Out") {
                     return !(
-                        gatepass.gateEntry === "IN-OUT" || 
+                        user.gateEntry === "IN-OUT" || 
                         gatepass.status === "Rejected" || currentDate>gatePassDate
                     );
                 }
@@ -123,7 +127,7 @@ const checkGatePass = async (req, res) => {
                 if (gatepass.type === "Night Out") {
                     
                     return !(
-                        (gatepass.gateEntry === "IN-OUT" || 
+                        (user.gateEntry === "IN-OUT" || 
                          gatepass.status === "Rejected")
                     );
                 }

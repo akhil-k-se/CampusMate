@@ -83,28 +83,66 @@ const Gatepass = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        // Validate out time and in time
         const outTime = new Date(`2024-01-01T${formData.outtime}:00`);
         const inTime = new Date(`2024-01-01T${formData.intime}:00`);
-        if (outTime >= inTime && formData.outday !== "Night Out") {
-            alert("Out time cannot be later than or equal to in time for a Day Out.");
-            return;
+        const currentTime = new Date();
+        const minOutTime = new Date();
+        minOutTime.setHours(6, 0, 0, 0);
+        const maxInTime = new Date();
+        maxInTime.setHours(20, 0, 0, 0);
+
+        if (inTime > maxInTime) {
+            alert("In-Time cannot exceed 8 PM");
         }
     
-        // Validate duration for night out
-        if (formData.outday === "Night Out") {
-            const outDate = new Date(formData.outdate);
-            const inDate = new Date(formData.indate);
-            const timeDifference = inDate.getTime() - outDate.getTime();
-            const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
-    
-            if (dayDifference > 7) {
-                alert("A Night Out gatepass cannot span more than 7 days.Talk to Warden for more no. of days");
+        if (formData.outday === "Day Out") {
+            if ( outTime >= maxInTime) {
+                alert("For Day Out, Out-Time must be between 6 AM and 8 PM.");
                 return;
             }
     
-            if (dayDifference < 0) {
-                alert("In date cannot be earlier than out date.");
+            if (outTime >= inTime) {
+                alert("Out-Time must be earlier than In-Time.");
+                return;
+            }
+            console.log("Hello onee");
+
+            try {
+                const response = await axios.post(
+                    "http://localhost:3005/gatePass/checkGatePass", 
+                    { enrollmentNumber: formData.enrollmentNumber, date: formData.outdate },
+                    { withCredentials: true }
+                );
+                console.log("hello ",response.data);
+                if (response.data.exists) {
+                    alert("You can only apply for one Day Out gatepass per day.");
+                    return;
+                }
+            } catch (err) {
+                console.error(err);
+                const errorMssg =  err.response?.data?.message || "An error occurred";
+                alert(errorMssg);
+                return;
+            }
+        }
+    
+        if (formData.outday === "Night Out") {
+            const outDate = new Date(formData.outdate);
+            const inDate = new Date(formData.indate);
+    
+            if (inTime > maxInTime) {
+                alert("In-Time cannot exceed 8 PM.");
+                return;
+            }
+    
+            if (inDate <= outDate) {
+                alert("In Date must be later than Out Date.");
+                return;
+            }
+    
+            const dayDifference = (inDate - outDate) / (1000 * 60 * 60 * 24);
+            if (dayDifference > 7) {
+                alert("Night Out cannot exceed 7 days. Contact the warden for approval.");
                 return;
             }
         }
@@ -119,6 +157,8 @@ const Gatepass = () => {
             alert(errorMessage);
         }
     };
+    
+    
     
     
     function handlePopClose(){
