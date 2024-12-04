@@ -365,6 +365,16 @@ app.get("/warden-dashboard", async (req, res) => {
   }
 });
 
+app.get('/suwarden', async (req, res) => {
+  try {
+    const users = await admin.find({});
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.send("Internal Server Error");
+  }
+});
+
 app.listen(3005, () => {
   console.log("Server started on 3005");
 });

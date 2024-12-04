@@ -70,7 +70,7 @@ const StudentComplaints = () => {
         <>
             <nav className="flex flex-col md:flex-row justify-between items-center p-4 bg-white">
                 <div className="logo mb-4 md:mb-0">
-                    <a href="#"><img src="./nameLogo.jpg" alt="logo" /></a>
+                    <a href="#"><img src="https://res.cloudinary.com/dhwaifalx/image/upload/v1732710122/logo-campusMate_m90scm.png" alt="logo" /></a>
                 </div>
                 <div className="nav__btns ml-auto">
                     <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"

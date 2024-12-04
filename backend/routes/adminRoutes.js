@@ -6,8 +6,9 @@ const adminController = require("../Controllers/adminController");
 
 router.post("/signup", adminController.register);
 router.post("/login", adminController.login);
-router.get('/showData',adminController.showData)
+router.get('/showData', adminController.showData)
 
 router.post("/update-user/:_id", adminController.updateUser);
+router.delete("/delete/:id", adminController.deleteUser)
 
 module.exports = router;

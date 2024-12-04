@@ -87,9 +87,9 @@ const login = async (req, res) => {
       secure: false,
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
-  });  
+    });
 
-    console.log("Login successful, returning token ",req.cookies.token);
+    console.log("Login successful, returning token ", req.cookies.token);
     return res.status(200).json({ msg: "done" });
   } catch (err) {
     console.error("Error during login:", err);
@@ -151,22 +151,17 @@ const updateUser = async (req, res) => {
 };
 const deleteUser = async (req, res) => {
   try {
-    const id = req.params._id;
-    const deleteData = await User.findByIdAndDelete(id);
-    if (deleteData) {
-      res.json({
-        status: 200,
-        msg: "User deleted successfully",
-        data: deleteData,
-      });
-    } else {
-      res.json({
-        status: 404,
-        msg: "User not found",
-      });
+    const { id } = req.params;
+    const deletedAdmin = await Admin.findByIdAndDelete(id);
+
+    if (!deletedAdmin) {
+      return res.status(404).json({ success: false, msg: 'Admin not found.' });
     }
+
+    res.json({ success: true, msg: 'Admin deleted successfully.' });
   } catch (error) {
-    console.log(error);
+    console.error('Error deleting admin:', error);
+    res.status(500).json({ success: false, msg: 'An error occurred while deleting the admin.' });
   }
 };
 
@@ -185,7 +180,7 @@ const showData = async (req, res) => {
       return res.status(404).json({ msg: "Admin not found with the provided token" });
     }
 
-    return res.status(200).json({admin});
+    return res.status(200).json({ admin });
   } catch (err) {
     console.error("Error happened:", err);
     return res.status(500).json({ msg: "Internal server error" });
@@ -195,4 +190,4 @@ const showData = async (req, res) => {
 module.exports = { showData };
 
 
-module.exports = { register, login, updateUser, deleteUser,showData };
+module.exports = { register, login, updateUser, deleteUser, showData };

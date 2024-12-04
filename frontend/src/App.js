@@ -23,6 +23,10 @@ import MessMenu from './components/MessMenu/MessMenu'
 import GateLogin from './components/GateSecurity/gateLogin'
 import GateSign from './components/GateSecurity/gateSign'
 import MessSign from './components/messLogin/messSignup'
+import Account1 from './components/superadmin/Dashboard/Account1'
+import Wardendetails from './components/superadmin/Dashboard/Wardendetails'
+import Warden from './components/superadmin/Dashboard/Warden'
+import GateSecurity from './components/superadmin/Dashboard/GateSecurity'
 import { useEffect } from 'react'
 import axios from 'axios'
 
@@ -68,6 +72,10 @@ function App() {
           <Route path='/gateLogin' element={<GateLogin />} />
           <Route path='/gateSignin' element={<GateSign />} />
           <Route path='/messSignIn' element={<MessSign />} />
+          <Route path='/suadmin' element={<Account1 />} />
+          <Route path='/suwarden' element={<Wardendetails />} />
+          <Route path='/suwardenlog' element={<Warden />} />
+          <Route path='/susecurity' element={<GateSecurity />} />
 
 
         </Routes>
