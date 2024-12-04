@@ -14,7 +14,7 @@ import axios from "axios";
 function StudentLandingPage() {
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const toRotate = ["beginnings", "friends", "family"];
+  const toRotate = ["beginning", "friends", "family"];
   const [text, setText] = useState("");
   const [delta, setDelta] = useState(300 - Math.random() * 100);
 
@@ -119,7 +119,7 @@ function StudentLandingPage() {
     <div>
       <section className="main_page">
         <Navbar />
-        <Container className="banner" id="home">
+        <Container className="banner w-[90%] ml-[5%]" id="home">
           <div className="black-div"></div>
           <div className="align-items-center">
             <div className="user">
