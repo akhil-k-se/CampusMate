@@ -151,7 +151,7 @@ function StudentLandingPage() {
                 <div className="img_holder w-45 h-45 rounded-full overflow-hidden">
                   <img
                     src={img}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover border-4 border-white"
                     alt="Profile"
                   />
                 </div>

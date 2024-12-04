@@ -83,13 +83,13 @@ app.post("/logout", (req, res) => {
 
 app.get("/get-qrcode/:enrollmentID", getQRcode);
 app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
-    try {
-      const { enrollmentID } = req.params;
-      const role = req.securityRole;
-      const user = await student.findOne({ enrollmentID });
-  
-      if (!user) {
-        return res.status(404).send(`
+  try {
+    const { enrollmentID } = req.params;
+    const role = req.securityRole;
+    const user = await student.findOne({ enrollmentID });
+
+    if (!user) {
+      return res.status(404).send(`
           <html>
             <head>
               <style>
@@ -104,13 +104,13 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
             </body>
           </html>
         `);
-      }
-  
-      if (role == "MessSecurity") {
-        user.messEntry = user.messEntry === "OUT" ? "IN" : "OUT";
-        await user.save();
-  
-        return res.send(`
+    }
+
+    if (role == "MessSecurity") {
+      user.messEntry = user.messEntry === "OUT" ? "IN" : "OUT";
+      await user.save();
+
+      return res.send(`
           <html>
             <head>
               <style>
@@ -129,13 +129,13 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
             </body>
           </html>
         `);
-      } else if (role == "GateSecurity") {
-        const gatePasses = await reservation
-          .find({ enrollmentId: enrollmentID })
-          .sort({ createdAt: -1 });
-  
-        if (!gatePasses || gatePasses.length === 0) {
-          return res.status(404).send(`
+    } else if (role == "GateSecurity") {
+      const gatePasses = await reservation
+        .find({ enrollmentId: enrollmentID })
+        .sort({ createdAt: -1 });
+
+      if (!gatePasses || gatePasses.length === 0) {
+        return res.status(404).send(`
             <html>
               <head>
                 <style>
@@ -150,12 +150,12 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
               </body>
             </html>
           `);
-        }
-  
-        const latestGatePass = gatePasses[0];
-  
-        if (latestGatePass.status != "Approved") {
-          return res.status(403).send(`
+      }
+
+      const latestGatePass = gatePasses[0];
+
+      if (latestGatePass.status != "Approved") {
+        return res.status(403).send(`
             <html>
               <head>
                 <style>
@@ -171,12 +171,77 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
               </body>
             </html>
           `);
-        }
-  
-        user.gateEntry = user.gateEntry === "IN" ? "OUT" : "IN";
-        await user.save();
-  
-        return res.send(`
+      }
+      if (user.gateEntry == "IN-OUT") {
+        return res.status(404).send(`
+                <html>
+                  <head>
+                    <style>
+                      body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+                      h1 { color: #e74c3c; }
+                      p { color: #555; font-size: 1.2em; }
+                    </style>
+                  </head>
+                  <body>
+                    <h1>No Gate Pass Found</h1>
+                    <p>No gate pass found for the student with Enrollment ID: <strong>${enrollmentID}</strong></p>
+                  </body>
+                </html>
+              `);
+      }
+      const currentTime = new Date();
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+
+    //   console.log(latestGatePass.intime< currentTime);
+
+      if (
+        new Date(latestGatePass.intime) < currentTime ||
+        new Date(latestGatePass.outdate) < currentDate
+      ) {
+        return res.status(404).send(`
+        <html>
+            <head>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        text-align: center; 
+                        margin: 20px; 
+                        background-color: #f9f9f9; 
+                        color: #333; 
+                    }
+                    h1 { 
+                        color: #e74c3c; 
+                        font-size: 2.5em; 
+                        margin-bottom: 10px; 
+                    }
+                    p { 
+                        font-size: 1.2em; 
+                        line-height: 1.6; 
+                    }
+                    strong { 
+                        color: #e74c3c; 
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>No Valid Gate Pass Found</h1>
+                <p>
+                    The gate pass for the student with Enrollment ID: <strong>${enrollmentID}</strong> 
+                    is either expired or not yet active.
+                </p>
+                <p>
+                    Please ensure that the gate pass is valid for the current date and time.
+                </p>
+            </body>
+        </html>
+    `);
+      }
+
+      user.gateEntry = user.gateEntry === "IN" ? "OUT" : "IN-OUT";
+      await user.save();
+
+      return res.send(`
           <html>
             <head>
               <style>
@@ -193,12 +258,14 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
               <p>New Gate Entry Status: <strong>${user.gateEntry}</strong></p>
               <h2>Gate Pass Details</h2>
               <p>Status: <strong>${latestGatePass.status}</strong></p>
-              <p>Created At: <strong>${new Date(latestGatePass.createdAt).toLocaleString()}</strong></p>
+              <p>Created At: <strong>${new Date(
+                latestGatePass.createdAt
+              ).toLocaleString()}</strong></p>
             </body>
           </html>
         `);
-      } else {
-        return res.status(403).send(`
+    } else {
+      return res.status(403).send(`
           <html>
             <head>
               <style>
@@ -213,10 +280,10 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
             </body>
           </html>
         `);
-      }
-    } catch (error) {
-      console.error("Error updating entry status:", error);
-      res.status(500).send(`
+    }
+  } catch (error) {
+    console.error("Error updating entry status:", error);
+    res.status(500).send(`
         <html>
           <head>
             <style>
@@ -231,9 +298,8 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
           </body>
         </html>
       `);
-    }
-  });
-  
+  }
+});
 
 app.get("/no-reload", (req, res) => {
   res.render("No Reload ALlowed");

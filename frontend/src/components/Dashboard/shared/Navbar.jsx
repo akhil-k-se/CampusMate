@@ -25,7 +25,7 @@ const Navbar = ({ isShrunk }) => {
       className={`bg-gray-900 text-white flex justify-between items-center px-4 py-3 transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} ${isShrunk ? "w-[calc(100%-80px)]" : "w-[calc(100%-300px)]"} `}
     >
       <div className="text-2xl font-bold text-[#e82574]">
-        Hostel Sync
+        CampusMate
       </div>
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">

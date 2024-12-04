@@ -84,6 +84,7 @@ const Gatepassdetails = () => {
                 {gatepass.studentId ? `${gatepass.studentId.firstName} ${gatepass.studentId.lastName}` : 'Student Name'}
               </h3>
               <div className="text-sm text-gray-300">
+              <p>EnrollmentID: {gatepass.enrollmentId}</p>
                 <p>Time of Gatepass: {gatepass.outday}</p>
                 <p>Out Time: {gatepass.outtime}</p>
                 <p>In Time: {gatepass.intime}</p>

@@ -80,21 +80,50 @@ const reservation = async (req, res) => {
 
 const getreservation = async (req, res) => {
     try {
+        // Get the token from cookies
         const token = req.cookies.token;
         console.log(token);
-        const admin = await Admin.findOne({token});
+
+        // Find the admin by token
+        const admin = await Admin.findOne({ token });
+        if (!admin) {
+            return res.status(403).json({ message: "Unauthorized access" });
+        }
         console.log(admin);
+
+        // Get the hostel name from the admin's details
         const hostelName = admin.hostel;
-        const reservations = await reserve.find({hostelname:hostelName});
+
+        // Find reservations for the given hostel
+        const reservations = await reserve.find({ hostelname: hostelName });
+        if (!reservations.length) {
+            return res.status(404).json({ message: "No reservations found" });
+        }
+
+        // Fetch user images for each reservation
+        const reservationData = await Promise.all(
+            reservations.map(async (reservation) => {
+                const user = await User.findOne({ enrollmentID: reservation.enrollmentNumber });
+                console.log(user);
+
+                return {
+                    ...reservation._doc, // Include all reservation data
+                    userImg: user?.img || null, // Include user image if available
+                };
+            })
+        );
+
+        // Send the response with reservation data and images
         return res.status(200).json({
-            message: 'Bookings retrieved successfully',
-            data: reservations
+            message: "Bookings retrieved successfully",
+            data: reservationData,
         });
     } catch (err) {
-        console.error(err);
-        return res.status(500).send({ message: 'Error retrieving bookings' });
+        console.error("Error retrieving reservations:", err);
+        return res.status(500).send({ message: "Error retrieving bookings" });
     }
 };
+
 
 const addbooking = async(req,res)=>{
     const inputData = req.body;

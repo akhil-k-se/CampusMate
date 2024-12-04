@@ -15,6 +15,7 @@ const Studentdetails = () => {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data.data);
         setStudentData(data.data);
       })
       .catch(error => console.error('Error fetching student data:', error));
@@ -34,7 +35,7 @@ const Studentdetails = () => {
           {studentData.map((student) => (
             <div key={student._id} className="bg-gray-900 shadow-md rounded-lg p-4 flex items-center space-x-2">
               <img
-                src="https://via.placeholder.com/150"
+                src={student.userImg}
                 alt={`${student.firstName} ${student.lastName}`}
                 className="w-16 h-16 rounded-full object-cover"
               />

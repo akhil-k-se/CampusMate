@@ -163,7 +163,7 @@ function LandingPage() {
 
       <section className="section__container about__container" id="about">
         <div className="about__image opacity-0">
-          <div className="w-[500px] h-[300px]">
+          <div className="w-[500px] h-[500px]">
             <Canvas id="canvas-container" className="w-full h-full ">
               <OrbitControls
                 enableRotate={true}
@@ -171,7 +171,7 @@ function LandingPage() {
                 enableZoom={false}
               />
               <PerspectiveCamera makeDefault position={[0, 0, 20]} />
-              <Hostel scale={1} position={[0,-5,0]} />
+              <Hostel scale={0.55} position={[0,-5,0]} />
               <ambientLight intensity={1} />
               <directionalLight intensity={1} position={[10, 10, 10]} />
             </Canvas>
