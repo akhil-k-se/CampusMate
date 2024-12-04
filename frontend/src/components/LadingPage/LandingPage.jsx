@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import Footer from "../footer/footer";
 import AdminOrUser from "../adminOrUser/adminOrUser";
@@ -9,6 +9,10 @@ import Hostel from "../hostelModel/Hostel";
 
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function LandingPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +32,82 @@ function LandingPage() {
     navigate("/about");
   };
 
+  useEffect(()=>{
+    const tl=gsap.timeline();
+    tl.to(".navbar-full",{
+      opacity:1,
+      duration:0.5,
+    })
+    tl.to(".nav-li",{
+      opacity:1,
+      duration:0.5,
+      stagger:0.25,
+      ease:"expo.inOut"
+    })
+    tl.to(".header",{
+      opacity:1,
+      duration:0.5,
+    })
+    tl.to(".header-txt",{
+      opacity:1,
+      duration:0.25,
+      stagger:0.25
+    })
+    tl.to(".about__image",{
+      opacity:1,
+      duration:0.5,
+    })
+    tl.to(".about__content",{
+      opacity:1,
+      duration:0.2
+    })
+    tl.to(".about-txt",{
+      opacity:1,
+      duration:0.25,
+      stagger:0.25,
+    });
+
+    gsap.to(".room__container",{
+      opacity:1,
+      duration:1,
+      scrollTrigger:{
+        trigger:".room__container",
+        // markers:true,
+        start:"top 70%",
+        end:"bottom 20%",
+        scrub:3
+      }
+    })
+    gsap.to(".service",{
+      opacity:1,
+      scale:1,
+      duration:1,
+      scrollTrigger:{
+        trigger:".service",
+        // markers:true,
+        start:"top 80%",
+        end:"bottom 60%",
+        scrub:3
+      }
+    })
+    gsap.to(".banner__container",{
+      opacity:1,
+      scale:1,
+      duration:1,
+      scrollTrigger:{
+        trigger:".banner__container",
+        // markers:true,
+        start:"top 70%",
+        end:"bottom 50%",
+        scrub:1
+      }
+    })
+    
+  })
+
   return (
     <>
-      <nav>
+      <nav className="navbar-full opacity-0">
         <div className="nav__bar">
           <div className="logo">
             <a href="#">
@@ -49,19 +126,19 @@ function LandingPage() {
           </div>
         </div>
         <ul className="nav__links" id="nav-links" onClick={handleNavLinkClick}>
-          <li>
+          <li className="nav-li opacity-0">
             <a href="#home">Home</a>
           </li>
-          <li>
+          <li className="nav-li opacity-0">
             <a href="#about">About</a>
           </li>
-          <li>
+          <li className="nav-li opacity-0">
             <a href="#rooms">Rooms</a>
           </li>
-          <li>
+          <li className="nav-li opacity-0">
             <a href="#service">Services</a>
           </li>
-          <li>
+          <li className="nav-li opacity-0">
             <a href="#contact">Contact</a>
           </li>
         </ul>
@@ -72,20 +149,20 @@ function LandingPage() {
         </div>
       </nav>
 
-      <header className="header">
+      <header className="header opacity-0">
         <div className="black-div"></div>
         <div className="section__container header__container" id="home">
-          <p>Simple - Unique - Friendly</p>
-          <h1>
+          <p className="header-txt opacity-0">Simple - Unique - Friendly</p>
+          <h1 className="header-txt opacity-0">
             Make Yourself At Home
             <br />
-            In Our <span>Hostels</span>.
+            In Our <span className="header-txt opacity-0">Hostels</span>.
           </h1>
         </div>
       </header>
 
       <section className="section__container about__container" id="about">
-        <div className="about__image">
+        <div className="about__image opacity-0">
           <div className="w-[500px] h-[300px]">
             <Canvas id="canvas-container" className="w-full h-full ">
               <OrbitControls
@@ -100,26 +177,26 @@ function LandingPage() {
             </Canvas>
           </div>
         </div>
-        <div className="about__content">
-          <p className="section__subheader">ABOUT US</p>
-          <h2 className="section__header">
+        <div className="about__content opacity-0">
+          <p className="section__subheader about-txt opacity-0">ABOUT US</p>
+          <h2 className="section__header about-txt opacity-0">
             The Second home away from your house!
           </h2>
-          <p className="section__description">
+          <p className="section__description about-txt opacity-0">
             With a focus on quality accommodations, personalized experiences,
             and seamless booking, our platform is dedicated to ensuring that
             every traveler embarks on their dream holiday with confidence and
             excitement.
           </p>
-          <div className="about__btn">
-            <button className="btn" onClick={handleClick}>
+          <div className="about__btn about-txt opacity-0">
+            <button className="btn about-txt opacity-0" onClick={handleClick}>
               Read More
             </button>
           </div>
         </div>
       </section>
 
-      <section className="section__container room__container" id="rooms">
+      <section className="section__container room__container opacity-0" id="rooms">
         <p className="section__subheader">ROOM OPTIONS AVAILABLE</p>
         <h2 className="section__header">
           The Most Memorable Stay Time Starts Here.
@@ -160,7 +237,7 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="service" id="service">
+      <section className="service opacity-0 scale-0" id="service">
         <div className="section__container service__container">
           <div className="service__content">
             <p className="section__subheader">SERVICES</p>
@@ -195,7 +272,7 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="section__container banner__container">
+      <section className="section__container banner__container opacity-0 scale-0">
         <div className="banner__content">
           <div className="banner__card">
             <h4>800+</h4>

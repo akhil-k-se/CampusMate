@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import './loginRegister.css'
+import React, { useState } from 'react';
+import './loginRegister.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function RegisterLogin() {
     const [formData, setFormData] = useState({
@@ -11,27 +11,30 @@ function RegisterLogin() {
         email: '',
         password: '',
         confirmPassword: '',
-        enrollmentID: ''
-    })
+        enrollmentID: '',
+        image: null, // For image file upload
+    });
 
-    const [passwordMatch, setPasswordMatch] = useState(true)
+    const [loginData, setLoginData] = useState({
+        enrollmentID: '',
+        password: '',
+    });
 
-    const navigate = useNavigate()
-    const handleClick = () => {
-        console.log("clicked");
-
-        navigate("/user");
-    }
-
+    const [passwordMatch, setPasswordMatch] = useState(true);
     const [isActive, setIsActive] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+    const navigate = useNavigate();
+
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
+
     const toggleConfirmPasswordVisibility = () => {
         setConfirmPasswordVisible(!confirmPasswordVisible);
     };
+
     const makeActive = () => {
         setIsActive(true);
     };
@@ -41,143 +44,195 @@ function RegisterLogin() {
     };
 
     const handleSignUp = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (!passwordMatch) {
-            alert("Passwords dont match")
-            console.log(formData);
-            return
+            alert("Passwords don't match");
+            return;
         }
+
+        const data = new FormData();
+        data.append('name', formData.name);
+        data.append('email', formData.email);
+        data.append('password', formData.password);
+        data.append('enrollmentID', formData.enrollmentID);
+        if (formData.image) data.append('image', formData.image);
+
         try {
             const response = await axios.post(
-                "http://localhost:3005/student/signup",
-                formData, {
-                withCredentials: true,
-            }
-
-            )
-            console.log(response);
-            await alert("User registered successfully !")
-
+                'http://localhost:3005/student/signup',
+                data,
+                { headers: { 'Content-Type': 'multipart/form-data'},
+                    withCredentials:true }
+            );
+            alert('User registered successfully!');
             localStorage.setItem('enrollmentID', formData.enrollmentID);
-            console.log('Logged in:', response.data);
-
-            handleClick();
-
+            console.log('Registered user:', response.data);
+            navigate('/user');
         } catch (err) {
-            console.log(err);
-            const errorMssg = err.response?.data?.msg || "An error occurred";
-
-            alert(errorMssg);
+            console.error('Error during registration:', err);
+            const errorMsg = err.response?.data?.msg || 'An error occurred during registration.';
+            alert(errorMsg);
         }
-    }
-
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setFormData(() => ({
-            ...formData,
-            [name]: value,
-        }))
-        if (name === "password" || name === "confirm_password") {
-            setPasswordMatch(
-                name === "password"
-                    ? value === formData.confirmPassword : value === formData.password
-            )
-        }
-    }
-
-    const [loginData, setLoginData] = useState({
-        enrollmentID: '',
-        password: ''
-    })
+    };
 
     const handleSignIn = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
             const response = await axios.post(
-                "http://localhost:3005/student/login",
-                loginData, {
-                withCredentials: true,
-            }
-            )
-            console.log(response);
-            alert("Login successfull !")
-            navigate('/user')
+                'http://localhost:3005/student/login',
+                loginData,
+                { withCredentials: true }
+            );
+            alert('Login successful!');
+            navigate('/user');
         } catch (err) {
-            console.log(err);
-            const errorMssg = err.response?.data?.msg || "An error occurred";
-            alert(errorMssg);
+            console.error('Error during login:', err);
+            const errorMsg = err.response?.data?.msg || 'An error occurred during login.';
+            alert(errorMsg);
         }
-    }
+    };
 
-    const handleChangeAgain = (e) => {
-        const { name, value } = e.target
-        setLoginData(() => ({
-            ...loginData,
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
             [name]: value,
-        }))
-    }
+        }));
+        if (name === 'password' || name === 'confirmPassword') {
+            setPasswordMatch(
+                name === 'password' ? value === formData.confirmPassword : value === formData.password
+            );
+        }
+    };
+
+    const handleImageChange = (e) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            image: e.target.files[0], // Capture the file object
+        }));
+    };
+
+    const handleLoginChange = (e) => {
+        const { name, value } = e.target;
+        setLoginData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
     return (
         <div className="logMain">
-            <div class={isActive ? "logContainer active" : "logContainer"} id="logContainer">
-                <div class="form-logContainer sign-up">
+            <div className={isActive ? 'logContainer active' : 'logContainer'}>
+                {/* Signup Form */}
+                <div className="form-logContainer sign-up">
                     <form onSubmit={handleSignUp}>
                         <h1>Create Account</h1>
-                        <input type="text" name="name" id='name' onChange={handleChange} value={formData.name} placeholder="Name" />
-                        <input type='number' name="enrollmentID" id='enrollmentID' onChange={handleChange} value={formData.enrollmentID} placeholder='Enrollment ID' />
-                        <input type="email" name="email" id='email' onChange={handleChange} value={formData.email} placeholder="Email" />
-                        <div className='relative w-[100%]'>
-                            <input type={passwordVisible ? "text" : "password"} name="password" id='password' onChange={handleChange} value={formData.password} placeholder="Password" />
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                        <input
+                            type="number"
+                            name="enrollmentID"
+                            placeholder="Enrollment ID"
+                            value={formData.enrollmentID}
+                            onChange={handleChange}
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                        <div className="relative w-full">
+                            <input
+                                type={passwordVisible ? 'text' : 'password'}
+                                name="password"
+                                placeholder="Password"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
                             <FontAwesomeIcon
                                 icon={passwordVisible ? faEyeSlash : faEye}
                                 onClick={togglePasswordVisibility}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                             />
                         </div>
-                        <div className='relative w-[100%]'>
-                            <input type={confirmPasswordVisible ? "text" : "password"} name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirm_password} placeholder="Confirm Password" />
+                        <div className="relative w-full">
+                            <input
+                                type={confirmPasswordVisible ? 'text' : 'password'}
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                            />
                             <FontAwesomeIcon
                                 icon={confirmPasswordVisible ? faEyeSlash : faEye}
                                 onClick={toggleConfirmPasswordVisibility}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                             />
                         </div>
-                        {/* <input type='file'/> */}
-                        <button>Sign Up</button>
+                        <input type="file" accept="image/*" onChange={handleImageChange} />
+                        <button type="submit">Sign Up</button>
                     </form>
                 </div>
-                <div class="form-logContainer sign-in">
+
+                {/* Login Form */}
+                <div className="form-logContainer sign-in">
                     <form onSubmit={handleSignIn}>
                         <h1>Sign In</h1>
-                        <input type="number" name="enrollmentID" id='enrollmentID' onChange={handleChangeAgain} value={loginData.enrollmentID} placeholder="Enrollment ID" />
-                        <div className='relative w-[100%]'>
-                            <input type={passwordVisible ? "text" : "password"} name="password" id='password' onChange={handleChangeAgain} value={loginData.password} placeholder="Password" />
+                        <input
+                            type="number"
+                            name="enrollmentID"
+                            placeholder="Enrollment ID"
+                            value={loginData.enrollmentID}
+                            onChange={handleLoginChange}
+                        />
+                        <div className="relative w-full">
+                            <input
+                                type={passwordVisible ? 'text' : 'password'}
+                                name="password"
+                                placeholder="Password"
+                                value={loginData.password}
+                                onChange={handleLoginChange}
+                            />
                             <FontAwesomeIcon
                                 icon={passwordVisible ? faEyeSlash : faEye}
                                 onClick={togglePasswordVisibility}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                             />
                         </div>
-                        <a href="#">Forget Your Password?</a>
-                        <button onClick={handleSignIn}>Sign In</button>
+                        <a href="#">Forgot Your Password?</a>
+                        <button type="submit">Sign In</button>
                     </form>
                 </div>
-                <div class="toggle-logContainer">
-                    <div class="toggle">
-                        <div class="toggle-panel toggle-left">
+
+                {/* Toggle Section */}
+                <div className="toggle-logContainer">
+                    <div className="toggle">
+                        <div className="toggle-panel toggle-left">
                             <h1>Welcome Back!</h1>
-                            <p>Enter your personal details to use all of site features</p>
-                            <button class="hider" id="login" onClick={removeActive}>Sign In</button>
+                            <p>Enter your personal details to use all of the site's features</p>
+                            <button className="hider" onClick={removeActive}>
+                                Sign In
+                            </button>
                         </div>
-                        <div class="toggle-panel toggle-right">
+                        <div className="toggle-panel toggle-right">
                             <h1>Hello, Friend!</h1>
-                            <p>Register with your personal details to use all of site features</p>
-                            <button class="hider" id="register" onClick={makeActive}>Sign Up</button>
+                            <p>Register with your personal details to use all of the site's features</p>
+                            <button className="hider" onClick={makeActive}>
+                                Sign Up
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
-export default RegisterLogin
+
+export default RegisterLogin;

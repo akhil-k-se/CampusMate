@@ -6,15 +6,37 @@ import gsap from "gsap";
 function AdminOrUser(props) {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (props.trigger) {
-  //     gsap.fromTo(
-  //       ".chooseUser",
-  //       { opacity: 0, scale: 0 },
-  //       { opacity: 1, scale: 1, duration: 0.5, stagger: 0.28 }
-  //     );
-  //   }
-  // }, [props.trigger]);
+  useEffect(() => {
+    // Initial animation for all elements with class "chooseUser"
+    gsap.to(".chooseUser", {
+      opacity: 1,
+      scale: 1,
+      stagger: 0.2,
+      duration: 0.2,
+    });
+
+    // Add mouseenter and mouseleave event listeners to elements with class "chooseUser"
+    const users = document.getElementsByClassName("chooseUser");
+
+    Array.from(users).forEach((user) => {
+      user.addEventListener("mouseenter", () => {
+        gsap.to(user, { scale: 1.2, duration:0.1 });
+      });
+
+      user.addEventListener("mouseleave", () => {
+        gsap.to(user, { scale: 1, duration: 0.1 });
+      });
+    });
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      Array.from(users).forEach((user) => {
+        user.removeEventListener("mouseenter", () => {});
+        user.removeEventListener("mouseleave", () => {});
+      });
+    };
+  });
+
 
   const handleUserClick = () => navigate("/user-signup");
   const handleAdminClick = () => navigate("/admin-signup");
@@ -31,7 +53,7 @@ function AdminOrUser(props) {
         <div className="popup flex items-center justify-center m-3 flex-1 flex-col position-fixed">
           <div
             onClick={handleGateClick}
-            className="chooseUser rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
+            className="chooseUser opacity-0 scale-0 rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
           >
             <img
               className="absolute w-full h-full object-cover -z-10 rounded-[10px]"
@@ -41,7 +63,7 @@ function AdminOrUser(props) {
             <h1 className="text-white">GateSecurity</h1>
           </div>
           <div
-            className="chooseUser rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
+            className="chooseUser opacity-0 scale-0 rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
             onClick={handleMessClick}
           >
             <img
@@ -53,7 +75,7 @@ function AdminOrUser(props) {
           </div>
           <div
             onClick={handleAdminClick}
-            className="chooseUser rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
+            className="chooseUser opacity-0 scale-0 rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
           >
             <img
               className="absolute w-full h-full object-cover -z-10 rounded-[10px]"
@@ -64,7 +86,7 @@ function AdminOrUser(props) {
           </div>
           <div
             onClick={handleUserClick}
-            className="chooseUser rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
+            className="chooseUser opacity-0 scale-0 rounded-[20px] w-[500px] h-[10%] flex items-center justify-center relative cursor-pointer border-[5px] border-white hover:scale-110 transition-all"
           >
             <img
               className="absolute w-full h-full object-cover -z-10 rounded-[10px]"

@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../Controllers/userController");
+const upload = require("../middlewares/multer");
 
-router.post("/signup", userController.register);
+router.post("/signup",upload.single('image'), userController.register);
 router.post("/login", userController.login);
 router.get("/showdata", userController.showData)
 router.get("/isBooked", userController.isBooked)

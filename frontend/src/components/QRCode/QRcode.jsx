@@ -4,12 +4,11 @@ import gsap from "gsap";
 
 const QRcode = () => {
   const enrollmentID = localStorage.getItem("enrollmentID");
-  const [QRurl, setQRurl] = useState(null); 
-  const [userData, setUserData] = useState(null); 
+  const [QRurl, setQRurl] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const fetchQRCodeAndData = async () => {
     try {
-
       const qrResponse = await axios.get(
         `http://localhost:3005/get-qrcode/${enrollmentID}`,
         {
@@ -32,7 +31,6 @@ const QRcode = () => {
     }
   };
 
-
   useEffect(() => {
     if (QRurl || userData) {
       gsap.to(".animated-div", { opacity: 1, duration: 1 });
@@ -41,7 +39,6 @@ const QRcode = () => {
 
   return (
     <div className="h-screen w-full bg-slate-900 flex flex-col items-center justify-center p-4">
-
       {userData == null ? (
         <button
           className="fetch-button mb-4 px-4 py-2 bg-white text-black rounded"
@@ -52,7 +49,10 @@ const QRcode = () => {
       ) : null}
 
       {userData == null ? null : (
-        <div className="flex flex-wrap w-full h-[60%] items-center justify-center bg-white rounded-[10px] animated-div" style={{ opacity: 0 }}>
+        <div
+          className="flex flex-wrap w-full h-[60%] items-center justify-center bg-white rounded-[10px] animated-div"
+          style={{ opacity: 0 }}
+        >
           {QRurl ? (
             <img
               width={200}
@@ -64,17 +64,28 @@ const QRcode = () => {
           ) : null}
 
           {userData ? (
-            <div className="bg-white p-4 rounded shadow-lg w-full max-w-md flex flex-col justify-center items-center">
-              <h2 className="text-lg font-bold mb-4 text-center">User Data</h2>
-              <p>
-                <strong>Enrollment ID:</strong> {userData.enrollmentID}
-              </p>
-              <p>
-                <strong>Name:</strong> {userData.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {userData.email}
-              </p>
+            <div className="bg-white rounded-lg shadow-lg flex max-w-md justify-center items-center">
+              <div className="flex flex-1 flex-col justify-center p-5 ">
+                <h2 className="text-lg font-bold mb-4 text-center">
+                  User Data
+                </h2>
+                <p>
+                  <strong>Enrollment ID:</strong> {userData.enrollmentID}
+                </p>
+                <p>
+                  <strong>Name:</strong> {userData.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {userData.email}
+                </p>
+              </div>
+              <div className="img_holder w-45 h-45 rounded-md overflow-hidden">
+                  <img
+                    src={userData.img}
+                    className="w-full h-full object-cover"
+                    alt="Profile"
+                  />
+                </div>
             </div>
           ) : null}
         </div>

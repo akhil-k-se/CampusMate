@@ -9,66 +9,52 @@ const Complaint = require('../models/complaintModel')
 // const { sendGreetMail } = require("../helper/mailServices");
 const register = async (req, res) => {
     try {
-        const { name, enrollmentID, email, password } = req.body;
+        const { name, email, password, enrollmentID } = req.body;
 
-        const image = req.body.image;
-
-        const existingUser = await User.findOne({
-            $or: [{ email }, { enrollmentID }]
-        });
-
+        // Check if user exists
+        const existingUser = await User.findOne({ $or: [{ email }, { enrollmentID }] });
         if (existingUser) {
-            console.log("User already exists");
-            return res.status(400).json({
-                msg: "User already exists with this email or enrollment ID",
-            });
+            return res.status(400).json({ msg: "User already exists" });
         }
 
-        const qrData = await QRcode(enrollmentID);
+        // Get Cloudinary image URL
         const imageUrl = req.file?.path;
 
-        console.log("The Pssword is :", password);
+        if(!imageUrl)
+        {
+            return res.status(400).json({ msg: "Image is Required to be Uploaded" });
+        }
+
+        // Generate QR code (example)
+        const qrData = await QRcode(enrollmentID);
+
+        // Save user to database
         const user = await User.create({
             name,
-            enrollmentID,
             email,
             password,
+            enrollmentID,
+            img: imageUrl,
             qrCode: qrData,
         });
 
+        // Generate JWT token
         const token = jwt.sign(
-            { email: user.email, _id: user._id,enrollmentID: user.enrollmentID },
-            JWT_SECRET,
+            { email: user.email, _id: user._id, enrollmentID: user.enrollmentID },
+            JWT_SECRET
         );
 
         user.token = token;
         await user.save();
 
-        await res.cookie("token", token, {
-            httpOnly: true,
-            secure: false,
-        });
-
-        console.log("The token in cookie is", req.cookies.token);
-
-        console.log("User registered successfully:", user);
-
-        return res.status(200).send(`
-            <html>
-              <body>
-                <h1>Registration Successful</h1>
-                <h2>Generated QR Code</h2>
-                <img src="${qrData}" alt="QR Code" />
-              </body>
-            </html>
-          `);
+        res.cookie('token', token, { httpOnly: true });
+        res.status(200).json({ msg: "User registered successfully", user });
     } catch (err) {
         console.error("Error during registration:", err);
-        return res.status(500).json({
-            msg: "Please check the details you have entered or try again later",
-        });
+        res.status(500).json({ msg: "Registration failed. Try again later." });
     }
 };
+
 
 const login = async (req, res) => {
     try {

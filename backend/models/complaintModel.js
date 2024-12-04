@@ -22,6 +22,7 @@ const complaintSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['Pending', 'Approved', 'Rejected'],
+        default:"Pending"
     },
     studentId: {
         type: mongoose.Schema.Types.ObjectId,

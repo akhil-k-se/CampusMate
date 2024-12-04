@@ -85,6 +85,8 @@ const Complaintbox = () => {
                     <div className="flex items-center space-x-2 mb-2">
                       <FontAwesomeIcon icon={getIssueIcon(complaint.issueType)} className="text-teal-400 text-xl" />
                       <p className="font-medium text-teal-400">{complaint.issueType}</p>
+                      <p className="font-medium text-teal-400">{complaint.enrollmentId}</p>
+
                     </div>
                     <p className="text-gray-200 font-semibold">Issue: {complaint.issue}</p>
                     <p className="text-gray-400 mt-1">Description: {complaint.description}</p>
