@@ -21,7 +21,7 @@ const Gatepassdetails = () => {
       })
       .catch(error => console.error('Error fetching gatepass data:', error));
   }, []);
-  
+
 
   const handleStatusChange = (e, id) => {
     const newStatus = e.target.value;
@@ -32,7 +32,7 @@ const Gatepassdetails = () => {
   };
   const saveStatusChange = (id) => {
     const updatedStatus = selectedStatuses[id];
-    
+
     if (updatedStatus) {
       fetch(`http://localhost:3005/gatepass/status`, {
         method: 'PATCH',
@@ -41,13 +41,13 @@ const Gatepassdetails = () => {
         },
         body: JSON.stringify({ _id: id, status: updatedStatus }),
       })
-      .then(response => response.json())
-      .then(data => {
-        setGatepassData(prevData => prevData.map(gatepass => 
-          gatepass._id === id ? { ...gatepass, status: updatedStatus } : gatepass
-        ));
-      })
-      .catch(error => console.error('Error updating status:', error));
+        .then(response => response.json())
+        .then(data => {
+          setGatepassData(prevData => prevData.map(gatepass =>
+            gatepass._id === id ? { ...gatepass, status: updatedStatus } : gatepass
+          ));
+        })
+        .catch(error => console.error('Error updating status:', error));
     }
   };
 
@@ -74,17 +74,12 @@ const Gatepassdetails = () => {
       <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-gray-800`}>
         {gatepassData.map((gatepass, index) => (
           <div key={index} className="w-full bg-gray-900 shadow-md rounded-lg p-4 flex items-center space-x-4 mb-4">
-            <img
-              src="https://via.placeholder.com/150"
-              alt={gatepass.studentId ? gatepass.studentId.firstName : "Student"}
-              className="w-16 h-16 rounded-full object-cover"
-            />
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-white">
                 {gatepass.studentId ? `${gatepass.studentId.firstName} ${gatepass.studentId.lastName}` : 'Student Name'}
               </h3>
               <div className="text-sm text-gray-300">
-              <p>EnrollmentID: {gatepass.enrollmentId}</p>
+                <p>EnrollmentID: {gatepass.enrollmentId}</p>
                 <p>Time of Gatepass: {gatepass.outday}</p>
                 <p>Out Time: {gatepass.outtime}</p>
                 <p>In Time: {gatepass.intime}</p>
@@ -100,6 +95,7 @@ const Gatepassdetails = () => {
                   id={`status-${index}`}
                   value={selectedStatuses[gatepass._id] || gatepass.status}
                   onChange={(e) => handleStatusChange(e, gatepass._id)}
+                  disabled={selectedStatuses[gatepass._id] == 'Approved' || selectedStatuses[gatepass._id] == 'Rejected'}
                   className="p-1 border border-gray-600 bg-gray-700 text-white rounded">
                   <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>

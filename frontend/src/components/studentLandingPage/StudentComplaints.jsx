@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWrench, faExclamationCircle, faInfoCircle, faCheckCircle, faSpinner, faClock, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faSpinner, faClock } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 
 const StudentComplaints = () => {
@@ -28,6 +28,8 @@ const StudentComplaints = () => {
                 });
                 const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setComplaints(sortedData);
+                console.log(complaints);
+
             } catch (error) {
                 console.error('Error fetching complaints data:', error);
             }
@@ -38,41 +40,29 @@ const StudentComplaints = () => {
 
     const getStatusIconAndText = (status) => {
         switch (status) {
-            case 'Approved':
+            case 'Resolved':
                 return (
                     <div className="flex items-center">
                         <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl mr-2" />
                         <span className="text-green-500">{status}</span>
                     </div>
                 );
-            case 'Rejected':
+            case 'Under Processing':
                 return (
                     <div className="flex items-center">
-                        <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-2xl mr-2" />
+                        <FontAwesomeIcon icon={faSpinner} className="text-red-500 text-2xl mr-2" />
                         <span className="text-red-500">{status}</span>
                     </div>
                 );
             case 'Pending':
                 return (
                     <div className="flex items-center">
-                        <FontAwesomeIcon icon={faSpinner} className="text-yellow-500 text-2xl mr-2 animate-spin" />
+                        <FontAwesomeIcon icon={faClock} className="text-yellow-500 text-2xl mr-2 animate-spin" />
                         <span className="text-yellow-500">{status}</span>
                     </div>
                 );
             default:
                 return null;
-        }
-    };
-
-    const getIssueIcon = (issueType) => {
-        switch (issueType) {
-            case 'Maintenance':
-                return faWrench;
-            case 'Safety':
-                return faExclamationCircle;
-            case 'Information':
-            default:
-                return faInfoCircle;
         }
     };
 

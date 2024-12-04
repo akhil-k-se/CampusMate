@@ -7,7 +7,9 @@ import { faWrench, faExclamationCircle, faInfoCircle, faCheckCircle, faSpinner, 
 const Complaintbox = () => {
   const [isShrunk, setIsShrunk] = useState(false);
   const [complaints, setComplaints] = useState([]);
+  const [selectedStatuses, setSelectedStatuses] = useState({}); // Track selected statuses
 
+  // Fetch complaints and initialize status on page load
   useEffect(() => {
     fetch('http://localhost:3005/complaintList', {
       method: 'GET',
@@ -16,8 +18,13 @@ const Complaintbox = () => {
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
-          console.log(data);
+          // Initialize selectedStatuses with the current statuses from backend data
+          const initialStatuses = data.reduce((acc, complaint) => {
+            acc[complaint._id] = complaint.status; // set initial status for each complaint
+            return acc;
+          }, {});
           setComplaints(data);
+          setSelectedStatuses(initialStatuses);
         } else {
           console.error('Received data is not an array:', data);
         }
@@ -25,26 +32,40 @@ const Complaintbox = () => {
       .catch(error => console.error('Error fetching complaints:', error));
   }, []);
 
+  // Handle status change in dropdown
   const handleStatusChange = (e, id) => {
     const updatedStatus = e.target.value;
-    fetch(`http://localhost:3005/complaint/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status: updatedStatus }),
-    })
-      .then(response => response.json())
-      .then(updatedComplaint => {
-        setComplaints(prevComplaints =>
-          prevComplaints.map(complaint =>
-            complaint._id === id ? { ...complaint, status: updatedStatus } : complaint
-          )
-        );
-      })
-      .catch(error => console.error('Error updating status:', error));
+    setSelectedStatuses(prevStatuses => ({
+      ...prevStatuses,
+      [id]: updatedStatus, // Update local state to reflect status change
+    }));
   };
 
+  // Save the status change to backend
+  const saveStatusChange = (id) => {
+    const updatedStatus = selectedStatuses[id]; // Get the updated status from state
+    if (updatedStatus) {
+      fetch(`http://localhost:3005/complaint/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ _id: id, status: updatedStatus }), // Send the updated status to backend
+      })
+        .then(response => response.json())
+        .then(updatedComplaint => {
+          // Once the status is successfully updated on the backend, update the local complaints array
+          setComplaints(prevComplaints =>
+            prevComplaints.map(complaint =>
+              complaint._id === id ? { ...complaint, status: updatedStatus } : complaint
+            )
+          );
+        })
+        .catch(error => console.error('Error updating status:', error));
+    }
+  };
+
+  // Get the icon based on the issue type
   const getIssueIcon = (issueType) => {
     switch (issueType) {
       case 'Maintenance':
@@ -57,6 +78,7 @@ const Complaintbox = () => {
     }
   };
 
+  // Get the icon based on the complaint status
   const getStatusIcon = (status) => {
     switch (status) {
       case 'Resolved':
@@ -86,23 +108,29 @@ const Complaintbox = () => {
                       <FontAwesomeIcon icon={getIssueIcon(complaint.issueType)} className="text-teal-400 text-xl" />
                       <p className="font-medium text-teal-400">{complaint.issueType}</p>
                       <p className="font-medium text-teal-400">{complaint.enrollmentId}</p>
-
                     </div>
                     <p className="text-gray-200 font-semibold">Issue: {complaint.issue}</p>
                     <p className="text-gray-400 mt-1">Description: {complaint.description}</p>
                   </div>
                   <div className="flex items-center space-x-2 mt-4">
                     <p className="font-medium text-gray-200">Status:</p>
-                    {getStatusIcon(complaint.status)}
+                    {getStatusIcon(selectedStatuses[complaint._id] || complaint.status)}
                     <select
-                      value={complaint.status}
+                      value={selectedStatuses[complaint._id] || complaint.status}
                       onChange={(e) => handleStatusChange(e, complaint._id)}
                       className="ml-4 p-1 border border-gray-600 bg-gray-700 text-white rounded"
+                      disabled={selectedStatuses[complaint._id] === 'Resolved'} // Disable select if status is "Resolved"
                     >
-                      <option value="Pending">Pending</option>
-                      <option value="Under Processing">Under Processing</option>
+                      <option value="Pending" disabled={selectedStatuses[complaint._id] === 'Resolved'}>Pending</option>
+                      <option value="Under Processing" disabled={selectedStatuses[complaint._id] === 'Resolved'}>Under Processing</option>
                       <option value="Resolved">Resolved</option>
                     </select>
+                    <button
+                      onClick={() => saveStatusChange(complaint._id)}
+                      className="ml-4 p-1 bg-[#e82574] text-white rounded"
+                    >
+                      Save
+                    </button>
                   </div>
                 </div>
               </div>

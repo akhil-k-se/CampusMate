@@ -7,20 +7,19 @@ const User = require("../models/studentModel");
 const createComplaint = async (req, res) => {
     try {
         const token = req.cookies.token;
-        if(!token) console.log("No token");
+        if (!token) console.log("No token");
         const inputData = req.body;
         console.log('Input Data', inputData);
 
-        const user = await User.findOne({token});
-        console.log("the rollNo is ",user.enrollmentID);
-        
-        
+        const user = await User.findOne({ token });
+        console.log("the rollNo is ", user.enrollmentID);
 
-        if(inputData.enrollmentNumber!= user.enrollmentID )
-            {
-                console.log("Not your roll Number");
-                return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
-            }
+
+
+        if (inputData.enrollmentNumber != user.enrollmentID) {
+            console.log("Not your roll Number");
+            return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
+        }
 
         if (!inputData.issuetype) {
             return res.status(403).send({ message: 'Please Select Issue' });
@@ -33,9 +32,8 @@ const createComplaint = async (req, res) => {
         if (!inputData.description) {
             return res.status(400).send({ message: 'Please explain the Issue.' });
         }
-        if(!inputData.issue && !inputData.issue && !inputData.description)
-        {
-            return res.status(400).send({message: 'Must fill the details'});
+        if (!inputData.issue && !inputData.issue && !inputData.description) {
+            return res.status(400).send({ message: 'Must fill the details' });
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
@@ -43,10 +41,10 @@ const createComplaint = async (req, res) => {
             console.log("No reservation");
             return res.status(404).send({ message: 'No reservation found in the database.' });
         }
-        
+
         const hostelName = studentReservation.hostelname;
-        console.log("the token is ",token);
-        
+        console.log("the token is ", token);
+
 
 
         const newComplaint = new complaint({
@@ -71,15 +69,45 @@ const complaintList = async (req, res) => {
         const token = req.cookies.token;
         const admin = await Admin.findOne({ token });
         const hostelName = admin.hostel;
-        const Complaints = await complaint.find({ hostel:hostelName });
+        const Complaints = await complaint.find({ hostel: hostelName });
         res.json(Complaints);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
+const updateComplaintStatus = async (req, res) => {
+    try {
+        console.log("Hello");
+
+        const { _id, status } = req.body;
+        console.log(status);
+
+
+        if (!_id || !status) {
+            return res.status(400).json({ message: 'Missing complaint ID or status' });
+        }
+        const complaints = await complaint.findById(_id);
+        console.log(complaints);
+
+
+        if (!complaints) {
+            return res.status(404).json({ message: 'Complaint not found' });
+        }
+        complaints.status = status;
+        const updatedComplaints = await complaints.save();
+        console.log(updatedComplaints);
+
+        res.json(updatedComplaints);
+    } catch (error) {
+        console.error('Error updating complaint status:', error);
+        res.status(500).json({ message: 'Error updating complaint status', error: error.message });
+    }
+};
+
 
 module.exports = {
     createComplaint,
-    complaintList
+    complaintList,
+    updateComplaintStatus
 };

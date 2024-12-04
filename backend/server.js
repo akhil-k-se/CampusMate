@@ -193,7 +193,7 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
       const currentDate = new Date();
       currentDate.setHours(0, 0, 0, 0);
 
-    //   console.log(latestGatePass.intime< currentTime);
+      //   console.log(latestGatePass.intime< currentTime);
 
       if (
         new Date(latestGatePass.intime) < currentTime ||
@@ -259,8 +259,8 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
               <h2>Gate Pass Details</h2>
               <p>Status: <strong>${latestGatePass.status}</strong></p>
               <p>Created At: <strong>${new Date(
-                latestGatePass.createdAt
-              ).toLocaleString()}</strong></p>
+        latestGatePass.createdAt
+      ).toLocaleString()}</strong></p>
             </body>
           </html>
         `);
@@ -333,6 +333,7 @@ app.patch("/gatepass/status", gate.updateGatepassStatus);
 //Complaints Routes
 app.post("/usercomplaints", complaint.createComplaint);
 app.get("/complaintList", complaint.complaintList);
+app.patch("/complaint/status", complaint.updateComplaintStatus);
 
 app.post("/gatePass/checkGatePass", gate.checkGatePass);
 
