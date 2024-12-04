@@ -117,7 +117,7 @@ function StudentLandingPage() {
 
   return (
     <div>
-      <section className="main_page">
+      <section className="main_page w-screen">
         <Navbar />
         <Container className="banner w-[90%] ml-[5%]" id="home">
           <div className="black-div"></div>
@@ -156,7 +156,7 @@ function StudentLandingPage() {
           </div>
         </Container>
 
-        <section class="section__container about__container" id="gatepass">
+        <section class="section__container about__container flex flex-wrap" id="gatepass">
           <div class="about__content">
             <p class="section__subheader">GATEPASS</p>
             <h2 class="section__header">Ticket to go out of the Campus</h2>
@@ -177,7 +177,7 @@ function StudentLandingPage() {
           </div>
         </section>
 
-        <section class="section__container about__container" id="complaint">
+        <section class="section__container about__container flex flex-wrap" id="complaint">
           <div class="about__image">
             <img src="/complaint.jpg" alt="about" />
           </div>
@@ -201,7 +201,7 @@ function StudentLandingPage() {
         <section class="explore" id="explore">
           <p class="section__subheader">EXPLORE</p>
           <h2 class="section__header">What's New Today.</h2>
-          <div class="explore__bg">
+          <div class="explore__bg relative">
             <div className="black-div"></div>
             <div class="explore__content">
               <p class="section__description">10th AUG 2024</p>
@@ -214,6 +214,7 @@ function StudentLandingPage() {
         </section>
 
         <Footer page="subpage" />
+        
       </section>
 
       <div className="popForm popBook scale-0">
