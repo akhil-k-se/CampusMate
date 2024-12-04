@@ -14,7 +14,7 @@ import axios from "axios";
 function StudentLandingPage() {
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const toRotate = ["beginnings", "friends", "family"];
+  const toRotate = ["beginning", "friends", "family"];
   const [text, setText] = useState("");
   const [delta, setDelta] = useState(300 - Math.random() * 100);
 
@@ -110,17 +110,16 @@ function StudentLandingPage() {
   };
 
 
-  if (!userData)
-    {
-        getUserData();
-        checkRoomBookingStatus();
-    };
+  if (!userData) {
+    getUserData();
+    checkRoomBookingStatus();
+  };
 
   return (
     <div>
       <section className="main_page">
         <Navbar />
-        <Container className="banner" id="home">
+        <Container className="banner w-[90%] ml-[5%]" id="home">
           <div className="black-div"></div>
           <div className="align-items-center">
             <div className="user">
@@ -134,11 +133,7 @@ function StudentLandingPage() {
                   <span className="wrap">{text}</span>
                 </h1>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Voluptate dolores eum accusantium sapiente amet! Rerum
-                  cupiditate facilis, voluptates ipsam autem voluptate
-                  exercitationem, quos corporis iste eum sequi fugit, placeat
-                  saepe.
+                  We're excited to have you on board. Manage your hostel stay, check upcoming events, and stay updated with all the latest announcements. Your journey to a seamless and comfortable hostel experience begins here!
                 </p>
                 {!isRoomBooked && (
                   <button onClick={handlePopBook} className="btn">
