@@ -19,7 +19,7 @@ import QRcode from "./components/QRCode/QRcode"
 import MessLogin from './components/messLogin/messLogin'
 import QRScanner from './components/QRCode/QRreader'
 import StudentComplaints from './components/studentLandingPage/StudentComplaints'
-import MessMenu from './components/MessMenu/MessMenu'
+import MessMenu from './components/Dashboard/messMenu'
 import GateLogin from './components/GateSecurity/gateLogin'
 import GateSign from './components/GateSecurity/gateSign'
 import MessSign from './components/messLogin/messSignup'
@@ -29,6 +29,7 @@ import Warden from './components/superadmin/Dashboard/Warden'
 import GateSecurity from './components/superadmin/Dashboard/GateSecurity'
 import { useEffect } from 'react'
 import axios from 'axios'
+import UserMess from './components/MessMenu/MessMenu'
 
 
 function App() {
@@ -66,7 +67,7 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/QRcode' element={<QRcode />} />
           <Route path='/messLogin' element={<MessLogin />} />
-          <Route path='/mess-menu' element={<MessMenu />} />
+          <Route path='/mess-menu' element={<MessMenu/>} />
           <Route path='/qrscanner' element={<QRScanner />} />
           <Route path='/about' element={<About />} />
           <Route path='/gateLogin' element={<GateLogin />} />
@@ -76,6 +77,7 @@ function App() {
           <Route path='/suwarden' element={<Wardendetails />} />
           <Route path='/suwardenlog' element={<Warden />} />
           <Route path='/susecurity' element={<GateSecurity />} />
+          <Route path='/user/mess' element={<UserMess/>} />
 
 
         </Routes>

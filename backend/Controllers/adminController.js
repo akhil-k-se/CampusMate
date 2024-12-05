@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "123";
 const bcrypt = require("bcrypt");
 
-
 const register = async (req, res) => {
   try {
     const { name, hostel, role, email, password } = req.body;
@@ -80,7 +79,7 @@ const login = async (req, res) => {
     }
     const token = admin.token;
 
-    console.log("The token of the user is ", token)
+    console.log("The token of the user is ", token);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -96,7 +95,6 @@ const login = async (req, res) => {
     return res.status(500).json({ msg: "An error occurred during login" });
   }
 };
-
 
 const updateUser = async (req, res) => {
   try {
@@ -155,16 +153,20 @@ const deleteUser = async (req, res) => {
     const deletedAdmin = await Admin.findByIdAndDelete(id);
 
     if (!deletedAdmin) {
-      return res.status(404).json({ success: false, msg: 'Admin not found.' });
+      return res.status(404).json({ success: false, msg: "Admin not found." });
     }
 
-    res.json({ success: true, msg: 'Admin deleted successfully.' });
+    res.json({ success: true, msg: "Admin deleted successfully." });
   } catch (error) {
-    console.error('Error deleting admin:', error);
-    res.status(500).json({ success: false, msg: 'An error occurred while deleting the admin.' });
+    console.error("Error deleting admin:", error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        msg: "An error occurred while deleting the admin.",
+      });
   }
 };
-
 
 const showData = async (req, res) => {
   try {
@@ -177,7 +179,9 @@ const showData = async (req, res) => {
     const admin = await Admin.findOne({ token });
 
     if (!admin) {
-      return res.status(404).json({ msg: "Admin not found with the provided token" });
+      return res
+        .status(404)
+        .json({ msg: "Admin not found with the provided token" });
     }
 
     return res.status(200).json({ admin });
@@ -187,7 +191,81 @@ const showData = async (req, res) => {
   }
 };
 
-module.exports = { showData };
+const updateMenu = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ msg: "Authorization token is missing" });
+    }
+
+    const admin = await Admin.findOne({ token });
+
+    if (!admin) {
+      return res.status(401).json({ msg: "Admin not found, authorization failed" });
+    }
+
+    const { description } = req.body;
+
+    if (!description || description.trim().length === 0) {
+      return res.status(400).json({ msg: "Description is required" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ msg: "Image is required to be uploaded" });
+    }
+    console.log(description);
+
+    const imageUrl = req.file?.path;
+
+    admin.messDesc = description;
+    admin.messMenu = imageUrl;
+
+    await admin.save();
+
+    return res.status(200).json({
+      success: true,
+      msg: "Mess menu updated successfully",
+      imageUrl: imageUrl,
+      description: description
+    });
+
+  } catch (error) {
+    console.error("Error updating mess menu:", error);
+    return res.status(500).json({ msg: "Server error while updating mess menu", error: error.message });
+  }
+};
 
 
-module.exports = { register, login, updateUser, deleteUser, showData };
+const showMenu = async(req,res)=>{
+  const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ msg: "Authorization token is missing" });
+    }
+
+    const admin = await Admin.findOne({ token });
+
+    if (!admin) {
+      return res.status(401).json({ msg: "Admin not found, authorization failed" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Mess menu updated successfully",
+      imageUrl: admin.messMenu,
+      description: admin.messDesc
+    });
+    
+}
+
+
+module.exports = {
+  register,
+  login,
+  updateUser,
+  deleteUser,
+  showData,
+  updateMenu,
+  showMenu
+};

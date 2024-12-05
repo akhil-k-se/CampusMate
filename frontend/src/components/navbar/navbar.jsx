@@ -21,6 +21,9 @@ function Navbar() {
   const handleQR = () => {
     navigate("/QRcode");
   };
+  const handleMessMenu = ()=>{
+    navigate("/user/mess")
+  }
   return (
     <>
       <nav>
@@ -52,6 +55,9 @@ function Navbar() {
           </li>
           <li>
             <a onClick={handleQR}>Your QR</a>
+          </li>
+          <li>
+            <a onClick={handleMessMenu}>MessMenu</a>
           </li>
         </ul>
         <button className="btn nav__btn" onClick={handleLogout}>

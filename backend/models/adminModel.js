@@ -38,6 +38,12 @@ const adminSchema = new mongoose.Schema({
     },
     token: {
         type: String
+    },
+    messMenu:{
+        type:String,
+    },
+    messDesc:{
+        type:String
     }
 });
 

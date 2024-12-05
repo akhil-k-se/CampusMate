@@ -9,6 +9,7 @@ router.get("/showdata", userController.showData)
 router.get("/isBooked", userController.isBooked)
 router.get("/stdGatePassList", userController.gatePassList)
 router.get("/stdComplaintList", userController.complaintList)
+router.get("/showMenu",userController.showMenu)
 
 router.post("/update-user/:_id", userController.updateUser);
 

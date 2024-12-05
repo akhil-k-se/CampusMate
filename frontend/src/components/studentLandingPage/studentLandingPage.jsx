@@ -74,7 +74,6 @@ function StudentLandingPage() {
       forms[i].style.transform = "scale(1)";
     }
   }
-
   const [userData, setUserData] = useState(null);
   const [img, setImg] = useState(null);
 
@@ -206,7 +205,7 @@ function StudentLandingPage() {
             <div class="explore__content">
               <p class="section__description">10th AUG 2024</p>
               <h4>A New Mess Menu Is Available In Our Hostels.</h4>
-              <NavLink to="/mess">
+              <NavLink to="/user/mess">
                 <button class="btn">View Menu</button>
               </NavLink>
             </div>

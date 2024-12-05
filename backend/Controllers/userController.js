@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "123"
 const bcrypt = require("bcrypt");
 const QRcode = require("../helpers/qrCodeGenerator");
+const Admin = require("../models/adminModel");
 const Reservation = require("../models/reservationModel");
 const GatePass = require("../models/gatepassModel");
 const Complaint = require('../models/complaintModel')
@@ -256,5 +257,33 @@ const complaintList = async (req, res) => {
     }
 };
 
+const showMenu = async(req,res)=>{
+    const token = req.cookies.token;
 
-module.exports = { register, login, updateUser, deleteUser, showData, isBooked, gatePassList, complaintList };
+    const user = await User.findOne({token});
+    // console.log(user);
+
+    const enrollmentId = user.enrollmentID;
+    // console.log(enrollmentId);
+
+    const userBooking = await Reservation.findOne({enrollmentNumber:enrollmentId});
+    const hostel = userBooking.hostelname;
+    console.log(hostel);
+
+    const warden = await Admin.findOne({hostel});
+
+    // console.log(warden);
+
+    const imgUrl = warden.messMenu;
+    const desc = warden.messDesc;
+
+    return res.status(200).json({
+        success: true,
+        msg: "Mess menu updated successfully",
+        imageUrl: imgUrl,
+        description: desc
+      });
+
+}
+
+module.exports = { register, login, updateUser, deleteUser, showData, isBooked, gatePassList, complaintList,showMenu };
