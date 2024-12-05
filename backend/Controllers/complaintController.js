@@ -3,66 +3,87 @@ const complaint = require('../models/complaintModel');
 const reservation = require('../models/reservationModel');
 const Admin = require('../models/adminModel');
 const User = require("../models/studentModel");
+const SendMail = require('../helpers/smsService');
 
 const createComplaint = async (req, res) => {
     try {
         const token = req.cookies.token;
-        if (!token) console.log("No token");
+        if (!token) {
+            console.log("No token");
+            return res.status(401).send({ message: "User not authenticated" });
+        }
+
         const inputData = req.body;
-        console.log('Input Data', inputData);
+        console.log('Input Data:', inputData);
 
         const user = await User.findOne({ token });
-        console.log("the rollNo is ", user.enrollmentID);
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
 
-
+        console.log("User Roll Number:", user.enrollmentID);
 
         if (inputData.enrollmentNumber != user.enrollmentID) {
-            console.log("Not your roll Number");
-            return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
+            console.log("Not your Roll Number");
+            return res.status(400).send({ message: "Fill Your Own Roll Number" });
         }
 
-        if (!inputData.issuetype) {
-            return res.status(403).send({ message: 'Please Select Issue' });
-        }
-
-        if (!inputData.issue) {
-            return res.status(400).send({ message: 'Please Write the Issue.' });
-        }
-
-        if (!inputData.description) {
-            return res.status(400).send({ message: 'Please explain the Issue.' });
-        }
-        if (!inputData.issue && !inputData.issue && !inputData.description) {
-            return res.status(400).send({ message: 'Must fill the details' });
+        if (!inputData.issuetype || !inputData.issue || !inputData.description) {
+            return res.status(400).send({ message: "Must fill all necessary details" });
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
         if (!studentReservation) {
             console.log("No reservation");
-            return res.status(404).send({ message: 'No reservation found in the database.' });
+            return res.status(404).send({ message: "No reservation found in the database" });
         }
 
         const hostelName = studentReservation.hostelname;
-        console.log("the token is ", token);
-
-
+        console.log("Hostel Name:", hostelName);
 
         const newComplaint = new complaint({
             ...inputData,
             studentId: studentReservation._id,
-            enrollmentId: inputData.enrollmentNumber
+            enrollmentId: inputData.enrollmentNumber,
+            hostel: hostelName,
         });
 
-        newComplaint.hostel = hostelName;
         const data = await newComplaint.save();
-        console.log('data', data);
+        console.log('Complaint Data:', data);
 
-        return res.status(201).send({ message: 'Complaint successfully registered' });
+        const emailSubject = "Complaint Submitted Successfully";
+        const emailBody = `
+            Dear ${user.name},
+
+            Your complaint has been successfully submitted. Below are the details of your complaint:
+
+            - Enrollment Number: ${inputData.enrollmentNumber}
+            - Hostel Name: ${hostelName}
+            - Issue Type: ${inputData.issuetype}
+            - Issue: ${inputData.issue}
+            - Description: ${inputData.description}
+
+            We will review your complaint and take the necessary actions as soon as possible. 
+
+            Thank you for bringing this to our attention.
+
+            Best regards,  
+            CampusMate Support Team
+        `;
+
+        const mail = await SendMail(user.email, emailSubject, emailBody);
+
+        if (!mail) {
+            return res.status(500).json({ message: "Complaint registered, but email could not be sent." });
+        }
+
+        return res.status(201).send({ message: "Complaint successfully registered and email sent" });
     } catch (err) {
-        console.error(err);
-        return res.status(500).send({ message: 'Error registering Complaint' });
+        console.error("Error registering complaint:", err);
+        return res.status(500).send({ message: "Error registering complaint" });
     }
 };
+
 
 const complaintList = async (req, res) => {
     try {

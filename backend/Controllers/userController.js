@@ -7,7 +7,8 @@ const Admin = require("../models/adminModel");
 const Reservation = require("../models/reservationModel");
 const GatePass = require("../models/gatepassModel");
 const Complaint = require('../models/complaintModel')
-// const sendMail = require("../helpers/mailService");
+const SendMail = require("../helpers/smsService");
+
 const register = async (req, res) => {
     try {
         const { name, email, password, enrollmentID } = req.body;
@@ -17,14 +18,14 @@ const register = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ msg: "User already exists" });
         }
+
         console.log("Hello");
 
         // Get Cloudinary image URL
         const imageUrl = req.file?.path;
 
-        if(!imageUrl)
-        {
-            return res.status(400).json({ msg: "Image is Required to be Uploaded" });
+        if (!imageUrl) {
+            return res.status(400).json({ msg: "Image is required to be uploaded" });
         }
 
         // Generate QR code (example)
@@ -48,9 +49,28 @@ const register = async (req, res) => {
 
         user.token = token;
         await user.save();
-        console.log("Came Here")
-        // await sendMail.SendInvoiceMail(email,`Welcome, Your Account Has Been Sucessfully created. ${{name,email,enrollmentID}}`)
 
+        console.log("Came Here");
+
+        // Send email to the user
+        const emailSubject = "ID Created Successfully";
+        const emailBody = `
+            Welcome ${name}, 
+
+            Your account has been successfully created with the following details:
+            - Email: ${email}
+            - Enrollment ID: ${enrollmentID}
+
+            Thank you for joining CampusMate!
+        `;
+
+        const mail = await SendMail(email, emailSubject, emailBody);
+        if(!mail)
+        {
+            res.status(500).json({ msg: "Email Couldnt be Sent" });
+        }
+
+        // Set cookie and respond
         res.cookie('token', token, { httpOnly: true });
         res.status(200).json({ msg: "User registered successfully", user });
     } catch (err) {
@@ -58,6 +78,7 @@ const register = async (req, res) => {
         res.status(500).json({ msg: "Registration failed. Try again later." });
     }
 };
+
 
 
 const login = async (req, res) => {

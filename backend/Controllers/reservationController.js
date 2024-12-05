@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const reserve = require('../models/reservationModel'); 
 const Admin = require('../models/adminModel');
 const User = require("../models/studentModel");
+const SendMail = require('../helpers/smsService');
 
 // const sms = require("../helpers/smsService");
 
@@ -12,76 +13,107 @@ app.use(bodyParser.json());
 const reservation = async (req, res) => {
     try {
         const inputData = req.body;
-        console.log('Input Data',inputData)
+        console.log("Input Data", inputData);
 
-        const token =  req.cookies.token;
-        console.log("the token is ",token);
+        const token = req.cookies.token;
+        console.log("The token is", token);
 
-        const user = await User.findOne({token});
-        console.log("The user is ",user);
+        const user = await User.findOne({ token });
+        console.log("The user is", user);
 
-        if(inputData.enrollmentNumber != user.enrollmentID || inputData.email!= user.email)
-        { 
-            return res.status(400).send({ message: 'Fill your Own Credentials' });
+        if (inputData.enrollmentNumber != user.enrollmentID || inputData.email != user.email) {
+            return res.status(400).send({ message: "Please fill in your own credentials" });
         }
-        
-        if (!inputData.firstName || !inputData.email || !inputData.enrollmentNumber || !inputData.gender || !inputData.phone || !inputData.address || !inputData.city || !inputData.state || !inputData.country || !inputData.roomtype || !inputData.hostelname || !inputData.roomseater || !inputData.roomfloor || !inputData.parentname || !inputData.parentphone || !inputData.parentEmail) {
-            return res.status(400).send({ message: 'Must fill all fields' });
+
+        const requiredFields = [
+            "firstName", "email", "enrollmentNumber", "gender", "phone", 
+            "address", "city", "state", "country", "roomtype", 
+            "hostelname", "roomseater", "roomfloor", "parentname", 
+            "parentphone", "parentEmail"
+        ];
+        for (const field of requiredFields) {
+            if (!inputData[field]) {
+                return res.status(400).send({ message: `Field ${field} is required` });
+            }
         }
-        if(inputData.firstName.length <2)
-        {
-            return res.status(400).json({ message: 'First name must be at least 2 characters long' });
+
+        if (inputData.firstName.length < 2) {
+            return res.status(400).json({ message: "First name must be at least 2 characters long" });
         }
-        if(inputData.lastName.length < 2)
-        {
-            return res.status(400).json({ message: 'Last name must be at least 2 characters long' });
+        if (inputData.lastName && inputData.lastName.length < 2) {
+            return res.status(400).json({ message: "Last name must be at least 2 characters long" });
         }
         if (!/^\S+@\S+\.\S+$/.test(inputData.email)) {
-            return res.status(400).json({ message: 'Invalid email address' });
+            return res.status(400).json({ message: "Invalid email address" });
         }
         if (inputData.enrollmentNumber.length < 10) {
-            return res.status(400).json({ message: 'Enrollment number must be at least 5 characters long' });
+            return res.status(400).json({ message: "Enrollment number must be at least 10 characters long" });
         }
         if (!/^\d{10}$/.test(inputData.phone)) {
-            return res.status(400).json({ message: 'Phone number must be 10 digits' });
+            return res.status(400).json({ message: "Phone number must be 10 digits" });
         }
 
-        checkEmail = await reserve.findOne({ 'email': inputData.email });
-        checkRoll = await reserve.findOne({ 'enrollmentNumber': inputData.enrollmentNumber });
-        checkPhone = await reserve.findOne({ 'phone': inputData.phone });
-        checkParentphone = await reserve.findOne({ 'parentphone': inputData.parentphone });
-        
-        if(checkEmail)
-        {
-            return res.status(400).json({ message: 'Email is already in use' });
+
+        const duplicates = await Promise.all([
+            reserve.findOne({ email: inputData.email }),
+            reserve.findOne({ enrollmentNumber: inputData.enrollmentNumber }),
+            reserve.findOne({ phone: inputData.phone }),
+            reserve.findOne({ parentphone: inputData.parentphone })
+        ]);
+
+        if (duplicates[0]) {
+            return res.status(400).json({ message: "Email is already in use" });
         }
-        if(checkRoll)
-        {
-            return res.status(400).json({ message: 'Enrollment number is already in use' });
+        if (duplicates[1]) {
+            return res.status(400).json({ message: "Enrollment number is already in use" });
         }
-        if(checkPhone)
-        {
-            return res.status(400).json({ message: 'Phone number is already in use' });
+        if (duplicates[2]) {
+            return res.status(400).json({ message: "Phone number is already in use" });
         }
-        if(checkParentphone)
-        {
-            return res.status(400).json({ message: 'Parent phone number is already in use' });
+        if (duplicates[3]) {
+            return res.status(400).json({ message: "Parent's phone number is already in use" });
         }
 
         const newReservation = new reserve(inputData);
         const data = await newReservation.save();
 
-        // await sms(`Your Bed is Booked Seccessfully ${inputData}`);
+        const emailSubject = "Reservation Confirmation - Hostel Booking";
+        const emailBody = `
+            Dear ${inputData.firstName},
 
-        console.log('data', data)
-        
-        return res.status(201).send({ message: 'Booking created successfully' });
+            Congratulations! Your hostel booking has been successfully confirmed.
+
+            Here are the details:
+            - Name: ${inputData.firstName} ${inputData.lastName || ""}
+            - Email: ${inputData.email}
+            - Enrollment ID: ${inputData.enrollmentNumber}
+            - Hostel Name: ${inputData.hostelname}
+            - Room Type: ${inputData.roomtype}
+            - Room Seater: ${inputData.roomseater}
+            - Floor: ${inputData.roomfloor}
+
+            If you have any questions, feel free to contact us.
+
+            Best Regards,  
+            CampusMate Team
+        `;
+
+        const mail = await SendMail(inputData.email, emailSubject, emailBody);
+
+        if (!mail) {
+            return res.status(500).json({ message: "Email couldn't be sent" });
+        }
+
+        console.log("Booking data saved:", data);
+
+        return res.status(201).send({ message: "Booking created successfully", data });
 
     } catch (err) {
-        console.error(err);
-        return res.status(500).send({message: 'Error creating booking'});
+        console.error("Error creating booking:", err);
+        return res.status(500).send({ message: "Error creating booking" });
     }
 };
+
 
 const getreservation = async (req, res) => {
     try {

@@ -13,7 +13,11 @@ app.use(
   })
 );
 
+const jwt = require('jsonwebtoken');
+
 const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
+
+const JWT_SECRET="123"
 
 const admin = require("./models/adminModel");
 const reservation = require("./models/gatepassModel");
@@ -463,6 +467,38 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
 app.get("/no-reload", (req, res) => {
   res.render("No Reload ALlowed");
 });
+
+app.get("/getUserRole", async (req, res) => {
+  try {
+    console.log("hello");
+    const token = req.cookies.token;
+    console.log(token);
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const role = decoded.role;
+    
+    console.log(role); 
+    
+    res.json({ role });
+  } catch (err) {
+    console.error(err);
+
+    if (err instanceof jwt.JsonWebTokenError) {
+      return res.status(403).json({ message: 'Invalid token' });
+    }
+
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.get('/clearcookie', (req, res) => {
+  res.clearCookie('token');  // Clear the 'token' cookie
+  res.status(200).send('Cookie cleared successfully');
+});
+
 
 //Booking Routes
 app.post("/reservation", reserve.reservation);

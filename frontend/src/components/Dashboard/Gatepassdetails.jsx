@@ -22,7 +22,6 @@ const Gatepassdetails = () => {
       .catch(error => console.error('Error fetching gatepass data:', error));
   }, []);
 
-
   const handleStatusChange = (e, id) => {
     const newStatus = e.target.value;
     setSelectedStatuses(prevStatuses => ({
@@ -30,6 +29,7 @@ const Gatepassdetails = () => {
       [id]: newStatus,
     }));
   };
+
   const saveStatusChange = (id) => {
     const updatedStatus = selectedStatuses[id];
 
@@ -46,6 +46,11 @@ const Gatepassdetails = () => {
           setGatepassData(prevData => prevData.map(gatepass =>
             gatepass._id === id ? { ...gatepass, status: updatedStatus } : gatepass
           ));
+          // Remove the save button once status is updated
+          setSelectedStatuses(prevStatuses => ({
+            ...prevStatuses,
+            [id]: updatedStatus,
+          }));
         })
         .catch(error => console.error('Error updating status:', error));
     }
@@ -91,26 +96,35 @@ const Gatepassdetails = () => {
             <div className="flex flex-col space-y-2">
               <div className="flex items-center space-x-2">
                 <label htmlFor={`status-${index}`} className="text-gray-300">Status:</label>
-                <select
-                  id={`status-${index}`}
-                  value={selectedStatuses[gatepass._id] || gatepass.status}
-                  onChange={(e) => handleStatusChange(e, gatepass._id)}
-                  disabled={selectedStatuses[gatepass._id] == 'Approved' || selectedStatuses[gatepass._id] == 'Rejected'}
-                  className="p-1 border border-gray-600 bg-gray-700 text-white rounded">
-                  <option value="Pending">Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
+                {/* Show the dropdown only if the status is "Pending" */}
+                {gatepass.status === 'Pending' ? (
+                  <select
+                    id={`status-${index}`}
+                    value={selectedStatuses[gatepass._id] || gatepass.status}
+                    onChange={(e) => handleStatusChange(e, gatepass._id)}
+                    className="p-1 border border-gray-600 bg-gray-700 text-white rounded"
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                ) : (
+                  <div className="text-gray-500">{gatepass.status}</div>
+                )}
                 <div className="ml-2">
                   {renderStatusIcon(selectedStatuses[gatepass._id] || gatepass.status)}
                 </div>
               </div>
-              <button
-                onClick={() => saveStatusChange(gatepass._id)}
-                className="p-1 mt-2 bg-[#e82574] text-white rounded"
-              >
-                Save
-              </button>
+
+              {/* Show the Save button only if the status is "Pending" */}
+              {(selectedStatuses[gatepass._id] === 'Pending' || gatepass.status === 'Pending') && (
+                <button
+                  onClick={() => saveStatusChange(gatepass._id)}
+                  className="p-1 mt-2 bg-[#e82574] text-white rounded"
+                >
+                  Save
+                </button>
+              )}
             </div>
           </div>
         ))}

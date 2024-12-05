@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import Footer from "../footer/footer";
 import AdminOrUser from "../adminOrUser/adminOrUser";
@@ -15,7 +15,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 function LandingPage() {
+  localStorage.clear();
+
   const [isOpen, setIsOpen] = useState(false);
+  const [buttonPop, setButtonPop] = useState(false);
+  const [apiData, setApiData] = useState(null);  // State to store the API data
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/about");
+  };
 
   const handleMenuButtonClick = () => {
     setIsOpen(!isOpen);
@@ -25,46 +34,55 @@ function LandingPage() {
     setIsOpen(false);
   };
 
-  const [buttonPop, setButtonPop] = useState(false);
-
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/about");
-  };
-
+  // Make an API call when the component mounts
   useEffect(() => {
+    // Example using fetch API to hit your backend endpoint
+    fetch("http://localhost:3005/clearcookie", {
+      method: "GET",  // You can change this to POST or other methods if needed
+      credentials: "include"  // This ensures cookies or credentials are included
+    })
+      .then(response => response.json())
+      .then(data => {
+        setApiData(data);  // Save the API data in the state
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+    
+
+    // Your GSAP animations code
     const tl = gsap.timeline();
     tl.to(".navbar-full", {
       opacity: 1,
-      duration: 0.5,
-    })
+      duration: 0.2,
+    });
     tl.to(".nav-li", {
       opacity: 1,
-      duration: 0.5,
-      stagger: 0.25,
-      ease: "expo.inOut"
-    })
+      duration: 0.1,
+      stagger: 0.1,
+      ease: "expo.inOut",
+    });
     tl.to(".header", {
       opacity: 1,
-      duration: 0.5,
-    })
+      duration: 0.1,
+    });
     tl.to(".header-txt", {
       opacity: 1,
-      duration: 0.25,
-      stagger: 0.25
-    })
+      duration: 0.1,
+      stagger: 0.1,
+    });
     tl.to(".about__image", {
       opacity: 1,
-      duration: 0.5,
-    })
+      duration: 0.1,
+    });
     tl.to(".about__content", {
       opacity: 1,
-      duration: 0.2
-    })
+      duration: 0.1,
+    });
     tl.to(".about-txt", {
       opacity: 1,
-      duration: 0.25,
-      stagger: 0.25,
+      duration: 0.1,
+      stagger: 0.1,
     });
 
     gsap.to(".room__container", {
@@ -75,9 +93,9 @@ function LandingPage() {
         // markers:true,
         start: "top 70%",
         end: "bottom 20%",
-        scrub: 3
-      }
-    })
+        scrub: 3,
+      },
+    });
     gsap.to(".service", {
       opacity: 1,
       scale: 1,
@@ -87,9 +105,9 @@ function LandingPage() {
         // markers:true,
         start: "top 80%",
         end: "bottom 60%",
-        scrub: 3
-      }
-    })
+        scrub: 3,
+      },
+    });
     gsap.to(".banner__container", {
       opacity: 1,
       scale: 1,
@@ -99,11 +117,10 @@ function LandingPage() {
         // markers:true,
         start: "top 70%",
         end: "bottom 50%",
-        scrub: 1
-      }
-    })
-
-  })
+        scrub: 1,
+      },
+    });
+  }, []); // Empty dependency array ensures this runs once when the component mounts
 
   return (
     <>
@@ -163,15 +180,18 @@ function LandingPage() {
 
       <section className="section__container about__container" id="about">
         <div className="about__image opacity-0">
-          <div className="w-[500px] h-[300px]">
-            <Canvas id="canvas-container" className="w-full h-full ">
+          <div className="w-[500px] h-[350px]">
+            <Canvas id="canvas-container" className="w-full h-full">
               <OrbitControls
                 enableRotate={true}
-                enablePan
+                enablePan={true}
                 enableZoom={false}
+                maxPolarAngle={Math.PI / 2}
+                minPolarAngle={Math.PI / 2}
+                rotateSpeed={1}
               />
               <PerspectiveCamera makeDefault position={[0, 0, 20]} />
-              <Hostel scale={1} position={[0, -5, 0]} />
+              <Hostel scale={0.75} position={[0, -5, 0]} />
               <ambientLight intensity={1} />
               <directionalLight intensity={1} position={[10, 10, 10]} />
             </Canvas>
@@ -183,10 +203,7 @@ function LandingPage() {
             The Second home away from your house!
           </h2>
           <p className="section__description about-txt opacity-0">
-            With a focus on quality accommodations, personalized experiences,
-            and seamless booking, our platform is dedicated to ensuring that
-            every traveler embarks on their dream holiday with confidence and
-            excitement.
+            {apiData ? apiData.description : "Loading description..."}  {/* Use data from API */}
           </p>
           <div className="about__btn about-txt opacity-0">
             <button className="btn about-txt opacity-0" onClick={handleClick}>
@@ -196,44 +213,16 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="section__container room__container opacity-0" id="rooms">
+      <section
+        className="section__container room__container opacity-0"
+        id="rooms"
+      >
         <p className="section__subheader">ROOM OPTIONS AVAILABLE</p>
         <h2 className="section__header">
           The Most Memorable Stay Time Starts Here.
         </h2>
         <div className="room__grid">
-          <div className="room__card">
-            <div className="room__card__details">
-              <h4>Common Rooms</h4>
-              <p>
-                4-Seater/3-Seater rooms with common washrooms for the hostellers
-              </p>
-              <h5>
-                Starting from <span>₹ 60,000/Sem</span>
-              </h5>
-            </div>
-          </div>
-          <div className="room__card">
-            <div className="room__card__details">
-              <h4>Standard Rooms</h4>
-              <p>4/3/2-Seater Rooms with personal washroom for the roomates.</p>
-              <h5>
-                Starting from <span>₹ 75,000/Sem</span>
-              </h5>
-            </div>
-          </div>
-          <div className="room__card">
-            <div className="room__card__details">
-              <h4>AC-Rooms</h4>
-              <p>
-                4/3/2/1-Seater rooms with personal washroom and air-conditioner
-                facilities.
-              </p>
-              <h5>
-                Starting from <span>₹ 87,499/Sem</span>
-              </h5>
-            </div>
-          </div>
+          {/* Room options */}
         </div>
       </section>
 
@@ -265,7 +254,7 @@ function LandingPage() {
                 <span>
                   <i className="ri-map-2-line"></i>
                 </span>
-                Laundary Services included
+                Laundry Services included
               </li>
             </ul>
           </div>
@@ -283,7 +272,9 @@ function LandingPage() {
             <p>Bookings Completed</p>
           </div>
           <div className="banner__card">
-            <h4>4<NavLink to='/super-admin/login'>.</NavLink>6 *</h4>
+            <h4>
+              4<NavLink to="/super-admin/login">.</NavLink>6 *
+            </h4>
             <p>Ratings</p>
           </div>
         </div>
@@ -292,7 +283,10 @@ function LandingPage() {
       <Footer page="main" />
 
       <AdminOrUser trigger={buttonPop}>
-        <button className="mt-5 bg-pink-600 px-8 py-3 text-white rounded-[10px] hover:text-pink-600 hover:bg-white transition-colors duration-100" onClick={() => setButtonPop(false)}>
+        <button
+          className="mt-5 bg-pink-600 px-8 py-3 text-white rounded-[10px] hover:text-pink-600 hover:bg-white transition-colors duration-100"
+          onClick={() => setButtonPop(false)}
+        >
           Close
         </button>
       </AdminOrUser>

@@ -3,6 +3,7 @@ const app = express();
 const gatepass = require('../models/gatepassModel');
 const reservation = require('../models/reservationModel');
 const User = require("../models/studentModel");
+const SendMail = require("../helpers/smsService");
 
 const createGatepass = async (req, res) => {
     try {
@@ -10,11 +11,10 @@ const createGatepass = async (req, res) => {
         const inputData = req.body;
         console.log('Input Data', inputData);
 
-        const user = await User.findOne({token});
+        const user = await User.findOne({ token });
 
-        if(inputData.enrollmentNumber!= user.enrollmentID)
-        {
-            return res.status(400).send({ message: 'Fill Your Roll Own Roll Number' });
+        if (inputData.enrollmentNumber != user.enrollmentID) {
+            return res.status(400).send({ message: 'Fill Your Own Roll Number' });
         }
 
         if (!inputData.outday) {
@@ -30,32 +30,63 @@ const createGatepass = async (req, res) => {
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
-        
+
         if (!studentReservation) {
             return res.status(404).send({ message: 'No reservation found' });
         }
-        
 
         const newGatePass = new gatepass({
             ...inputData,
-            enrollmentId:inputData.enrollmentNumber,
+            enrollmentId: inputData.enrollmentNumber,
             studentId: studentReservation._id,
-            hostel:studentReservation.hostelname
+            hostel: studentReservation.hostelname,
         });
 
         user.gateEntry = "IN";
         await user.save();
 
-        
         const data = await newGatePass.save();
-        console.log('data', data);
 
-        return res.status(201).send({ message: 'GatePass created successfully' });
+        console.log('Gate Pass Data:', data);
+
+        // Prepare email content
+        const emailSubject = "Gate Pass Applied";
+        const emailBody = `
+            Dear ${user.name},
+
+            Your gate pass has been successfull applied.
+
+            Details of the Gate Pass:
+            - Enrollment Number: ${inputData.enrollmentNumber}
+            - Reason: ${inputData.reason}
+            - Out Day: ${inputData.outday}
+            - Out Date: ${inputData.outdate}
+            - Out Time: ${inputData.outtime}
+            - In Time: ${inputData.intime}
+            ${inputData.outday == 'Night Out' ? `- In Date: ${inputData.indate}` : ''}
+            - Hostel: ${studentReservation.hostelname}
+
+            Please ensure you follow the rules while outside the campus. 
+
+            Thank you,
+            CampusMate Team
+        `;
+
+        // Send Email
+        const mail = await SendMail(user.email, emailSubject, emailBody);
+
+        if (!mail) {
+            return res.status(500).json({ message: 'Gate pass created, but email could not be sent.' });
+        }
+
+        return res.status(201).send({ message: 'GatePass created and email sent successfully', data });
+
     } catch (err) {
-        console.error(err);
+        console.error("Error creating Gatepass:", err);
         return res.status(500).send({ message: 'Error creating Gatepass' });
     }
 };
+
 
 
 const getGatepasses = async (req, res) => {
@@ -73,23 +104,70 @@ const getGatepasses = async (req, res) => {
 const updateGatepassStatus = async (req, res) => {
     try {
         const { _id, status } = req.body;
+        console.log(status);
 
         if (!_id || !status) {
             return res.status(400).json({ message: 'Missing gatepass ID or status' });
         }
-        const gatepasses = await gatepass.findById(_id);
 
-        if (!gatepasses) {
+        const gatepassRecord = await gatepass.findById(_id);
+        console.log(gatepassRecord);
+
+        if (!gatepassRecord) {
             return res.status(404).json({ message: 'Gatepass not found' });
         }
-        gatepasses.status = status;
-        const updatedGatepass = await gatepasses.save();
+
+        // Update the gatepass status
+        gatepassRecord.status = status;
+        const updatedGatepass = await gatepassRecord.save();
+
+        // Get the user associated with this gatepass (assuming you have a reference to the user)
+        const student = await User.findOne({enrollmentID:gatepassRecord.enrollmentId});
+        
+        if (!student) {
+            return res.status(404).json({ message: 'User not found for this gatepass' });
+        }
+
+        console.log("Hello");
+
+        // Prepare the email content
+        let emailSubject = `Gatepass ${status == 'Approved' ? 'Approved' : 'Rejected'}`;
+        let emailBody = `
+            Dear ${student.name},
+
+            Your gatepass request has been ${status == 'APpproved' ? 'Approved' : 'Rejected'}.
+
+            - EnrollmentID: ${student.enrollmentID}
+            - Status: ${status == 'Approved' ? 'Approved' : 'Rejected'}
+            - Type : ${gatepassRecord.outday}
+            - Out Day : ${gatepassRecord.outdate}
+            - Out Time: ${gatepassRecord.outtime}
+            - In Day : ${gatepassRecord.indate}
+            - In Time: ${gatepassRecord.intime}
+            - Reason: ${gatepassRecord.reason}
+
+            Please contact the hostel office if you have any questions regarding this decision.
+
+            Best regards,
+            CampusMate Support Team
+        `;
+
+        // Send the email to the user
+        const mail = await SendMail(student.email, emailSubject, emailBody);
+
+        if (!mail) {
+            return res.status(500).json({ message: "Gatepass status updated, but email could not be sent." });
+        }
+
+        // Return the updated gatepass
+        console.log(updatedGatepass);
         res.json(updatedGatepass);
     } catch (error) {
         console.error('Error updating gatepass status:', error);
         res.status(500).json({ message: 'Error updating gatepass status', error: error.message });
     }
 };
+
 
 const checkGatePass = async (req, res) => {
     try {

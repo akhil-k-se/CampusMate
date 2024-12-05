@@ -34,7 +34,7 @@ const UserMess = () => {
     return (
         <div className='flex flex-col gap-3 h-screen w-full relative items-center justify-center'>
         <p className='h-[100px]  text-[50px]'>{desc}</p>
-            <img src={imgUrl} alt="Work in Progress"
+            <img src={imgUrl} alt="The Menu Will be soon uploaded my Warden"
                 className='h-[80vh] w-[80vw]'
             />
         </div>
