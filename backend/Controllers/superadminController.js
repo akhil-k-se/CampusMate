@@ -4,15 +4,15 @@ const storedUsername = process.env.ADMIN_USERNAME;
 const storedPassword = process.env.ADMIN_PASSWORD;
 
 const login = async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { email, password } = req.body;
+    console.log(email," ",password);
+    if (!email || !password) {
         return res.status(400).json({ message: 'Username and password are required' });
     }
 
-    if (username === storedUsername) {
+    if (email === storedUsername) {
         const isPasswordCorrect = password === storedPassword
         if (isPasswordCorrect) {
-            alert("Login successful !")
             return res.status(200).json({ message: 'Login successful!' });
         } else {
             return res.status(401).json({ message: 'Invalid credentials' });

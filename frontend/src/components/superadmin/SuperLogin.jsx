@@ -16,6 +16,7 @@ function SuperLogin() {
     const handleSignIn = async (e) => {
         e.preventDefault();
         try {
+            console.log(loginData);
             const response = await axios.post(
                 "http://localhost:3005/super-admin/login",
                 loginData, {

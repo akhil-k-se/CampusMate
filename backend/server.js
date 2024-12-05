@@ -45,7 +45,7 @@ Dbconnect();
 
 app.use("/student", userRoutes);
 app.use("/admin", adminRoutes);
-// app.use("/super-admin", superRoutes)
+app.use("/super-admin", superRoutes)
 app.use("/mess", messRoutes);
 app.use("/gateSecurity", gateSecurity);
 app.post("/qrscanner", qrScan.processQR);
