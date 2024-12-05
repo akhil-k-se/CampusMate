@@ -89,8 +89,17 @@ const Gatepass = () => {
         const outDate = new Date(formData.outdate);
         outDate.setHours(0, 0, 0, 0);
 
+
         const inDate = formData.indate ? new Date(formData.indate) : null;
-        inDate.setHours(0,0,0,0);
+        if(inDate)
+        {
+            inDate.setHours(0,0,0,0);
+        }
+
+        // console.log(today," ",outDate," ",inDate)
+
+        console.log("The Today is ",inDate);
+
 
         if (outDate < today) {
             return alert("You cannot apply for a gate pass for past dates.");
