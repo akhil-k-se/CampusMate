@@ -8,7 +8,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://hostel-sync.vercel.app/",
+    origin: "https://hostel-sync.vercel.app",
     credentials: true,
   })
 );
