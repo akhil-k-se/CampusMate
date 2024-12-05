@@ -88,9 +88,9 @@ const Warden = () => {
     <>
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
-      <div className="w-full h-[91.75vh] bg-[#d2e0ff] flex justify-center items-center">
-        <div className="w-[33%] h-[650px] bg-[#9dbaff] rounded-xl ml-[300px] p-6">
-          <p className="text-[25px] font-semibold flex items-center justify-center mt-[20px] mb-[40px]">
+      <div className="w-full h-[91.75vh] bg-gray-800 flex justify-center items-center">
+        <div className="w-[33%] h-[675px] bg-gray-900 rounded-xl ml-[300px] p-6">
+          <p className="text-[25px] font-extrabold text-blue-500 flex items-center justify-center mt-[20px] mb-[40px]">
             Create Account
           </p>
 
@@ -101,7 +101,7 @@ const Warden = () => {
               placeholder="Name"
               value={formData.name}
               onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-200"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
 
             <input
@@ -110,7 +110,7 @@ const Warden = () => {
               placeholder="Hostel"
               value={formData.hostel}
               onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-200"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
 
             <input
@@ -119,7 +119,7 @@ const Warden = () => {
               placeholder="Role"
               value={formData.role}
               onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-200"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
 
             <input
@@ -128,7 +128,7 @@ const Warden = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-200"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
 
             <div className="relative mb-5">
@@ -138,7 +138,7 @@ const Warden = () => {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full p-3 rounded-lg border-none bg-gray-200"
+                className="w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
               />
               <FontAwesomeIcon
                 icon={passwordVisible ? faEyeSlash : faEye}
@@ -154,7 +154,7 @@ const Warden = () => {
                 placeholder="Confirm Password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full p-3 rounded-lg border-none bg-gray-200"
+                className="w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
               />
               <FontAwesomeIcon
                 icon={confirmPasswordVisible ? faEyeSlash : faEye}
@@ -168,7 +168,7 @@ const Warden = () => {
                 type="file"
                 name="image"
                 onChange={handleImageChange} // Handle image change
-                className="w-full p-3 rounded-lg border-none bg-gray-200"
+                className="w-full p-3 rounded-lg border-none bg-gray-800 text-gray-400"
               />
             </div>
 
@@ -177,7 +177,7 @@ const Warden = () => {
             <div className="mt-4 flex justify-center items-center gap-6">
               <button
                 type="submit"
-                className="bg-[#2c69f8] text-white p-3 rounded-lg w-[40%] hover:bg-[#4f89e6] transition duration-300 ease-in-out transform hover:scale-105"
+                className="bg-[#3879e2] text-white p-3 rounded-lg w-[40%] hover:bg-[#2c69f8] transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Create Account
               </button>

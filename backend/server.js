@@ -112,23 +112,65 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
       await user.save();
 
       return res.send(`
-          <html>
-            <head>
-              <style>
-                body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-                h1 { color: #27ae60; }
-                p { color: #555; font-size: 1.2em; }
-                img { margin-top: 20px; width: 150px; height: 150px; border-radius: 50%; object-fit: cover; }
-              </style>
-            </head>
-            <body>
-              <h1>Mess Entry Status Updated</h1>
-              <p>Enrollment ID: <strong>${enrollmentID}</strong></p>
-              <p><strong>${user.name}</strong></p>
-              <img src="${user.img}" alt="Student Image" />
-              <p>New Mess Entry Status: <strong>${user.messEntry}</strong></p>
-            </body>
-          </html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      h1 {
+        color: #27ae60;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #555;
+        font-size: 1.2em;
+      }
+
+      img {
+        margin-top: 20px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+      }
+
+      strong {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Mess Entry Status Updated</h1>
+      <p>Enrollment ID: <strong>${enrollmentID}</strong></p>
+      <p><strong>${user.name}</strong></p>
+      <img src="${user.img}" alt="Student Image" />
+      <p>New Mess Entry Status: <strong>${user.messEntry}</strong></p>
+    </div>
+  </body>
+</html>
         `);
     } else if (role == "GateSecurity") {
       const gatePasses = await reservation
@@ -157,37 +199,107 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
 
       if (latestGatePass.status != "Approved") {
         return res.status(403).send(`
-            <html>
-              <head>
-                <style>
-                  body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-                  h1 { color: #e67e22; }
-                  p { color: #555; font-size: 1.2em; }
-                </style>
-              </head>
-              <body>
-                <h1>Cannot Update Entry</h1>
-                <p>Gate pass is not approved for the student with Enrollment ID: <strong>${enrollmentID}</strong></p>
-                <p>Gate Pass Status: <strong>${latestGatePass.status}</strong></p>
-              </body>
-            </html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color:gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #e67e22;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #555;
+        font-size: 1.2em;
+      }
+
+      strong {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Cannot Update Entry</h1>
+      <p>Gate pass is not approved for the student with Enrollment ID: <strong>${enrollmentID}</strong></p>
+      <p>Gate Pass Status: <strong>${latestGatePass.status}</strong></p>
+    </div>
+  </body>
+</html>
+
           `);
       }
       if (user.gateEntry == "IN-OUT") {
         return res.status(404).send(`
                 <html>
-                  <head>
-                    <style>
-                      body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-                      h1 { color: #e74c3c; }
-                      p { color: #555; font-size: 1.2em; }
-                    </style>
-                  </head>
-                  <body>
-                    <h1>No Gate Pass Found</h1>
-                    <p>No gate pass found for the student with Enrollment ID: <strong>${enrollmentID}</strong></p>
-                  </body>
-                </html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+
+      h1 {
+        color: #e74c3c;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #555;
+        font-size: 1.2em;
+      }
+
+      strong {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>No Gate Pass Found</h1>
+      <p>No gate pass found for the student with Enrollment ID: <strong>${enrollmentID}</strong></p>
+    </div>
+  </body>
+</html>
+
               `);
       }
       const currentTime = new Date();
@@ -243,27 +355,73 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
       await user.save();
 
       return res.send(`
-          <html>
-            <head>
-              <style>
-                body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-                h1 { color: #2980b9; }
-                img { margin-top: 20px; width: 150px; height: 150px; border-radius: 50%; object-fit: cover; }
-                p { color: #555; font-size: 1.2em; }
-              </style>
-            </head>
-            <body>
-              <h1>Gate Entry Status Updated</h1>
-              <p>Enrollment ID: <strong>${enrollmentID}</strong></p>
-              <img src=${user.img} />
-              <p>New Gate Entry Status: <strong>${user.gateEntry}</strong></p>
-              <h2>Gate Pass Details</h2>
-              <p>Status: <strong>${latestGatePass.status}</strong></p>
-              <p>Created At: <strong>${new Date(
-        latestGatePass.createdAt
-      ).toLocaleString()}</strong></p>
-            </body>
-          </html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color:gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #2980b9;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        color: #555;
+        font-size: 20px;
+        margin-top: 20px;
+      }
+
+      p {
+        color: #555;
+        font-size: 1.2em;
+        margin: 10px 0;
+      }
+
+      strong {
+        color: #333;
+      }
+
+      img {
+        margin-top: 20px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Gate Entry Status Updated</h1>
+      <p>Enrollment ID: <strong>${enrollmentID}</strong></p>
+      <img src="${user.img}" alt="Student Image" />
+      <p>New Gate Entry Status: <strong>${user.gateEntry}</strong></p>
+      <h2>Gate Pass Details</h2>
+      <p>Status: <strong>${latestGatePass.status}</strong></p>
+      <p>Created At: <strong>${new Date(latestGatePass.createdAt).toLocaleString()}</strong></p>
+    </div>
+  </body>
+</html>
+
         `);
     } else {
       return res.status(403).send(`

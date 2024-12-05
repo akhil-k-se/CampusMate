@@ -44,9 +44,8 @@ function Dashboard1() {
       <Navbar isShrunk={isShrunk} />
 
       {/* Main container for centering the content */}
-      <div className="flex justify-center items-center min-h-screen bg-gray-800 p-4">
+      <div className="flex justify-center items-center min-h-screen bg-gray-800 pl-[250px]">
         <div className="w-full max-w-3xl space-y-4">
-          <h1 className="text-3xl font-bold text-white text-center mb-6">Dashboard</h1>
           
           {/* Wardens Count Box */}
           <div className="bg-gray-900 shadow-md rounded-lg p-6 text-center">

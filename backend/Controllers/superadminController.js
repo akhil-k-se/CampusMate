@@ -5,7 +5,7 @@ const storedPassword = process.env.ADMIN_PASSWORD;
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-    console.log(email," ",password);
+    console.log(email," ",password," ",storedUsername," ",storedPassword);
     if (!email || !password) {
         return res.status(400).json({ message: 'Username and password are required' });
     }

@@ -86,9 +86,9 @@ const GateSecurity = () => {
     <>
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
-      <div className="w-full h-[91.75vh] bg-[#d2e0ff] flex justify-center items-center">
-        <div className="w-[33%] h-[650px] bg-[#9dbaff] rounded-xl ml-[300px] p-6">
-          <p className="text-[25px] font-semibold flex items-center justify-center mt-[20px] mb-[40px]">Create Account</p>
+      <div className="w-full h-[91.75vh] bg-gray-800 flex justify-center items-center">
+        <div className="w-[33%] h-[650px] bg-gray-900 rounded-xl ml-[300px] p-6">
+          <p className="text-[25px] font-semibold flex items-center justify-center mt-[20px] mb-[40px] text-blue-500">Create Account</p>
 
           <form onSubmit={handleSubmit}>
             <input
@@ -97,7 +97,7 @@ const GateSecurity = () => {
               placeholder="Name"
               value={name}
               onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-200"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
 
             <input
@@ -106,7 +106,7 @@ const GateSecurity = () => {
               placeholder="Email"
               value={email}
               onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-200"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
 
             <div className="relative mb-5">
@@ -116,7 +116,7 @@ const GateSecurity = () => {
                 placeholder="Password"
                 value={password}
                 onChange={handleChange}
-                className="w-full p-3 rounded-lg border-none bg-gray-200"
+                className="w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
               />
               <FontAwesomeIcon
                 icon={passwordVisible ? faEyeSlash : faEye}
@@ -132,7 +132,7 @@ const GateSecurity = () => {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={handleChange}
-                className="w-full p-3 rounded-lg border-none bg-gray-200"
+                className="w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
               />
               <FontAwesomeIcon
                 icon={confirmPasswordVisible ? faEyeSlash : faEye}
@@ -146,7 +146,7 @@ const GateSecurity = () => {
             <div className="mt-4 flex justify-center items-center gap-6">
               <button
                 type="submit"
-                className="bg-[#2c69f8] text-white p-3 rounded-lg w-[40%] hover:bg-[#4f89e6] transition duration-300 ease-in-out transform hover:scale-105"
+                className="bg-[#4f89e6] text-white p-3 rounded-lg w-[40%] hover:bg-[#2c69f8] transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Create Account
               </button>
