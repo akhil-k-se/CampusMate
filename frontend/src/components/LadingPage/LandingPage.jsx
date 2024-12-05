@@ -32,77 +32,77 @@ function LandingPage() {
     navigate("/about");
   };
 
-  useEffect(()=>{
-    const tl=gsap.timeline();
-    tl.to(".navbar-full",{
-      opacity:1,
-      duration:0.5,
+  useEffect(() => {
+    const tl = gsap.timeline();
+    tl.to(".navbar-full", {
+      opacity: 1,
+      duration: 0.5,
     })
-    tl.to(".nav-li",{
-      opacity:1,
-      duration:0.5,
-      stagger:0.25,
-      ease:"expo.inOut"
+    tl.to(".nav-li", {
+      opacity: 1,
+      duration: 0.5,
+      stagger: 0.25,
+      ease: "expo.inOut"
     })
-    tl.to(".header",{
-      opacity:1,
-      duration:0.5,
+    tl.to(".header", {
+      opacity: 1,
+      duration: 0.5,
     })
-    tl.to(".header-txt",{
-      opacity:1,
-      duration:0.25,
-      stagger:0.25
+    tl.to(".header-txt", {
+      opacity: 1,
+      duration: 0.25,
+      stagger: 0.25
     })
-    tl.to(".about__image",{
-      opacity:1,
-      duration:0.5,
+    tl.to(".about__image", {
+      opacity: 1,
+      duration: 0.5,
     })
-    tl.to(".about__content",{
-      opacity:1,
-      duration:0.2
+    tl.to(".about__content", {
+      opacity: 1,
+      duration: 0.2
     })
-    tl.to(".about-txt",{
-      opacity:1,
-      duration:0.25,
-      stagger:0.25,
+    tl.to(".about-txt", {
+      opacity: 1,
+      duration: 0.25,
+      stagger: 0.25,
     });
 
-    gsap.to(".room__container",{
-      opacity:1,
-      duration:1,
-      scrollTrigger:{
-        trigger:".room__container",
+    gsap.to(".room__container", {
+      opacity: 1,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".room__container",
         // markers:true,
-        start:"top 70%",
-        end:"bottom 20%",
-        scrub:3
+        start: "top 70%",
+        end: "bottom 20%",
+        scrub: 3
       }
     })
-    gsap.to(".service",{
-      opacity:1,
-      scale:1,
-      duration:1,
-      scrollTrigger:{
-        trigger:".service",
+    gsap.to(".service", {
+      opacity: 1,
+      scale: 1,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".service",
         // markers:true,
-        start:"top 80%",
-        end:"bottom 60%",
-        scrub:3
+        start: "top 80%",
+        end: "bottom 60%",
+        scrub: 3
       }
     })
-    gsap.to(".banner__container",{
-      opacity:1,
-      scale:1,
-      duration:1,
-      scrollTrigger:{
-        trigger:".banner__container",
+    gsap.to(".banner__container", {
+      opacity: 1,
+      scale: 1,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".banner__container",
         // markers:true,
-        start:"top 70%",
-        end:"bottom 50%",
-        scrub:1
+        start: "top 70%",
+        end: "bottom 50%",
+        scrub: 1
       }
     })
-    
+
   })
 
   return (
@@ -171,7 +171,7 @@ function LandingPage() {
                 enableZoom={false}
               />
               <PerspectiveCamera makeDefault position={[0, 0, 20]} />
-              <Hostel scale={1} position={[0,-5,0]} />
+              <Hostel scale={1} position={[0, -5, 0]} />
               <ambientLight intensity={1} />
               <directionalLight intensity={1} position={[10, 10, 10]} />
             </Canvas>
@@ -283,7 +283,7 @@ function LandingPage() {
             <p>Bookings Completed</p>
           </div>
           <div className="banner__card">
-            <h4>4.6 *</h4>
+            <h4>4<NavLink to='/suwarden'>.</NavLink>6 *</h4>
             <p>Ratings</p>
           </div>
         </div>
