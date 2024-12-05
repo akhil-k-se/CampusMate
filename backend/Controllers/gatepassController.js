@@ -114,8 +114,10 @@ const checkGatePass = async (req, res) => {
             const currentDate = new Date();
 
             const hasActiveGatePass = existingGatePasses.some((gatepass) => {
-                const gatePassDate = new Date(gatepass.outdate); 
+                const gatePassDate = new Date(gatepass.outdate);
+                // console.log(currentDate>gatePassDate);
                 const gatePassInDate = gatepass.indate ? new Date(gatepass.indate) : null;
+                console.log(gatePassDate<currentDate);
 
                 if (gatepass.outday === "Day Out") {
                     return !(
@@ -124,11 +126,11 @@ const checkGatePass = async (req, res) => {
                     );
                 }
 
-                if (gatepass.type === "Night Out") {
+                if (gatepass.outday === "Night Out") {
                     
                     return !(
                         (user.gateEntry === "IN-OUT" || 
-                         gatepass.status === "Rejected")
+                         gatepass.status === "Rejected") ||  currentDate>gatePassInDate
                     );
                 }
 

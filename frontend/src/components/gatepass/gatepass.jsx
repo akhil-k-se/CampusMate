@@ -82,78 +82,90 @@ const Gatepass = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const outDate = new Date(formData.outdate);
+        outDate.setHours(0, 0, 0, 0);
+
+        const inDate = formData.indate ? new Date(formData.indate) : null;
+        inDate.setHours(0,0,0,0);
+
+        if (outDate < today) {
+            return alert("You cannot apply for a gate pass for past dates.");
+        }
+
+        const maxAllowedOutDate = new Date(today);
+        maxAllowedOutDate.setDate(today.getDate() + 2);
+
+        if (outDate > maxAllowedOutDate) {
+            return alert("Gate passes can only be applied for the current day or up to 2 days in advance.");
+        }
+
         const outTime = new Date(`2024-01-01T${formData.outtime}:00`);
         const inTime = new Date(`2024-01-01T${formData.intime}:00`);
-        const currentTime = new Date();
-        const minOutTime = new Date();
-        minOutTime.setHours(6, 0, 0, 0);
-        const maxInTime = new Date();
-        maxInTime.setHours(20, 0, 0, 0);
 
-        if (inTime > maxInTime) {
-            alert("In-Time cannot exceed 8 PM");
-        }
-    
+        const minOutTime = new Date(2024, 0, 1, 6, 0, 0);
+        const maxInTime = new Date(2024, 0, 1, 20, 0, 0);
+
         if (formData.outday === "Day Out") {
-            if ( outTime >= maxInTime) {
-                alert("For Day Out, Out-Time must be between 6 AM and 8 PM.");
-                return;
+            if (outTime < minOutTime || outTime > maxInTime) {
+                return alert("For Day Out, Out-Time must be between 6 AM and 8 PM.");
             }
-    
-            if (outTime >= inTime) {
-                alert("Out-Time must be earlier than In-Time.");
-                return;
-            }
-            console.log("Hello onee");
 
-            try {
-                const response = await axios.post(
-                    "http://localhost:3005/gatePass/checkGatePass", 
-                    { enrollmentNumber: formData.enrollmentNumber, date: formData.outdate },
-                    { withCredentials: true }
-                );
-                console.log("hello ",response.data);
-                if (response.data.exists) {
-                    alert("You can only apply for one Day Out gatepass per day.");
-                    return;
-                }
-            } catch (err) {
-                console.error(err);
-                const errorMssg =  err.response?.data?.message || "An error occurred";
-                alert(errorMssg);
-                return;
+            if (inTime < minOutTime || inTime > maxInTime) {
+                return alert("In-Time must be between 6 AM and 8 PM.");
+            }
+
+            if (outTime >= inTime) {
+                return alert("Out-Time must be earlier than In-Time.");
             }
         }
-    
+
         if (formData.outday === "Night Out") {
-            const outDate = new Date(formData.outdate);
-            const inDate = new Date(formData.indate);
-    
-            if (inTime > maxInTime) {
-                alert("In-Time cannot exceed 8 PM.");
-                return;
+            if (!inDate) {
+                return alert("Please provide an In-Date for Night Out.");
             }
-    
+
             if (inDate <= outDate) {
-                alert("In Date must be later than Out Date.");
-                return;
+                return alert("In-Date must be later than Out-Date.");
             }
-    
-            const dayDifference = (inDate - outDate) / (1000 * 60 * 60 * 24);
+
+            const dayDifference = Math.ceil((inDate - outDate) / (1000 * 60 * 60 * 24));
             if (dayDifference > 7) {
-                alert("Night Out cannot exceed 7 days. Contact the warden for approval.");
-                return;
+                return alert("Night Out cannot exceed 7 days. Contact the warden for approval.");
+            }
+
+            if (outDate > maxAllowedOutDate) {
+                return alert("Night Out passes can only be applied for the current day or up to 2 days in advance.");
             }
         }
-    
+
         try {
-            const response = await axios.post("http://localhost:3005/gatepass", formData, { withCredentials: true });
+            const response = await axios.post(
+                "http://localhost:3005/gatePass/checkGatePass",
+                { enrollmentNumber: formData.enrollmentNumber, date: formData.outdate },
+                { withCredentials: true }
+            );
+            if (response.data.exists) {
+                return alert("You can only apply for one Day Out gate pass per day.");
+            }
+        } catch (err) {
+            const errorMessage = err.response?.data?.message || "An error occurred";
+            return alert(errorMessage);
+        }
+
+        try {
+            const response = await axios.post(
+                "http://localhost:3005/gatepass",
+                formData,
+                { withCredentials: true }
+            );
             alert("Gate Pass Applied Successfully");
             navigate("/user");
         } catch (err) {
-            console.error(err);
-            const errorMessage = err.response?.data.message || "An error occurred";
+            const errorMessage = err.response?.data?.message || "An error occurred";
             alert(errorMessage);
         }
     };

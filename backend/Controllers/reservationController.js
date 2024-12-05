@@ -5,6 +5,8 @@ const reserve = require('../models/reservationModel');
 const Admin = require('../models/adminModel');
 const User = require("../models/studentModel");
 
+// const sms = require("../helpers/smsService");
+
 app.use(bodyParser.json());
 
 const reservation = async (req, res) => {
@@ -68,6 +70,9 @@ const reservation = async (req, res) => {
 
         const newReservation = new reserve(inputData);
         const data = await newReservation.save();
+
+        // await sms(`Your Bed is Booked Seccessfully ${inputData}`);
+
         console.log('data', data)
         
         return res.status(201).send({ message: 'Booking created successfully' });

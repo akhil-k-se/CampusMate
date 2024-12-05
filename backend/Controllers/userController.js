@@ -6,7 +6,7 @@ const QRcode = require("../helpers/qrCodeGenerator");
 const Reservation = require("../models/reservationModel");
 const GatePass = require("../models/gatepassModel");
 const Complaint = require('../models/complaintModel')
-// const { sendGreetMail } = require("../helper/mailServices");
+// const sendMail = require("../helpers/mailService");
 const register = async (req, res) => {
     try {
         const { name, email, password, enrollmentID } = req.body;
@@ -16,6 +16,7 @@ const register = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ msg: "User already exists" });
         }
+        console.log("Hello");
 
         // Get Cloudinary image URL
         const imageUrl = req.file?.path;
@@ -46,6 +47,8 @@ const register = async (req, res) => {
 
         user.token = token;
         await user.save();
+        console.log("Came Here")
+        // await sendMail.SendInvoiceMail(email,`Welcome, Your Account Has Been Sucessfully created. ${{name,email,enrollmentID}}`)
 
         res.cookie('token', token, { httpOnly: true });
         res.status(200).json({ msg: "User registered successfully", user });
