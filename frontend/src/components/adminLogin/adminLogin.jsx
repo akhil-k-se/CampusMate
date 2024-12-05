@@ -17,7 +17,7 @@ function AdminLogin() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                "http://localhost:3005/admin/login",
+                "https://hostel-sync-1.onrender.com/admin/login",
                 loginData, {
                 withCredentials: true
             }

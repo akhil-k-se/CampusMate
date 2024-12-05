@@ -18,7 +18,7 @@ function MessLogin() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3005/gateSecurity/login",
+        "https://hostel-sync-1.onrender.com/gateSecurity/login",
         loginData, {
         withCredentials: true
       }

@@ -11,7 +11,7 @@ const Complaintbox = () => {
 
   // Fetch complaints and initialize status on page load
   useEffect(() => {
-    fetch('http://localhost:3005/complaintList', {
+    fetch('https://hostel-sync-1.onrender.com/complaintList', {
       method: 'GET',
       credentials: 'include',
     })
@@ -45,7 +45,7 @@ const Complaintbox = () => {
   const saveStatusChange = (id) => {
     const updatedStatus = selectedStatuses[id]; // Get the updated status from state
     if (updatedStatus) {
-      fetch(`http://localhost:3005/complaint/status`, {
+      fetch(`https://hostel-sync-1.onrender.com/complaint/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

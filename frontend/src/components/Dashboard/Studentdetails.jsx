@@ -9,7 +9,7 @@ const Studentdetails = () => {
   const [studentData, setStudentData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3005/reservationlist', {
+    fetch('https://hostel-sync-1.onrender.com/reservationlist', {
       method: 'GET',
       credentials: 'include',
     })

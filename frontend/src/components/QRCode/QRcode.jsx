@@ -10,7 +10,7 @@ const QRcode = () => {
   const fetchQRCodeAndData = async () => {
     try {
       const qrResponse = await axios.get(
-        `http://localhost:3005/get-qrcode/${enrollmentID}`,
+        `https://hostel-sync-1.onrender.com/get-qrcode/${enrollmentID}`,
         {
           withCredentials: true,
         }
@@ -19,7 +19,7 @@ const QRcode = () => {
       console.log("QR Code:", qrResponse.data);
 
       const userResponse = await axios.get(
-        "http://localhost:3005/student/showData",
+        "https://hostel-sync-1.onrender.com/student/showData",
         {
           withCredentials: true,
         }

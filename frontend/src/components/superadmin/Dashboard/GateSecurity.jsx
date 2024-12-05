@@ -66,7 +66,7 @@ const GateSecurity = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:3005/gatesecurity/signup", {
+      const response = await axios.post("https://hostel-sync-1.onrender.com/gatesecurity/signup", {
         name,
         email,
         password,

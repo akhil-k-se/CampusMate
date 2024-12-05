@@ -15,11 +15,11 @@ function Dashboard1() {
     const fetchCounts = async () => {
       try {
         // Fetch wardens count
-        const wardenResponse = await axios.get('http://localhost:3005/super-admin/wardens');
+        const wardenResponse = await axios.get('https://hostel-sync-1.onrender.com/super-admin/wardens');
         setWardens(wardenResponse.data.length); // Count the number of wardens
         
         // Fetch security guards count
-        const guardResponse = await axios.get('http://localhost:3005/super-admin/guards');
+        const guardResponse = await axios.get('https://hostel-sync-1.onrender.com/super-admin/guards');
         setSecurityGuards(guardResponse.data.length); // Count the number of guards
 
         setLoading(false);  // Set loading to false once the data is fetched

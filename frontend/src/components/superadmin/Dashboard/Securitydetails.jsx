@@ -10,7 +10,7 @@ const SecurityDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3005/susecuritydetails', {
+        const response = await axios.get('https://hostel-sync-1.onrender.com/susecuritydetails', {
           withCredentials: true, 
         });
 
@@ -27,7 +27,7 @@ const SecurityDetails = () => {
   const handleDelete = async (securityId) => { 
     try {
       console.log(`Attempting to delete security with ID: ${securityId}`);
-      const response = await axios.delete(`http://localhost:3005/gateSecurity/delete/${securityId}`, {
+      const response = await axios.delete(`https://hostel-sync-1.onrender.com/gateSecurity/delete/${securityId}`, {
         withCredentials: true,
       });
       console.log('Delete response:', response.data);

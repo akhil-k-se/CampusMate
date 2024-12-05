@@ -18,7 +18,7 @@ function SuperLogin() {
         try {
             console.log(loginData);
             const response = await axios.post(
-                "http://localhost:3005/super-admin/login",
+                "https://hostel-sync-1.onrender.com/super-admin/login",
                 loginData, {
                 withCredentials: true
             }

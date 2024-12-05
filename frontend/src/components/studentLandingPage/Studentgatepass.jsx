@@ -10,7 +10,7 @@ const Studentgatepass = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
+            const response = await axios.post("https://hostel-sync-1.onrender.com/logout", {}, { withCredentials: true });
             if (response.status === 200) {
                 localStorage.clear();
                 navigate("/");
@@ -23,7 +23,7 @@ const Studentgatepass = () => {
     useEffect(() => {
         const fetchGatePasses = async () => {
             try {
-                const response = await axios.get('http://localhost:3005/student/stdGatePassList', {
+                const response = await axios.get('https://hostel-sync-1.onrender.com/student/stdGatePassList', {
                     withCredentials: true,
                 });
                 const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));

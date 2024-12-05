@@ -9,7 +9,7 @@ const Navbar = ({ isShrunk }) => {
   // Handle Logout
   const handleLogout = async () => {
     try {
-      const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
+      const response = await axios.post("https://hostel-sync-1.onrender.com/logout", {}, { withCredentials: true });
       if (response.status === 200) {
         localStorage.clear();
         navigate("/");
@@ -22,7 +22,7 @@ const Navbar = ({ isShrunk }) => {
   // Fetch Warden Data
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("http://localhost:3005/admin/showData", {
+      const response = await axios.get("https://hostel-sync-1.onrender.com/admin/showData", {
         withCredentials: true,
       });
       setWardenProfile(response.data.admin);
