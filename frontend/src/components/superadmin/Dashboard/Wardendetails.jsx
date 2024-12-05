@@ -11,7 +11,7 @@ const Wardendetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://hostel-sync-1.onrender.com/super-admin/wardens', {
+        const response = await axios.get('http://localhost:3005/super-admin/wardens', {
           withCredentials: true, // Include credentials like cookies in the request
         });
 
@@ -28,7 +28,7 @@ const Wardendetails = () => {
   const handleDelete = async (wardenId) => {
     try {
       console.log(`Attempting to delete warden with ID: ${wardenId}`);
-      const response = await axios.delete(`https://hostel-sync-1.onrender.com/admin/delete/${wardenId}`, {
+      const response = await axios.delete(`http://localhost:3005/admin/delete/${wardenId}`, {
         withCredentials: true,
       });
       console.log('Delete response:', response.data);

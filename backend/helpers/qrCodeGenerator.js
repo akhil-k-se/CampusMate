@@ -3,7 +3,7 @@ const student = require('../models/studentModel');
 
 const generateQR = async (enrollmentID) => {
     try {
-        const apiURL = `https://hostel-sync-1.onrender.com/qr-scan/${enrollmentID}`;
+        const apiURL = `http://localhost:3005/qr-scan/${enrollmentID}`;
         const qrCodeURL = await QRCode.toDataURL(apiURL);
         return qrCodeURL;
       } catch (error) {

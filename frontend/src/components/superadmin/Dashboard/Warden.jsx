@@ -66,7 +66,7 @@ const Warden = () => {
     }
 
     try {
-      const response = await axios.post("https://hostel-sync-1.onrender.com/admin/signup", formDataToSend, {
+      const response = await axios.post("http://localhost:3005/admin/signup", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

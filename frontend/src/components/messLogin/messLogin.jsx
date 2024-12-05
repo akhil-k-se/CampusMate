@@ -38,7 +38,7 @@ function MessLogin() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://hostel-sync-1.onrender.com/mess/login",
+        "http://localhost:3005/mess/login",
         loginData, {
         withCredentials: true
       }

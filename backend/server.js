@@ -6,31 +6,12 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(cookieParser());
-const allowedOrigins = [
-  'https://hostel-sync.vercel.app', // Without trailing slash
-  'https://hostel-sync.vercel.app/' // With trailing slash
-];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, // Include this if cookies or credentials are being sent
-}));
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://hostel-sync.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true'); // Only if credentials are needed
-  next();
-});
-
-
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
 

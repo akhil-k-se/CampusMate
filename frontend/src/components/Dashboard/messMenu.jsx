@@ -26,7 +26,7 @@ const MessMenu = () => {
 
   const getImg = async () => {
     try {
-      const response = await axios.get('https://hostel-sync-1.onrender.com/admin/showMenu', {
+      const response = await axios.get('http://localhost:3005/admin/showMenu', {
         withCredentials: true,
       });
 
@@ -62,7 +62,7 @@ const MessMenu = () => {
 
     try {
       // Upload image and menu details to the backend
-      const response = await axios.post('https://hostel-sync-1.onrender.com/admin/update-menu', formData, {
+      const response = await axios.post('http://localhost:3005/admin/update-menu', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

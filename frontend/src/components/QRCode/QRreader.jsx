@@ -27,7 +27,7 @@ const QRScanner = () => {
           try {
            
             const response = await fetch(
-              "https://hostel-sync-1.onrender.com/getTokenForSecurity",
+              "http://localhost:3005/getTokenForSecurity",
               {
                 method: "POST",
                 headers: {
@@ -82,7 +82,7 @@ const QRScanner = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post("https://hostel-sync-1.onrender.com/logout", {}, { withCredentials: true });
+      const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
 
       if (response.status === 200) {
         localStorage.clear();

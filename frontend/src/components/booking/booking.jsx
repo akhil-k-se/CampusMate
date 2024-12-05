@@ -116,7 +116,7 @@ const Bookings = () => {
 
     try {
       const response = await axios.post(
-        "https://hostel-sync-1.onrender.com/reservation",
+        "http://localhost:3005/reservation",
         formData,
         { withCredentials: true }
       );

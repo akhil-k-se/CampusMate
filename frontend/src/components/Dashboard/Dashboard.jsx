@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("https://hostel-sync-1.onrender.com/warden-dashboard")
+      .get("http://localhost:3005/warden-dashboard")
       .then((response) => {
         setDashboardData(response.data);
         setLoading(false);

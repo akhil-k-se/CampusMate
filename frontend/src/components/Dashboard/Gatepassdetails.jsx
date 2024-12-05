@@ -10,7 +10,7 @@ const Gatepassdetails = () => {
   const [selectedStatuses, setSelectedStatuses] = useState({});
 
   useEffect(() => {
-    fetch('https://hostel-sync-1.onrender.com/gatepasseslist', {
+    fetch('http://localhost:3005/gatepasseslist', {
       method: 'GET',
       credentials: 'include',
     })
@@ -34,7 +34,7 @@ const Gatepassdetails = () => {
     const updatedStatus = selectedStatuses[id];
 
     if (updatedStatus) {
-      fetch(`https://hostel-sync-1.onrender.com/gatepass/status`, {
+      fetch(`http://localhost:3005/gatepass/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -153,7 +153,7 @@ const Gatepass = () => {
 
         try {
             const response = await axios.post(
-                "https://hostel-sync-1.onrender.com/gatePass/checkGatePass",
+                "http://localhost:3005/gatePass/checkGatePass",
                 { enrollmentNumber: formData.enrollmentNumber, date: formData.outdate },
                 { withCredentials: true }
             );
@@ -167,7 +167,7 @@ const Gatepass = () => {
 
         try {
             const response = await axios.post(
-                "https://hostel-sync-1.onrender.com/gatepass",
+                "http://localhost:3005/gatepass",
                 formData,
                 { withCredentials: true }
             );

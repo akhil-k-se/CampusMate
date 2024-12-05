@@ -37,7 +37,7 @@ function MessSign() {
         }
         try {
             const response = await axios.post(
-                "https://hostel-sync-1.onrender.com/mess/signup",
+                "http://localhost:3005/mess/signup",
                 formData, {
                 withCredentials: true,
             }

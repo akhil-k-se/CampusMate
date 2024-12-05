@@ -59,7 +59,7 @@ function RegisterLogin() {
 
         try {
             const response = await axios.post(
-                'https://hostel-sync-1.onrender.com/student/signup',
+                'http://localhost:3005/student/signup',
                 data,
                 { headers: { 'Content-Type': 'multipart/form-data'},
                     withCredentials:true }
@@ -79,7 +79,7 @@ function RegisterLogin() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'https://hostel-sync-1.onrender.com/student/login',
+                'http://localhost:3005/student/login',
                 loginData,
                 { withCredentials: true }
             );

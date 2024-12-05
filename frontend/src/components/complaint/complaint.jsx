@@ -77,7 +77,7 @@ const Complaint = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://hostel-sync-1.onrender.com/usercomplaints",
+        "http://localhost:3005/usercomplaints",
         formData,
         { withCredentials: true }
       );

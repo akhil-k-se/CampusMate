@@ -10,7 +10,7 @@ const StudentComplaints = () => {
     const navigate = useNavigate()
     const handleLogout = async () => {
         try {
-            const response = await axios.post("https://hostel-sync-1.onrender.com/logout", {}, { withCredentials: true });
+            const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
             if (response.status === 200) {
                 localStorage.clear();
                 navigate("/");
@@ -23,7 +23,7 @@ const StudentComplaints = () => {
     useEffect(() => {
         const fetchComplaints = async () => {
             try {
-                const response = await axios.get('https://hostel-sync-1.onrender.com/student/stdComplaintList', {
+                const response = await axios.get('http://localhost:3005/student/stdComplaintList', {
                     withCredentials: true,
                 });
                 const sortedData = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
