@@ -6,12 +6,22 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "https://hostel-sync.vercel.app",
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  'https://hostel-sync.vercel.app', // Without trailing slash
+  'https://hostel-sync.vercel.app/' // With trailing slash
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Include this if cookies or credentials are being sent
+}));
+
 
 const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
 
