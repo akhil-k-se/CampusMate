@@ -31,6 +31,7 @@ import axios from 'axios'
 import UserMess from './components/MessMenu/MessMenu'
 import GuardDetails from './components/superadmin/Dashboard/GuardDetails'
 import SuperLogin from './components/superadmin/SuperLogin'
+import Dashboard1 from './components/superadmin/Dashboard/Dashboard1'
 
 
 function App() {
@@ -68,7 +69,7 @@ function App() {
           <Route path='/payment' element={<PaymentPage />} />
           <Route path='/QRcode' element={<QRcode />} />
           <Route path='/messLogin' element={<MessLogin />} />
-          <Route path='/mess-menu' element={<MessMenu/>} />
+          <Route path='/mess-menu' element={<MessMenu />} />
           <Route path='/qrscanner' element={<QRScanner />} />
           <Route path='/about' element={<About />} />
           <Route path='/gateLogin' element={<GateLogin />} />
@@ -79,9 +80,8 @@ function App() {
           <Route path='/super-admin/warden/create' element={<Warden />} />
           <Route path='/super-admin/guard/create' element={<GateSecurity />} />
           <Route path='/super-admin/guard/details' element={<GuardDetails />} />
-          <Route path='/user/mess' element={<UserMess/>} />
-
-
+          <Route path='/super-admin/dashboard' element={<Dashboard1 />} />
+          <Route path='/user/mess' element={<UserMess />} />
         </Routes>
       </Router>
     </>

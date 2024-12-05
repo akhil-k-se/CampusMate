@@ -28,6 +28,7 @@ const gate = require("./Controllers/gatepassController");
 
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const superRoutes = require("./routes/superRoutes")
 const gateSecurity = require("./routes/gateSecurity");
 const messRoutes = require("./routes/messSecurity");
 const qrScan = require("./routes/qr");
@@ -44,6 +45,7 @@ Dbconnect();
 
 app.use("/student", userRoutes);
 app.use("/admin", adminRoutes);
+// app.use("/super-admin", superRoutes)
 app.use("/mess", messRoutes);
 app.use("/gateSecurity", gateSecurity);
 app.post("/qrscanner", qrScan.processQR);

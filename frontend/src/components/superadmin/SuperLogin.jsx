@@ -17,14 +17,14 @@ function SuperLogin() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                "http://localhost:3005/gateSecurity/login",
+                "http://localhost:3005/super-admin/login",
                 loginData, {
                 withCredentials: true
             }
             );
             console.log("The response is ", response.data)
             alert("Login successful!");
-            navigate("/qrscanner");
+            navigate("/super-admin/dashboard");
         } catch (error) {
             alert(error.response?.data?.message || "Login failed");
         }
@@ -58,7 +58,7 @@ function SuperLogin() {
                     <input
                         type="email"
                         name="email"
-                        id="wmail"
+                        id="email"
                         onChange={handleChangeAgain}
                         value={loginData.email}
                         placeholder="Email"
