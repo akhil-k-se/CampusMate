@@ -50,15 +50,15 @@ const StudentComplaints = () => {
             case 'Under Processing':
                 return (
                     <div className="flex items-center">
-                        <FontAwesomeIcon icon={faSpinner} className="text-red-500 text-2xl mr-2" />
-                        <span className="text-red-500">{status}</span>
+                        <FontAwesomeIcon icon={faSpinner} className="text-yellow-500 text-2xl mr-2 animate-spin" />
+                        <span className="text-yellow-500">{status}</span>
                     </div>
                 );
             case 'Pending':
                 return (
                     <div className="flex items-center">
-                        <FontAwesomeIcon icon={faClock} className="text-yellow-500 text-2xl mr-2 animate-spin" />
-                        <span className="text-yellow-500">{status}</span>
+                        <FontAwesomeIcon icon={faClock} className="text-red-500 text-2xl mr-2" />
+                        <span className="text-red-500">{status}</span>
                     </div>
                 );
             default:
