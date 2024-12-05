@@ -386,6 +386,28 @@ app.get('/super-admin/guards', async (req, res) => {
   }
 });
 
+
+app.get('/super-admin/wardens', async (req, res) => {
+  try {
+    const wardens = await admin.find({});  
+    res.json(wardens); 
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+app.get('/super-admin/guards', async (req, res) => {
+  try {
+    const guards = await Guard.find({}); 
+    res.json(guards);  
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.listen(3005, () => {
   console.log("Server started on 3005");
 });

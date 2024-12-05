@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const url = 'mongodb+srv://akhilse2024:hotlineclasher123@cluster0.cigonb3.mongodb.net/HostelSync?retryWrites=true&w=majority&appName=Cluster0';
+const url = 'mongodb+srv://aryan2003:aryan@cluster0.tojagvi.mongodb.net/campusmate?';
 
 const Dbconnect=async()=>
     {
