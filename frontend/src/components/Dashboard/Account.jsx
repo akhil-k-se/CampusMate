@@ -46,7 +46,7 @@ const Account = () => {
         <div className="w-full max-w-lg bg-white shadow-lg rounded-lg border border-gray-300 overflow-hidden">
           <div className="flex items-center justify-between p-4 bg-pink-700">
             <img
-              src={wardenProfile.profilePicture}
+              src={wardenProfile.profilePic}
               alt={`${wardenProfile.name}`}
               className="w-16 h-16 rounded-full object-cover"
             />

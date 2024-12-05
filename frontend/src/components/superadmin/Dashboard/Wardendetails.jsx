@@ -59,7 +59,7 @@ const Wardendetails = () => {
           {wardenData.map((warden) => (
             <div key={warden._id} className="bg-gray-900 shadow-md rounded-lg p-4 flex items-center space-x-2">
               <img
-                src="https://via.placeholder.com/150"
+                src={warden.profilePic}
                 alt={`${warden.firstName} ${warden.lastName}`}
                 className="w-16 h-16 rounded-full object-cover"
               />

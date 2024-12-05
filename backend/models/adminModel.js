@@ -39,6 +39,10 @@ const adminSchema = new mongoose.Schema({
     token: {
         type: String
     },
+    profilePic:{
+        type:String,
+        required:true
+    },
     messMenu:{
         type:String,
     },

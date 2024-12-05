@@ -7,13 +7,16 @@ const register = async (req, res) => {
   try {
     const { name, hostel, role, email, password } = req.body;
 
-    const existingUser = await Admin.findOne({ $or: [{ email: email }] });
+    const existingUser = await Admin.findOne({ $or: [{ email: email },{hostel:hostel}] });
     if (existingUser) {
       console.log("User already exists");
       return res
         .status(400)
-        .json({ msg: "User already exists with this email" });
+        .json({ msg: "User already exists with this email or for this hostel already exists" });
     }
+
+    const imageUrl = req.file?.path;
+    console.log(imageUrl);
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -24,6 +27,7 @@ const register = async (req, res) => {
       role,
       email,
       password: hashedPassword,
+      profilePic:imageUrl
     });
 
     const token = jwt.sign(
@@ -39,7 +43,7 @@ const register = async (req, res) => {
     admin.save();
 
     console.log(admin);
-    return res.status(201).json({ msg: "User created successfully" });
+    return res.status(201).json({ success:true, msg: "User created successfully" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({
@@ -184,7 +188,7 @@ const showData = async (req, res) => {
         .json({ msg: "Admin not found with the provided token" });
     }
 
-    return res.status(200).json({ admin });
+    return res.status(200).json({admin});
   } catch (err) {
     console.error("Error happened:", err);
     return res.status(500).json({ msg: "Internal server error" });

@@ -9,16 +9,17 @@ const Warden = () => {
   const [isShrunk, setIsShrunk] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     name: "",
     hostel: "",
     role: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
+  const [image, setImage] = useState(null); // Separate state for the image file
   const [error, setError] = useState("");
 
   const togglePasswordVisibility = () => {
@@ -30,10 +31,18 @@ const Warden = () => {
   };
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value,
     });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -46,16 +55,28 @@ const Warden = () => {
 
     setError("");
 
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("hostel", formData.hostel);
+    formDataToSend.append("role", formData.role);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("password", formData.password);
+    if (image) {
+      formDataToSend.append("image", image); // Append the image file
+    }
+
     try {
-      const response = await axios.post("http://localhost:3005/admin/signup", formData, {
-        withCredentials: true
+      const response = await axios.post("http://localhost:3005/admin/signup", formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
       });
-      console.log(response.data);
 
       if (response.data.success) {
         alert("User created successfully!");
-      }else{
-        alert("User created successfully!");
+      } else {
+        alert(response.data.message || "Failed to create user.");
       }
     } catch (error) {
       const errmsg = error.response?.data?.msg;
@@ -69,7 +90,9 @@ const Warden = () => {
       <Navbar isShrunk={isShrunk} />
       <div className="w-full h-[91.75vh] bg-[#d2e0ff] flex justify-center items-center">
         <div className="w-[33%] h-[650px] bg-[#9dbaff] rounded-xl ml-[300px] p-6">
-          <p className="text-[25px] font-semibold flex items-center justify-center mt-[20px] mb-[40px]">Create Account</p>
+          <p className="text-[25px] font-semibold flex items-center justify-center mt-[20px] mb-[40px]">
+            Create Account
+          </p>
 
           <form onSubmit={handleSubmit}>
             <input
@@ -137,6 +160,15 @@ const Warden = () => {
                 icon={confirmPasswordVisible ? faEyeSlash : faEye}
                 onClick={toggleConfirmPasswordVisibility}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-xl text-gray-500"
+              />
+            </div>
+
+            <div className="mb-5">
+              <input
+                type="file"
+                name="image"
+                onChange={handleImageChange} // Handle image change
+                className="w-full p-3 rounded-lg border-none bg-gray-200"
               />
             </div>
 
