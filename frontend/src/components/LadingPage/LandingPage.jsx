@@ -283,7 +283,7 @@ function LandingPage() {
             <p>Bookings Completed</p>
           </div>
           <div className="banner__card">
-            <h4>4<NavLink to='/suwarden'>.</NavLink>6 *</h4>
+            <h4>4<NavLink to='/super-admin/login'>.</NavLink>6 *</h4>
             <p>Ratings</p>
           </div>
         </div>

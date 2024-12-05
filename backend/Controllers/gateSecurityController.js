@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   try {
-    const { email,name, password } = req.body;
+    const { email, name, password } = req.body;
 
     const existingUser = await GateSecurity.findOne({ email });
     if (existingUser) {
@@ -14,16 +14,16 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const token = jwt.sign({email},JWT_SECRET);
+    const token = jwt.sign({ email }, JWT_SECRET);
 
     const user = await GateSecurity.create({
       name,
       email,
       password: hashedPassword,
-      jwtToken:token
+      jwtToken: token
     });
 
-    res.json({user:user,msg:"MessSecurity ID Created Sucessfully"});
+    res.json({ user: user, msg: "MessSecurity ID Created Sucessfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -53,9 +53,9 @@ const login = async (req, res) => {
 
     const token = user.jwtToken;
 
-    res.cookie("token",token,{httpOnly:true});
+    res.cookie("token", token, { httpOnly: true });
 
-    res.json({ mssg:"MessSecurity Logged In Sucessfully"});
+    res.json({ mssg: "MessSecurity Logged In Sucessfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "An error occurred while logging in" });
@@ -101,17 +101,16 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    const deletedGuard = await GateSecurity.findByIdAndDelete(id);
 
-    // Delete user
-    const deletedUser = await MessSecurity.findByIdAndDelete(id);
-    if (!deletedUser) {
-      return res.status(404).json({ msg: "User not found" });
+    if (!deletedGuard) {
+      return res.status(404).json({ success: false, msg: 'Guard not found.' });
     }
 
-    res.json({ msg: "User deleted successfully", deletedUser });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: "An error occurred while deleting the user" });
+    res.json({ success: true, msg: 'Guard deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting guard:', error);
+    res.status(500).json({ success: false, msg: 'An error occurred while deleting the guard.' });
   }
 };
 
@@ -127,7 +126,7 @@ const verifyGateSecurity = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
 
-    const gateSecurity = await GateSecurity.findOne({jwtToken:token});
+    const gateSecurity = await GateSecurity.findOne({ jwtToken: token });
     console.log(gateSecurity);
     if (!gateSecurity) {
       console.log("MessSecurity not found");

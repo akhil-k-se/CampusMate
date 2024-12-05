@@ -11,7 +11,7 @@ const Wardendetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3005/suwarden', {
+        const response = await axios.get('http://localhost:3005/super-admin/wardens', {
           withCredentials: true, // Include credentials like cookies in the request
         });
 
@@ -32,7 +32,7 @@ const Wardendetails = () => {
         withCredentials: true,
       });
       console.log('Delete response:', response.data);
-      
+
       if (response.data.success) {
         setWardenData((prevData) => prevData.filter((warden) => warden._id !== wardenId));
         alert('Warden removed successfully!');
@@ -43,7 +43,7 @@ const Wardendetails = () => {
       console.error('Error removing warden:', error);
       alert('An error occurred while removing the warden.');
     }
-};
+  };
 
   // Show a loading message while the data is being fetched
   if (wardenData.length === 0) {
