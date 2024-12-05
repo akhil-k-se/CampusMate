@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Navbar = ({ isShrunk}) => {
+const Navbar = ({ isShrunk }) => {
 
   const navigate = useNavigate()
 
@@ -29,9 +29,8 @@ const Navbar = ({ isShrunk}) => {
       </div>
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">
+          <span className="font-semibold text-[#acccfc]">SuperAdmin</span>
           <button className="btn bg-[#2573e8] text-white py-2 px-4 rounded hover:bg-[#3d8bff]" onClick={handleLogout}>Logout</button>
-          <img src="https://via.placeholder.com/30" alt="Profile" className="w-8 h-8 rounded-full" />
-          <span className="font-semibold text-[#acccfc]">SuperAmin</span>
         </div>
       </div>
     </div>

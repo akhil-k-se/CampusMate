@@ -66,7 +66,7 @@ const GateSecurity = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:3005/gatesecurity/signupsecurity", {
+      const response = await axios.post("http://localhost:3005/gatesecurity/signup", {
         name,
         email,
         password,
@@ -75,12 +75,7 @@ const GateSecurity = () => {
         withCredentials: true
       });
       console.log(response.data);
-
-      if (response.data.success) {
-        alert("User created successfully!");
-      } else {
-        alert("User creation failed.");
-      }
+      alert("User Created successfully !")
     } catch (error) {
       const errmsg = error.response?.data?.msg;
       alert(errmsg || "An error occurred.");

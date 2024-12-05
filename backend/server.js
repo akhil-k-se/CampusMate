@@ -15,27 +15,26 @@ app.use(
 
 const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
 
-const gateSecurity = require("./routes/gateSecurity");
-
 const admin = require("./models/adminModel");
 const reservation = require("./models/gatepassModel");
+const student = require("./models/studentModel");
 const Complaints = require("./models/complaintModel");
+const gatepass = require("./models/gatepassModel");
+const Guard = require("./models/gateSecurityModel")
 
 const complaint = require("./Controllers/complaintController");
 const reserve = require("./Controllers/reservationController");
 const gate = require("./Controllers/gatepassController");
-const gatepass = require("./models/gatepassModel");
+
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const gateSecurity = require("./routes/gateSecurity");
 const messRoutes = require("./routes/messSecurity");
-
-const getQRcode = require("./helpers/qrCodeGetter");
-
-const student = require("./models/studentModel");
-
 const qrScan = require("./routes/qr");
 
+const getQRcode = require("./helpers/qrCodeGetter");
 const messScheduler = require("./helpers/messScheduler");
+
 // const session = require('express-session');
 
 app.use(express.json());
@@ -365,10 +364,20 @@ app.get("/warden-dashboard", async (req, res) => {
   }
 });
 
-app.get('/suwarden', async (req, res) => {
+app.get('/super-admin/wardens', async (req, res) => {
   try {
-    const users = await admin.find({});
-    res.json(users);
+    const wardens = await admin.find({});
+    res.json(wardens);
+  } catch (error) {
+    console.error(error);
+    res.send("Internal Server Error");
+  }
+});
+
+app.get('/super-admin/guards', async (req, res) => {
+  try {
+    const guards = await Guard.find({});
+    res.json(guards);
   } catch (error) {
     console.error(error);
     res.send("Internal Server Error");
