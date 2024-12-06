@@ -3,7 +3,7 @@ const app = express();
 const gatepass = require('../models/gatepassModel');
 const reservation = require('../models/reservationModel');
 const User = require("../models/studentModel");
-const SendMail = require("../helpers/smsService");
+const SendMail = require("../helpers/mailService");
 
 const createGatepass = async (req, res) => {
     try {

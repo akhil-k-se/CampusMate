@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const reserve = require('../models/reservationModel'); 
 const Admin = require('../models/adminModel');
 const User = require("../models/studentModel");
-const SendMail = require('../helpers/smsService');
+const SendMail = require('../helpers/mailService');
 
 // const sms = require("../helpers/smsService");
 

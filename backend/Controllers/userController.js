@@ -7,7 +7,7 @@ const Admin = require("../models/adminModel");
 const Reservation = require("../models/reservationModel");
 const GatePass = require("../models/gatepassModel");
 const Complaint = require('../models/complaintModel')
-const SendMail = require("../helpers/smsService");
+const SendMail = require("../helpers/mailService");
 
 const register = async (req, res) => {
     try {

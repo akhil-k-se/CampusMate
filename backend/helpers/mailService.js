@@ -5,11 +5,16 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   secure: true, // Use true for port 465
   port: 465,
+  // auth: {
+  //   user: "hotlineclasher123@gmail.com", // Your email
+  //   pass: "vmstabqosxczxezq",           // App password
+  // },
   auth: {
-    user: "hotlineclasher123@gmail.com", // Your email
-    pass: "wrbfdwxuwptbqxgr",           // App password
+    user: "campusmate96@gmail.com", // Your email
+    pass: "llaaumnvkaayfsnz",           // App password
   },
 });
+
 
 /**
  * Sends an email using the specified details.

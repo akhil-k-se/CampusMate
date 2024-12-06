@@ -3,7 +3,7 @@ const complaint = require('../models/complaintModel');
 const reservation = require('../models/reservationModel');
 const Admin = require('../models/adminModel');
 const User = require("../models/studentModel");
-const SendMail = require('../helpers/smsService');
+const SendMail = require('../helpers/mailService');
 
 const createComplaint = async (req, res) => {
     try {
