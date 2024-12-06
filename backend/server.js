@@ -367,7 +367,7 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
               - Email: ${user.email}
               - Enrollment ID: ${enrollmentID}
               - GatePass : ${latestGatePass}
-              ${user.gateEntry=="OUT"? `- Left the Campus at ${new Date()}` : `- Returned to Campus at ${new Date()}`}
+              ${user.gateEntry=="OUT"? `- Left the Campus at ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}` : `- Returned to Campus at ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`}
   
               Thank you for joining CampusMate!
           `;
