@@ -13,7 +13,7 @@ const Account = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:3005/admin/showData", {
+        const response = await axios.get("https://campus-mate.onrender.com/admin/showData", {
           withCredentials: true,
         });
         console.log(response.data);

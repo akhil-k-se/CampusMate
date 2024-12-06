@@ -39,7 +39,7 @@ function MessSign() {
         }
         try {
             const response = await axios.post(
-                "http://localhost:3005/gateSecurity/signup",
+                "https://campus-mate.onrender.com/gateSecurity/signup",
                 formData, {
                 withCredentials: true,
             }

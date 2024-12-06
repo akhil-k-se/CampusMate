@@ -37,7 +37,7 @@ function MessSign() {
         }
         try {
             const response = await axios.post(
-                "http://localhost:3005/mess/signup",
+                "https://campus-mate.onrender.com/mess/signup",
                 formData, {
                 withCredentials: true,
             }

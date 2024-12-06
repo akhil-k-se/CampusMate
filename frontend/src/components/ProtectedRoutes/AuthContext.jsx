@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:3005/getUserRole", {
+        const response = await axios.get("https://campus-mate.onrender.com/getUserRole", {
           withCredentials: true
         });
         console.log(response.data);

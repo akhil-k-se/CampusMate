@@ -37,7 +37,7 @@ function LandingPage() {
   // Make an API call when the component mounts
   useEffect(() => {
     // Example using fetch API to hit your backend endpoint
-    fetch("http://localhost:3005/clearcookie", {
+    fetch("https://campus-mate.onrender.com/clearcookie", {
       method: "GET",  // You can change this to POST or other methods if needed
       credentials: "include"  // This ensures cookies or credentials are included
     })

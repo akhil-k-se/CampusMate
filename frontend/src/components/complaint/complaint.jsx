@@ -77,7 +77,7 @@ const Complaint = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3005/studentcomplaints",
+        "https://campus-mate.onrender.com/studentcomplaints",
         formData,
         { withCredentials: true }
       );

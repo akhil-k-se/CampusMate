@@ -10,7 +10,7 @@ const Navbar = ({ isShrunk }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post("http://localhost:3005/logout", {}, { withCredentials: true });
+      const response = await axios.post("https://campus-mate.onrender.com/logout", {}, { withCredentials: true });
       if (response.status === 200) {
         localStorage.clear();
         navigate("/");

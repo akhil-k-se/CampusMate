@@ -9,7 +9,7 @@ const Studentdetails = () => {
   const [studentData, setStudentData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3005/reservationlist', {
+    fetch('https://campus-mate.onrender.com/reservationlist', {
       method: 'GET',
       credentials: 'include',
     })

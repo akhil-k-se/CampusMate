@@ -152,7 +152,7 @@ const Gatepass = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:3005/gatePass/checkGatePass",
+                "https://campus-mate.onrender.com/gatePass/checkGatePass",
                 { enrollmentNumber: formData.enrollmentNumber, date: formData.outdate },
                 { withCredentials: true }
             );
@@ -166,7 +166,7 @@ const Gatepass = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:3005/gatepass",
+                "https://campus-mate.onrender.com/gatepass",
                 formData,
                 { withCredentials: true }
             );

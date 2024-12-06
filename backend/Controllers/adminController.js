@@ -35,10 +35,11 @@ const register = async (req, res) => {
       JWT_SECRET
     );
 
-    await res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
+    // await res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: true, // Send cookie over HTTPS only
+    //   sameSite: "none",
+    // });
     admin.token = token;
     admin.save();
 
@@ -87,9 +88,8 @@ const login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: true, // Send cookie over HTTPS only
+      sameSite: "none",
     });
 
     console.log("Login successful, returning token ", req.cookies.token);

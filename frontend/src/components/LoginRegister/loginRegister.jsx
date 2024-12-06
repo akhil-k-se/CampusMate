@@ -59,7 +59,7 @@ function RegisterLogin() {
 
         try {
             const response = await axios.post(
-                'http://localhost:3005/student/signup',
+                'https://campus-mate.onrender.com/student/signup',
                 data,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' },
@@ -81,7 +81,7 @@ function RegisterLogin() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'http://localhost:3005/student/login',
+                'https://campus-mate.onrender.com/student/login',
                 loginData,
                 { withCredentials: true }
             );

@@ -116,7 +116,7 @@ const Bookings = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3005/reservation",
+        "https://campus-mate.onrender.com/reservation",
         formData,
         { withCredentials: true }
       );

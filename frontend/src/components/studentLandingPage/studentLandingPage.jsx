@@ -80,7 +80,7 @@ function StudentLandingPage() {
   const getUserData = async () => {
     try {
       const userResponse = await axios.get(
-        "http://localhost:3005/student/showdata",
+        "https://campus-mate.onrender.com/student/showdata",
         {
           withCredentials: true, // Include credentials for cookies
         }
@@ -96,7 +96,7 @@ function StudentLandingPage() {
   const checkRoomBookingStatus = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3005/student/isBooked",
+        "https://campus-mate.onrender.com/student/isBooked",
         {
           withCredentials: true, // Include credentials for cookies
         }

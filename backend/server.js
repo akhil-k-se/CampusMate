@@ -8,7 +8,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
+    origin: "https://campus-mateee.vercel.app",
     credentials: true,
   })
 );
@@ -62,8 +62,8 @@ app.post("/getTokenForSecurity", (req, res) => {
   if (token) {
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 1000,
+      secure: true, // Send cookie over HTTPS only
+      sameSite: "none",
     });
     console.log(token);
 
@@ -527,7 +527,7 @@ app.get("/gatepasseslist", async (req, res) => {
 app.patch("/gatepass/status", gate.updateGatepassStatus);
 
 //Complaints Routes
-app.post("/usercomplaints", complaint.createComplaint);
+app.post("/studentcomplaints", complaint.createComplaint);
 app.get("/complaintList", complaint.complaintList);
 app.patch("/complaint/status", complaint.updateComplaintStatus);
 

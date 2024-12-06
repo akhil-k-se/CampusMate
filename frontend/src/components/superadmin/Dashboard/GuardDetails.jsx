@@ -11,7 +11,7 @@ const GuardDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:3005/super-admin/guards', {
+                const response = await axios.get('https://campus-mate.onrender.com/super-admin/guards', {
                     withCredentials: true, // Include credentials like cookies in the request
                 });
 
@@ -28,7 +28,7 @@ const GuardDetails = () => {
     const handleDelete = async (guardId) => {
         try {
             console.log(`Attempting to delete warden with ID: ${guardId}`);
-            const response = await axios.delete(`http://localhost:3005/gateSecurity/delete/${guardId}`, {
+            const response = await axios.delete(`https://campus-mate.onrender.com/gateSecurity/delete/${guardId}`, {
                 withCredentials: true,
             });
             console.log('Delete response:', response.data);

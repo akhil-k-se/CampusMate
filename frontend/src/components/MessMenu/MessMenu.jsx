@@ -8,7 +8,7 @@ const UserMess = () => {
 
     const handleShowMenu = async(e)=>{
         try{
-            const response = await axios.get("http://localhost:3005/student/showMenu",{
+            const response = await axios.get("https://campus-mate.onrender.com/student/showMenu",{
                 withCredentials:true
             });
             console.log(response.data)

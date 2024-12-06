@@ -18,7 +18,7 @@ function SuperLogin() {
         try {
             console.log(loginData);
             const response = await axios.post(
-                "http://localhost:3005/super-admin/login",
+                "https://campus-mate.onrender.com/super-admin/login",
                 loginData, {
                 withCredentials: true
             }
