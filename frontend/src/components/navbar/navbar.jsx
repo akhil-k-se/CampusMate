@@ -19,10 +19,10 @@ function Navbar() {
     }
   };
   const handleQR = () => {
-    navigate("/QRcode");
+    navigate("/student/QR");
   };
-  const handleMessMenu = ()=>{
-    navigate("/user/mess")
+  const handleMessMenu = () => {
+    navigate("/student/mess")
   }
   return (
     <>
@@ -40,9 +40,6 @@ function Navbar() {
         <ul className="nav_links" id="nav-links">
           <li>
             <a href="#home">Home</a>
-          </li>
-          <li>
-            <a href="#about">About</a>
           </li>
           <li>
             <a href="#gatepass">Gatepass</a>

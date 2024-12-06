@@ -205,7 +205,7 @@ function StudentLandingPage() {
             <div class="explore__content">
               <p class="section__description">10th AUG 2024</p>
               <h4>A New Mess Menu Is Available In Our Hostels.</h4>
-              <NavLink to="/user/mess">
+              <NavLink to="/student/mess">
                 <button class="btn">View Menu</button>
               </NavLink>
             </div>
@@ -213,7 +213,7 @@ function StudentLandingPage() {
         </section>
 
         <Footer page="subpage" />
-        
+
       </section>
 
       <div className="popForm popBook scale-0">

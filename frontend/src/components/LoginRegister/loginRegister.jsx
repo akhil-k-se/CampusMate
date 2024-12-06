@@ -61,13 +61,15 @@ function RegisterLogin() {
             const response = await axios.post(
                 'http://localhost:3005/student/signup',
                 data,
-                { headers: { 'Content-Type': 'multipart/form-data'},
-                    withCredentials:true }
+                {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                    withCredentials: true
+                }
             );
             alert('User registered successfully!');
             localStorage.setItem('enrollmentID', formData.enrollmentID);
             console.log('Registered user:', response.data);
-            navigate('/user');
+            navigate('/student');
         } catch (err) {
             console.error('Error during registration:', err);
             const errorMsg = err.response?.data?.msg || 'An error occurred during registration.';
@@ -84,7 +86,7 @@ function RegisterLogin() {
                 { withCredentials: true }
             );
             alert('Login successful!');
-            navigate('/user');
+            navigate('/student');
         } catch (err) {
             console.error('Error during login:', err);
             const errorMsg = err.response?.data?.msg || 'An error occurred during login.';

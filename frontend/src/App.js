@@ -53,35 +53,33 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<LandingPage />} />
-          <Route path='/select' element={<AdminOrUser />} />
-          <Route path='/user-signup' element={<RegisterLogin />} />
-          <Route path='/admin-signup' element={<AdminLogin />} />
-          <Route path='/user' element={<StudentLandingPage />} />
-          <Route path='/booking' element={<Bookings />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="studentdetails" element={<Studentdetails />} />
-          <Route path="gatepasses" element={<Gatepassdetails />} />
-          <Route path="complaintbox" element={<Complaintbox />} />
-          <Route path="hostelrooms" element={<Hosteldetails />} />
-          <Route path="account" element={<Account />} />
-          <Route path='/my-gatepasses' element={<Studentgatepass />} />
-          <Route path='/my-complaints' element={<StudentComplaints />} />
-          <Route path='/payment' element={<PaymentPage />} />
-          <Route path='/QRcode' element={<QRcode />} />
-          <Route path='/messLogin' element={<MessLogin />} />
-          <Route path='/mess-menu' element={<MessMenu />} />
-          <Route path='/qrscanner' element={<QRScanner />} />
+          <Route path='/select-user' element={<AdminOrUser />} />
+          <Route path='/student-signup' element={<RegisterLogin />} />
+          <Route path='/warden-signup' element={<AdminLogin />} />
+          <Route path='/student' element={<StudentLandingPage />} />
+          <Route path='/student/booking' element={<Bookings />} />
+          <Route path="/warden/dashboard" element={<Dashboard />} />
+          <Route path="/warden/student-details" element={<Studentdetails />} />
+          <Route path="/warden/gatepasses" element={<Gatepassdetails />} />
+          <Route path="/warden/complaints" element={<Complaintbox />} />
+          <Route path="/warden/my-account" element={<Account />} />
+          <Route path='/student/my-gatepasses' element={<Studentgatepass />} />
+          <Route path='/student/my-complaints' element={<StudentComplaints />} />
+          <Route path='/student/booking/payment' element={<PaymentPage />} />
+          <Route path='/student/QR' element={<QRcode />} />
+          <Route path='/guard/mess-login' element={<MessLogin />} />
+          <Route path='/warden/update/mess-menu' element={<MessMenu />} />
+          <Route path='/guard/scanner' element={<QRScanner />} />
           <Route path='/about' element={<About />} />
-          <Route path='/gateLogin' element={<GateLogin />} />
-          <Route path='/gateSignin' element={<GateSign />} />
-          <Route path='/messSignIn' element={<MessSign />} />
+          <Route path='/guard/gate-login' element={<GateLogin />} />
+          <Route path='/super-admin/create/mess-security' element={<MessSign />} />
           <Route path='/super-admin/login' element={<SuperLogin />} />
-          <Route path='/super-admin/warden/details' element={<Wardendetails />} />
-          <Route path='/super-admin/warden/create' element={<Warden />} />
-          <Route path='/super-admin/guard/create' element={<GateSecurity />} />
-          <Route path='/super-admin/guard/details' element={<GuardDetails />} />
+          <Route path='/super-admin/details/wardens' element={<Wardendetails />} />
+          <Route path='/super-admin/create/warden' element={<Warden />} />
+          <Route path='/super-admin/create/gate-security' element={<GateSecurity />} />
+          <Route path='/super-admin/details/gate-security' element={<GuardDetails />} />
           <Route path='/super-admin/dashboard' element={<Dashboard1 />} />
-          <Route path='/user/mess' element={<UserMess />} />
+          <Route path='/student/mess' element={<UserMess />} />
         </Routes>
       </Router>
     </>
