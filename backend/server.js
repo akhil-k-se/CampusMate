@@ -17,7 +17,7 @@ const jwt = require('jsonwebtoken');
 
 const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
 
-const JWT_SECRET="123"
+const JWT_SECRET = "123"
 
 const admin = require("./models/adminModel");
 const reservation = require("./models/gatepassModel");
@@ -479,9 +479,9 @@ app.get("/getUserRole", async (req, res) => {
 
     const decoded = jwt.verify(token, JWT_SECRET);
     const role = decoded.role;
-    
-    console.log(role); 
-    
+
+    console.log(role);
+
     res.json({ role });
   } catch (err) {
     console.error(err);
@@ -583,8 +583,8 @@ app.get('/super-admin/guards', async (req, res) => {
 
 app.get('/super-admin/wardens', async (req, res) => {
   try {
-    const wardens = await admin.find({});  
-    res.json(wardens); 
+    const wardens = await admin.find({});
+    res.json(wardens);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -594,8 +594,8 @@ app.get('/super-admin/wardens', async (req, res) => {
 
 app.get('/super-admin/guards', async (req, res) => {
   try {
-    const guards = await Guard.find({}); 
-    res.json(guards);  
+    const guards = await Guard.find({});
+    res.json(guards);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
