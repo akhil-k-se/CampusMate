@@ -203,7 +203,10 @@ function LandingPage() {
             The Second home away from your house!
           </h2>
           <p className="section__description about-txt opacity-0">
-            {apiData ? apiData.description : "Loading description..."}  {/* Use data from API */}
+          With a focus on quality accommodations, personalized experiences,
+            and seamless booking, our platform is dedicated to ensuring that
+            every traveler embarks on their dream holiday with confidence and
+            excitement.
           </p>
           <div className="about__btn about-txt opacity-0">
             <button className="btn about-txt opacity-0" onClick={handleClick}>
