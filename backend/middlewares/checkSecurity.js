@@ -7,7 +7,7 @@ const checkSecurity = async (req, res, next) => {
 
     if (!token) {
         console.log("Token Not Found");
-        return res.status(403).json({ msg: "Unauthorized access: Token not found" });
+        return res.status(403).json({ msg: "Unauthorized access: HAHA..!! You are not allowed 😂😂😂😂" });
     }
 
     try {
