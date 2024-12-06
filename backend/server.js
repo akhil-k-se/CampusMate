@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const SendMail = require("./helpers/mailService");
 
 const app = express();
 app.use(cookieParser());
@@ -358,6 +359,21 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
       user.gateEntry = user.gateEntry === "IN" ? "OUT" : "IN-OUT";
       await user.save();
 
+      const emailSubject = `${user.gateEntry=="OUT"? `- Left the Campus` : `- Returned to Campus`}`;
+      const emailBody = `
+              Welcome ${user.name}, 
+  
+              Your account has been successfully created with the following details:
+              - Email: ${user.email}
+              - Enrollment ID: ${enrollmentID}
+              - GatePass : ${latestGatePass}
+              ${user.gateEntry=="OUT"? `- Left the Campus at ${new Date()}` : `- Returned to Campus at ${new Date()}`}
+  
+              Thank you for joining CampusMate!
+          `;
+  
+      const mail = await SendMail(user.email, emailSubject, emailBody);
+
       return res.send(`
 <html>
   <head>
@@ -429,6 +445,8 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
 </html>
 
         `);
+
+
     } else {
       return res.status(403).send(`
           <html>
