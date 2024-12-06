@@ -13,18 +13,18 @@ app.use(
   })
 );
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
 
-const JWT_SECRET="123"
+const JWT_SECRET = "123";
 
 const admin = require("./models/adminModel");
 const reservation = require("./models/gatepassModel");
 const student = require("./models/studentModel");
 const Complaints = require("./models/complaintModel");
 const gatepass = require("./models/gatepassModel");
-const Guard = require("./models/gateSecurityModel")
+const Guard = require("./models/gateSecurityModel");
 
 const complaint = require("./Controllers/complaintController");
 const reserve = require("./Controllers/reservationController");
@@ -32,7 +32,7 @@ const gate = require("./Controllers/gatepassController");
 
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const superRoutes = require("./routes/superRoutes")
+const superRoutes = require("./routes/superRoutes");
 const gateSecurity = require("./routes/gateSecurity");
 const messRoutes = require("./routes/messSecurity");
 const qrScan = require("./routes/qr");
@@ -49,7 +49,7 @@ Dbconnect();
 
 app.use("/student", userRoutes);
 app.use("/admin", adminRoutes);
-app.use("/super-admin", superRoutes)
+app.use("/super-admin", superRoutes);
 app.use("/mess", messRoutes);
 app.use("/gateSecurity", gateSecurity);
 app.post("/qrscanner", qrScan.processQR);
@@ -421,7 +421,9 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
       <p>New Gate Entry Status: <strong>${user.gateEntry}</strong></p>
       <h2>Gate Pass Details</h2>
       <p>Status: <strong>${latestGatePass.status}</strong></p>
-      <p>Created At: <strong>${new Date(latestGatePass.createdAt).toLocaleString()}</strong></p>
+      <p>Created At: <strong>${new Date(
+        latestGatePass.createdAt
+      ).toLocaleString()}</strong></p>
     </div>
   </body>
 </html>
@@ -474,31 +476,30 @@ app.get("/getUserRole", async (req, res) => {
     const token = req.cookies.token;
     console.log(token);
     if (!token) {
-      return res.status(401).json({ message: 'No token provided' });
+      return res.status(401).json({ message: "No token provided" });
     }
 
     const decoded = jwt.verify(token, JWT_SECRET);
     const role = decoded.role;
-    
-    console.log(role); 
-    
+
+    console.log(role);
+
     res.json({ role });
   } catch (err) {
     console.error(err);
 
     if (err instanceof jwt.JsonWebTokenError) {
-      return res.status(403).json({ message: 'Invalid token' });
+      return res.status(403).json({ message: "Invalid token" });
     }
 
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-app.get('/clearcookie', (req, res) => {
-  res.clearCookie('token');  // Clear the 'token' cookie
-  res.status(200).send('Cookie cleared successfully');
+app.get("/clearcookie", (req, res) => {
+  res.clearCookie("token"); // Clear the 'token' cookie
+  res.status(200).send("Cookie cleared successfully");
 });
-
 
 //Booking Routes
 app.post("/reservation", reserve.reservation);
@@ -560,7 +561,7 @@ app.get("/warden-dashboard", async (req, res) => {
   }
 });
 
-app.get('/super-admin/wardens', async (req, res) => {
+app.get("/super-admin/wardens", async (req, res) => {
   try {
     const wardens = await admin.find({});
     res.json(wardens);
@@ -570,7 +571,7 @@ app.get('/super-admin/wardens', async (req, res) => {
   }
 });
 
-app.get('/super-admin/guards', async (req, res) => {
+app.get("/super-admin/guards", async (req, res) => {
   try {
     const guards = await Guard.find({});
     res.json(guards);
@@ -580,22 +581,20 @@ app.get('/super-admin/guards', async (req, res) => {
   }
 });
 
-
-app.get('/super-admin/wardens', async (req, res) => {
+app.get("/super-admin/wardens", async (req, res) => {
   try {
-    const wardens = await admin.find({});  
-    res.json(wardens); 
+    const wardens = await admin.find({});
+    res.json(wardens);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-
-app.get('/super-admin/guards', async (req, res) => {
+app.get("/super-admin/guards", async (req, res) => {
   try {
-    const guards = await Guard.find({}); 
-    res.json(guards);  
+    const guards = await Guard.find({});
+    res.json(guards);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
