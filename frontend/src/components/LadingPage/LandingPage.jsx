@@ -181,7 +181,7 @@ function LandingPage() {
       <section className="section__container about__container" id="about">
         <div className="about__image opacity-0">
           <div className="w-[500px] h-[350px]">
-            <Canvas id="canvas-container" className="w-full h-full">
+            {/* <Canvas id="canvas-container" className="w-full h-full">
               <OrbitControls
                 enableRotate={true}
                 enablePan={true}
@@ -194,7 +194,7 @@ function LandingPage() {
               <Hostel scale={0.75} position={[0, -5, 0]} />
               <ambientLight intensity={1} />
               <directionalLight intensity={1} position={[10, 10, 10]} />
-            </Canvas>
+            </Canvas> */}
           </div>
         </div>
         <div className="about__content opacity-0">
