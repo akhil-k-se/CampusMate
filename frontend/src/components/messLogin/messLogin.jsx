@@ -45,7 +45,7 @@ function MessLogin() {
       );
       localStorage.setItem("token", response.data.token); // Store token
       alert("Login successful!");
-      navigate("/qrscanner");
+      navigate("/guard/scanner");
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");
     }

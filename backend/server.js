@@ -6,12 +6,17 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(cookieParser());
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    credentials: true,
+    origin: (origin, callback) => {
+      // Allow requests from any origin
+      callback(null, true);
+    },
+    credentials: true, // Allow cookies and other credentials to be included
   })
 );
+
 
 const jwt = require("jsonwebtoken");
 

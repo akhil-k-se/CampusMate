@@ -30,8 +30,8 @@ const Footer = ({ page }) => {
             <h1><a href="#rooms">Rooms</a></h1>
           </div> : <div className='flex flex-col font-montserrat text-[35px] font-bold gap-3'>
             <h1><a href='#'>Home</a></h1>
-            <h1><NavLink to={'/my-gatepasses'}>Gatepasses</NavLink></h1>
-            <h1><NavLink to={'/my-complaints'}>Complaints</NavLink></h1>
+            <h1><NavLink to={'/student/my-gatepasses'}>Gatepasses</NavLink></h1>
+            <h1><NavLink to={'/student/my-complaints'}>Complaints</NavLink></h1>
           </div>}
         </div>
         <div className='flex flex-col font-montserrat my-5'>

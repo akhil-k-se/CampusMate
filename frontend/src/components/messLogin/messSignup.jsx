@@ -16,7 +16,7 @@ function MessSign() {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate('/account');
+        navigate('/warden/my-account');
     }
     const [passwordMatch, setPasswordMatch] = useState(true)
     const [passwordVisible, setPasswordVisible] = useState(false);

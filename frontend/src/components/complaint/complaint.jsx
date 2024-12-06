@@ -56,7 +56,7 @@ const Complaint = () => {
   }, [currentImage]);
 
   const handleClick = () => {
-    navigate("/user");
+    navigate("/student");
     if (window.location.pathname === "/") {
       window.location.reload();
     }
@@ -77,12 +77,12 @@ const Complaint = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3005/usercomplaints",
+        "http://localhost:3005/studentcomplaints",
         formData,
         { withCredentials: true }
       );
       alert("Complaint Registered Successfully");
-      navigate("/user");
+      navigate("/student");
     } catch (err) {
       console.error(err);
       const errorMessage = err.response?.data?.message || "An error occurred";

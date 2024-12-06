@@ -18,7 +18,7 @@ function MessSign() {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate('/account');
+        navigate('/warden/my-account');
     }
 
 

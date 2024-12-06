@@ -20,7 +20,7 @@ function AdminOrUser(props) {
 
     Array.from(users).forEach((user) => {
       user.addEventListener("mouseenter", () => {
-        gsap.to(user, { scale: 1.2, duration:0.1 });
+        gsap.to(user, { scale: 1.2, duration: 0.1 });
       });
 
       user.addEventListener("mouseleave", () => {
@@ -31,19 +31,19 @@ function AdminOrUser(props) {
     // Cleanup event listeners on component unmount
     return () => {
       Array.from(users).forEach((user) => {
-        user.removeEventListener("mouseenter", () => {});
-        user.removeEventListener("mouseleave", () => {});
+        user.removeEventListener("mouseenter", () => { });
+        user.removeEventListener("mouseleave", () => { });
       });
     };
   });
 
 
-  const handleUserClick = () => navigate("/user-signup");
-  const handleAdminClick = () => navigate("/admin-signup");
-  const handleMessClick = () => navigate("/messLogin");
-  const handleGateClick = () => navigate("/gateLogin");
+  const handleUserClick = () => navigate("/student-signup");
+  const handleAdminClick = () => navigate("/warden-signup");
+  const handleMessClick = () => navigate("/guard/mess-login");
+  const handleGateClick = () => navigate("/guard/gate-login");
 
-  return props.trigger? (
+  return props.trigger ? (
     <div className="full">
       <div className="black_div"></div>
       <div className="popup_holder">

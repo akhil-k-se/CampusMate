@@ -25,7 +25,7 @@ function MessLogin() {
       );
       console.log("The response is ", response.data)
       alert("Login successful!");
-      navigate("/qrscanner");
+      navigate("/guard/scanner");
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");
     }

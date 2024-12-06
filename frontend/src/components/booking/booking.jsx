@@ -121,7 +121,7 @@ const Bookings = () => {
         { withCredentials: true }
       );
       alert("Your request has been sent will let you know about the room");
-      navigate("/payment");
+      navigate("/student/booking/payment");
     } catch (error) {
       console.error("Error in Booking", error);
       const errorMessage = error.response?.data?.message || "An error occurred";
@@ -150,9 +150,8 @@ const Bookings = () => {
                 key={index}
                 src={image.src}
                 alt={`Slide ${index + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity rounded-2xl signup-image ${
-                  currentImage === index ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity rounded-2xl signup-image ${currentImage === index ? "opacity-100" : "opacity-0"
+                  }`}
                 style={{
                   transition:
                     "opacity 0.5s ease-in-out, transform 0.5s ease-in-out",
@@ -164,9 +163,8 @@ const Bookings = () => {
                 <button
                   key={index}
                   onClick={() => handleSlide(index)}
-                  className={`w-6 h-3 rounded-full ${
-                    currentImage === index ? "bg-white" : "bg-white/50"
-                  } transition-all duration-300`}
+                  className={`w-6 h-3 rounded-full ${currentImage === index ? "bg-white" : "bg-white/50"
+                    } transition-all duration-300`}
                 ></button>
               ))}
             </div>

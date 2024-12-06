@@ -24,7 +24,7 @@ function AdminLogin() {
             );
             console.log("The response is ", response.data)
             alert("Login successful!");
-            navigate("/account");
+            navigate("/warden/my-account");
         } catch (error) {
             alert(error.response?.data?.message || "Login failed");
         }

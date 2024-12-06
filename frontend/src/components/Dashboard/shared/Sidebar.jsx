@@ -14,41 +14,41 @@ const Sidebar = ({ isShrunk, setIsShrunk }) => {
       </span>
 
       <div className="text-center text-gray-100 mt-20">
-        <Link to="/dashboard" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/warden/dashboard" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-house-door-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>Dashboard</span>
         </Link>
 
-        <Link to="/studentdetails" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/warden/student-details" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-backpack-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>Student Details</span>
         </Link>
 
-        <Link to="/messSignIn" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/super-admin/create/mess-security" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-person-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>MessSecurity</span>
         </Link>
 
-        <Link to="/gatepasses" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/warden/gatepasses" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-calendar-week-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>Gate Passes</span>
         </Link>
 
-        <Link to="/complaintbox" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/warden/complaints" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-box-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>Complaint Box</span>
         </Link>
 
-        <Link to="/mess-menu" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/warden/update/mess-menu" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-box-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>Mess Menu</span>
         </Link>
 
-        <Link to="/account" className='p-2.5 flex items-center rounded-md px-4 mt-20 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/warden/my-account" className='p-2.5 flex items-center rounded-md px-4 mt-20 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-person-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>Account</span>
         </Link>
-        
+
       </div>
     </div>
   );

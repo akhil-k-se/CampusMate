@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children, roles = [] }) => {
 
   // If the user is not logged in, redirect to login
   if (!user) {
-    return <Navigate to="/user-signup" />;
+    return <Navigate to="/student-signup" />;
   }
 
   // If the user does not have the correct role, redirect to a different page
