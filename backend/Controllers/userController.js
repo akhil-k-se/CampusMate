@@ -45,7 +45,7 @@ const register = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { email: user.email, _id: user._id, enrollmentID: user.enrollmentID },
+      { email: user.email, _id: user._id, enrollmentID: user.enrollmentID ,role:'student'},
       JWT_SECRET
     );
 

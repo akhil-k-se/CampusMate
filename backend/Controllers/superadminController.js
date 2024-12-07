@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = "123";
+
 require('dotenv').config();
 
 const storedUsername = process.env.ADMIN_USERNAME;
@@ -13,6 +16,13 @@ const login = async (req, res) => {
     if (email === storedUsername) {
         const isPasswordCorrect = password === storedPassword
         if (isPasswordCorrect) {
+            const token = jwt.sign({role:'warden'},JWT_SECRET);
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true, // Send cookie over HTTPS only
+                sameSite: "none",
+              });
+
             return res.status(200).json({ message: 'Login successful!' });
         } else {
             return res.status(401).json({ message: 'Invalid credentials' });

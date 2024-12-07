@@ -14,7 +14,7 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const token = jwt.sign({ email }, JWT_SECRET);
+    const token = jwt.sign({ email ,role:'gate-security'}, JWT_SECRET);
 
     const user = await GateSecurity.create({
       name,

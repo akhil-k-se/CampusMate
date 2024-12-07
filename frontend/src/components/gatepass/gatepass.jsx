@@ -117,6 +117,10 @@ const Gatepass = () => {
         const minOutTime = new Date(2024, 0, 1, 6, 0, 0);
         const maxInTime = new Date(2024, 0, 1, 20, 0, 0);
 
+        const currentTime = new Date();
+        alert(currentTime.getTime());
+
+
         if (formData.outday === "Day Out") {
             if (outTime < minOutTime || outTime > maxInTime) {
                 return alert("For Day Out, Out-Time must be between 6 AM and 8 PM.");

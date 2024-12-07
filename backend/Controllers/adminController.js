@@ -31,7 +31,7 @@ const register = async (req, res) => {
     });
 
     const token = jwt.sign(
-      { id: admin._id, email: admin.email, role: "admin" },
+      { id: admin._id, email: admin.email, role:'warden' },
       JWT_SECRET
     );
 
