@@ -15,7 +15,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 function LandingPage() {
-  localStorage.clear();
+  localStorage.removeItem("token"); // Remove from localStorage
+  sessionStorage.removeItem("token"); // Remove from sessionStorage
+
 
   const [isOpen, setIsOpen] = useState(false);
   const [buttonPop, setButtonPop] = useState(false);
