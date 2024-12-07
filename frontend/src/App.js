@@ -1,44 +1,44 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './components/ProtectedRoutes/AuthContext';
-import ProtectedRoute from './components/ProtectedRoutes/ProtectedRoutes';
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./components/ProtectedRoutes/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoutes";
 
 // Import your components
-import LandingPage from './components/LadingPage/LandingPage';
-import About from './components/about/about';
-import AdminOrUser from './components/adminOrUser/adminOrUser';
-import RegisterLogin from './components/LoginRegister/loginRegister';
-import AdminLogin from './components/adminLogin/adminLogin';
-import StudentLandingPage from './components/studentLandingPage/studentLandingPage';
-import Studentgatepass from './components/studentLandingPage/Studentgatepass';
-import StudentComplaints from './components/studentLandingPage/StudentComplaints';
-import PaymentPage from './components/payment/PaymentForm';
-import QRcode from './components/QRCode/QRcode';
-import UserMess from './components/MessMenu/MessMenu';
+import LandingPage from "./components/LadingPage/LandingPage";
+import About from "./components/about/about";
+import AdminOrUser from "./components/adminOrUser/adminOrUser";
+import RegisterLogin from "./components/LoginRegister/loginRegister";
+import AdminLogin from "./components/adminLogin/adminLogin";
+import StudentLandingPage from "./components/studentLandingPage/studentLandingPage";
+import Studentgatepass from "./components/studentLandingPage/Studentgatepass";
+import StudentComplaints from "./components/studentLandingPage/StudentComplaints";
+import PaymentPage from "./components/payment/PaymentForm";
+import QRcode from "./components/QRCode/QRcode";
+import UserMess from "./components/MessMenu/MessMenu";
 
-import Dashboard from './components/Dashboard/Dashboard';
-import Studentdetails from './components/Dashboard/Studentdetails';
-import Gatepassdetails from './components/Dashboard/Gatepassdetails';
-import Complaintbox from './components/Dashboard/Complaintbox';
-import Account from './components/Dashboard/Account';
-import MessMenu from './components/Dashboard/messMenu';
+import Dashboard from "./components/Dashboard/Dashboard";
+import Studentdetails from "./components/Dashboard/Studentdetails";
+import Gatepassdetails from "./components/Dashboard/Gatepassdetails";
+import Complaintbox from "./components/Dashboard/Complaintbox";
+import Account from "./components/Dashboard/Account";
+import MessMenu from "./components/Dashboard/messMenu";
 
-import MessLogin from './components/messLogin/messLogin';
-import QRScanner from './components/QRCode/QRreader';
+import MessLogin from "./components/messLogin/messLogin";
+import QRScanner from "./components/QRCode/QRreader";
 
-import GateLogin from './components/GateSecurity/gateLogin';
+import GateLogin from "./components/GateSecurity/gateLogin";
 
-import MessSign from './components/messLogin/messSignup';
-import SuperLogin from './components/superadmin/SuperLogin';
-import Wardendetails from './components/superadmin/Dashboard/Wardendetails';
-import Warden from './components/superadmin/Dashboard/Warden';
-import GateSecurity from './components/superadmin/Dashboard/GateSecurity';
-import GuardDetails from './components/superadmin/Dashboard/GuardDetails';
-import Dashboard1 from './components/superadmin/Dashboard/Dashboard1';
+import MessSign from "./components/messLogin/messSignup";
+import SuperLogin from "./components/superadmin/SuperLogin";
+import Wardendetails from "./components/superadmin/Dashboard/Wardendetails";
+import Warden from "./components/superadmin/Dashboard/Warden";
+import GateSecurity from "./components/superadmin/Dashboard/GateSecurity";
+import GuardDetails from "./components/superadmin/Dashboard/GuardDetails";
+import Dashboard1 from "./components/superadmin/Dashboard/Dashboard1";
 
 function App() {
   return (
-  <AuthProvider>
+    <AuthProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -47,12 +47,13 @@ function App() {
           <Route path="/student-signup" element={<RegisterLogin />} />
           <Route path="/warden-signup" element={<AdminLogin />} />
           <Route path="/about" element={<About />} />
+          <Route path="/super-admin/login" element={<SuperLogin />} />
 
           {/* Student Routes */}
           <Route
             path="/student"
             element={
-              <ProtectedRoute allowedRoles={['student']}>
+              <ProtectedRoute allowedRoles={["student"]}>
                 <StudentLandingPage />
               </ProtectedRoute>
             }
@@ -60,7 +61,7 @@ function App() {
           <Route
             path="/student/my-gatepasses"
             element={
-              <ProtectedRoute allowedRoles={['student']}>
+              <ProtectedRoute allowedRoles={["student"]}>
                 <Studentgatepass />
               </ProtectedRoute>
             }
@@ -68,7 +69,7 @@ function App() {
           <Route
             path="/student/my-complaints"
             element={
-              <ProtectedRoute allowedRoles={['student']}>
+              <ProtectedRoute allowedRoles={["student"]}>
                 <StudentComplaints />
               </ProtectedRoute>
             }
@@ -76,7 +77,7 @@ function App() {
           <Route
             path="/student/booking/payment"
             element={
-              <ProtectedRoute allowedRoles={['student']}>
+              <ProtectedRoute allowedRoles={["student"]}>
                 <PaymentPage />
               </ProtectedRoute>
             }
@@ -84,7 +85,7 @@ function App() {
           <Route
             path="/student/QR"
             element={
-              <ProtectedRoute allowedRoles={['student']}>
+              <ProtectedRoute allowedRoles={["student"]}>
                 <QRcode />
               </ProtectedRoute>
             }
@@ -92,7 +93,7 @@ function App() {
           <Route
             path="/student/mess"
             element={
-              <ProtectedRoute allowedRoles={['student']}>
+              <ProtectedRoute allowedRoles={["student"]}>
                 <UserMess />
               </ProtectedRoute>
             }
@@ -102,7 +103,7 @@ function App() {
           <Route
             path="/warden/dashboard"
             element={
-              <ProtectedRoute allowedRoles={['warden']}>
+              <ProtectedRoute allowedRoles={["warden"]}>
                 <Dashboard />
               </ProtectedRoute>
             }
@@ -110,7 +111,7 @@ function App() {
           <Route
             path="/warden/student-details"
             element={
-              <ProtectedRoute allowedRoles={['warden']}>
+              <ProtectedRoute allowedRoles={["warden"]}>
                 <Studentdetails />
               </ProtectedRoute>
             }
@@ -118,7 +119,7 @@ function App() {
           <Route
             path="/warden/gatepasses"
             element={
-              <ProtectedRoute allowedRoles={['warden']}>
+              <ProtectedRoute allowedRoles={["warden"]}>
                 <Gatepassdetails />
               </ProtectedRoute>
             }
@@ -126,7 +127,7 @@ function App() {
           <Route
             path="/warden/complaints"
             element={
-              <ProtectedRoute allowedRoles={['warden']}>
+              <ProtectedRoute allowedRoles={["warden"]}>
                 <Complaintbox />
               </ProtectedRoute>
             }
@@ -134,7 +135,7 @@ function App() {
           <Route
             path="/warden/my-account"
             element={
-              <ProtectedRoute allowedRoles={['warden']}>
+              <ProtectedRoute allowedRoles={["warden"]}>
                 <Account />
               </ProtectedRoute>
             }
@@ -142,7 +143,7 @@ function App() {
           <Route
             path="/warden/update/mess-menu"
             element={
-              <ProtectedRoute allowedRoles={['warden']}>
+              <ProtectedRoute allowedRoles={["warden"]}>
                 <MessMenu />
               </ProtectedRoute>
             }
@@ -152,7 +153,7 @@ function App() {
           <Route
             path="/guard/mess-login"
             element={
-              <ProtectedRoute allowedRoles={['mess-guard']}>
+              <ProtectedRoute allowedRoles={["mess-guard"]}>
                 <MessLogin />
               </ProtectedRoute>
             }
@@ -160,7 +161,7 @@ function App() {
           <Route
             path="/guard/scanner"
             element={
-              <ProtectedRoute allowedRoles={['mess-guard', 'gate-security']}>
+              <ProtectedRoute allowedRoles={["mess-guard", "gate-security"]}>
                 <QRScanner />
               </ProtectedRoute>
             }
@@ -170,7 +171,7 @@ function App() {
           <Route
             path="/guard/gate-login"
             element={
-              <ProtectedRoute allowedRoles={['gate-security']}>
+              <ProtectedRoute allowedRoles={["gate-security"]}>
                 <GateLogin />
               </ProtectedRoute>
             }
@@ -180,23 +181,16 @@ function App() {
           <Route
             path="/super-admin/create/mess-security"
             element={
-              <ProtectedRoute allowedRoles={['super-admin']}>
+              <ProtectedRoute allowedRoles={["super-admin"]}>
                 <MessSign />
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/super-admin/login"
-            element={
-              <ProtectedRoute allowedRoles={['super-admin']}>
-                <SuperLogin />
-              </ProtectedRoute>
-            }
-          />
+
           <Route
             path="/super-admin/details/wardens"
             element={
-              <ProtectedRoute allowedRoles={['super-admin']}>
+              <ProtectedRoute allowedRoles={["super-admin"]}>
                 <Wardendetails />
               </ProtectedRoute>
             }
@@ -204,7 +198,7 @@ function App() {
           <Route
             path="/super-admin/create/warden"
             element={
-              <ProtectedRoute allowedRoles={['super-admin']}>
+              <ProtectedRoute allowedRoles={["super-admin"]}>
                 <Warden />
               </ProtectedRoute>
             }
@@ -212,7 +206,7 @@ function App() {
           <Route
             path="/super-admin/create/gate-security"
             element={
-              <ProtectedRoute allowedRoles={['super-admin']}>
+              <ProtectedRoute allowedRoles={["super-admin"]}>
                 <GateSecurity />
               </ProtectedRoute>
             }
@@ -220,7 +214,7 @@ function App() {
           <Route
             path="/super-admin/details/gate-security"
             element={
-              <ProtectedRoute allowedRoles={['super-admin']}>
+              <ProtectedRoute allowedRoles={["super-admin"]}>
                 <GuardDetails />
               </ProtectedRoute>
             }
@@ -228,7 +222,7 @@ function App() {
           <Route
             path="/super-admin/dashboard"
             element={
-              <ProtectedRoute allowedRoles={['super-admin']}>
+              <ProtectedRoute allowedRoles={["super-admin"]}>
                 <Dashboard1 />
               </ProtectedRoute>
             }
