@@ -1,21 +1,17 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from './AuthContext'; // Import the auth hook
+import { useAuth } from './AuthContext';
 
 const ProtectedRoute = ({ children, roles = [] }) => {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
-  // If still loading, show a loading spinner or nothing
-  if (loading) return <div>Loading...</div>;
-
-  // If the user is not logged in, redirect to login
   if (!user) {
     return <Navigate to="/" />;
   }
+  console.log("The role is ",roles);
 
-  // If the user does not have the correct role, redirect to a different page
   if (roles.length > 0 && !roles.includes(user.role)) {
-    return <Navigate to="/" />; // Redirect to homepage or any unauthorized page
+    return <Navigate to="/unauthorized" />;
   }
 
   return children;

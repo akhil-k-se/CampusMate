@@ -1,11 +1,9 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext();
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -14,13 +12,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("https://campus-mate.onrender.com/getUserRole", {
-          withCredentials: true
+        const response = await axios.get('https://campus-mate.onrender.com/getUserRole', {
+          withCredentials: true,
         });
-        console.log(response.data);
+        console.log("The user is ",response.data);
         setUser(response.data);
-      } catch (err) {
-        console.log('Authentication error:', err);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -30,8 +29,8 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, setUser }}>
-      {children}
+    <AuthContext.Provider value={{ user, setUser, loading }}>
+      {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
 };
