@@ -15,18 +15,19 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.get('https://campus-mate.onrender.com/getUserRole', {
           withCredentials: true,
         });
-        console.log("The user is ",response.data);
+        console.log("AuthContext: User data fetched", response.data);
         setUser(response.data);
       } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error("AuthContext: Error fetching user", error);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchUser();
   }, []);
+  
 
   return (
     <AuthContext.Provider value={{ user, setUser, loading }}>
