@@ -514,8 +514,9 @@ app.get("/getUserRole", async (req, res) => {
   }
 });
 
-app.get("/clearcookie", (req, res) => {
-  res.clearCookie("token"); // Clear the 'token' cookie
+app.get("/clearcookie",async (req, res) => {
+  await res.clearCookie("token"); // Clear the 'token' cookie
+  console.log("Cookie cleared successfully");
   res.status(200).send("Cookie cleared successfully");
 });
 
