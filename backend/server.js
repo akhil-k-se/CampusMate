@@ -523,7 +523,7 @@ app.get("/clearcookie", async (req, res) => {
       path: "/",          // Makes the cookie accessible across the entire domain
       domain: "https://campus-mate-roan.vercel.app", // Your deployed domain
       secure: true,       // Ensures it works over HTTPS
-      sameSite: "strict", // Match the SameSite attribute used when setting the cookie
+      sameSite: "none", // Match the SameSite attribute used when setting the cookie
     });
 
     console.log("Cookie cleared successfully.");
