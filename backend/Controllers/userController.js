@@ -123,7 +123,7 @@ const login = async (req, res) => {
       sameSite: "none",
       maxAge: 3600000
     });
-    console.log("Generated Token:", token);
+    console.log("Generated Token :", token);
 
     console.log("Login successful, returning token");
     return res.status(200).json({ msg: "Login successful" });
