@@ -36,7 +36,7 @@ import GateSecurity from './components/superadmin/Dashboard/GateSecurity';
 import GuardDetails from './components/superadmin/Dashboard/GuardDetails';
 import Dashboard1 from './components/superadmin/Dashboard/Dashboard1';
 
-const app =async()=> {
+function App() {
   return (
   <AuthProvider>
       <Router>
