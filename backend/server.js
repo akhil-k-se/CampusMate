@@ -514,11 +514,26 @@ app.get("/getUserRole", async (req, res) => {
   }
 });
 
-app.get("/clearcookie",async (req, res) => {
-  res.clearCookie("token", { secure: true, sameSite: "strict" });
-  console.log("Cookie cleared successfully");
-  res.status(200).send("Cookie cleared successfully");
+app.get("/clearcookie", async (req, res) => {
+  try {
+    console.log("Cookies before clearing:", req.cookies);
+
+    // Clear the 'token' cookie
+    res.clearCookie("token", {
+      path: "/",          // Makes the cookie accessible across the entire domain
+      domain: "campus-mate-roan.vercel.app", // Your deployed domain
+      secure: true,       // Ensures it works over HTTPS
+      sameSite: "strict", // Match the SameSite attribute used when setting the cookie
+    });
+
+    console.log("Cookie cleared successfully.");
+    res.status(200).send("Cookie cleared successfully.");
+  } catch (error) {
+    console.error("Error clearing cookie:", error);
+    res.status(500).send("Failed to clear cookie.");
+  }
 });
+
 
 //Booking Routes
 app.post("/reservation", reserve.reservation);
