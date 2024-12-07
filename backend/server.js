@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://campus-matee.vercel.app",
+    origin: "https://campus-mate-roan.vercel.app",
     credentials: true,
   })
 );
