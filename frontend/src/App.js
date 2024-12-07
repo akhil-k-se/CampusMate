@@ -36,9 +36,9 @@ import GateSecurity from './components/superadmin/Dashboard/GateSecurity';
 import GuardDetails from './components/superadmin/Dashboard/GuardDetails';
 import Dashboard1 from './components/superadmin/Dashboard/Dashboard1';
 
-function App() {
+const app =async()=> {
   return (
-    <AuthProvider>
+  <AuthProvider>
       <Router>
         <Routes>
           {/* Public Routes */}

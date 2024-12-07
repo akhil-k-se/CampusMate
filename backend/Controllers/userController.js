@@ -76,6 +76,7 @@ const register = async (req, res) => {
         httpOnly: true,
         secure: true, // Send cookie over HTTPS only
         sameSite: "none",
+        maxAge: 3600000
       });
     res.status(200).json({ msg: "User registered successfully", user });
   } catch (err) {
@@ -116,10 +117,11 @@ const login = async (req, res) => {
 
     const token = user.token;
 
-    await res.cookie("token", token, {
+     res.cookie("token", token, {
       httpOnly: true,
       secure: true, // Send cookie over HTTPS only
       sameSite: "none",
+      maxAge: 3600000
     });
     console.log("Generated Token:", token);
 
@@ -295,6 +297,10 @@ const showMenu = async (req, res) => {
   const userBooking = await Reservation.findOne({
     enrollmentNumber: enrollmentId,
   });
+  if(!userBooking)
+  {
+    return res.status(404).json({ msg: "Please Book the room first" });
+  }
   const hostel = userBooking.hostelname;
   console.log(hostel);
 
