@@ -24,7 +24,7 @@ const Sidebar = ({ isShrunk, setIsShrunk }) => {
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>Student Details</span>
         </Link>
 
-        <Link to="/super-admin/create/mess-security" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
+        <Link to="/warden/create/mess-security" className='p-2.5 flex items-center rounded-md px-4 mt-3 duration-300 cursor-pointer group hover:bg-gray-600'>
           <i className='bi bi-person-fill text-xl px-3 py-2 rounded-md bg-[#e82574]'></i>
           <span className={`text-[17px] ml-4 text-gray-300 font-bold group-hover:text-white ${isShrunk ? "hidden" : "block"}`}>MessSecurity</span>
         </Link>

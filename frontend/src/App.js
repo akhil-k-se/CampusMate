@@ -104,6 +104,14 @@ function App() {
       </ProtectedRoute>
     }
   />
+    <Route
+    path="/warden/create/mess-security"
+    element={
+      <ProtectedRoute allowedRoles={["warden"]}>
+        <MessSign />
+      </ProtectedRoute>
+    }
+  />
 
   {/* Mess Guard Routes */}
   <Route
@@ -134,14 +142,7 @@ function App() {
   />
 
   {/* Super Admin Routes */}
-  <Route
-    path="/super-admin/create/mess-security"
-    element={
-      <ProtectedRoute allowedRoles={["super-admin"]}>
-        <MessSign />
-      </ProtectedRoute>
-    }
-  />
+
   <Route
     path="/super-admin/login"
     element={
