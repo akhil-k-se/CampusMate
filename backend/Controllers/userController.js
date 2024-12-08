@@ -72,7 +72,9 @@ const register = async (req, res) => {
     }
 
     // Set cookie and respond
-    res.cookie("token", token);
+    res.cookie("token", token,{
+      httpOnly: true
+    });
     res.status(200).json({ msg: "User registered successfully", user });
   } catch (err) {
     console.error("Error during registration:", err);
@@ -112,7 +114,9 @@ const login = async (req, res) => {
 
     const token = user.token;
 
-     res.cookie("token", token);
+     res.cookie("token", token,{
+      httpOnly: true
+    });
     console.log("Generated Token :", token);
 
     console.log("Login successful, returning token");

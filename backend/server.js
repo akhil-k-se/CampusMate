@@ -61,7 +61,9 @@ app.post("/getTokenForSecurity", (req, res) => {
   const token = req.header("Authorization")?.replace("Bearer ", "");
   // console.log("Received Token:",token);
   if (token) {
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true
+    });
     console.log(token);
 
     return res.status(200).json({ msg: "Token stored in cookie" });

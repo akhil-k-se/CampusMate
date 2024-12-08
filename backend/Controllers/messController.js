@@ -52,7 +52,9 @@ const login = async (req, res) => {
 
     const token = user.jwtToken;
 
-    res.cookie("token",token)
+    res.cookie("token",token,{
+      httpOnly: true
+    })
 
     res.json({ token });
   } catch (err) {

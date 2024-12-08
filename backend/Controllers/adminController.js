@@ -86,7 +86,9 @@ const login = async (req, res) => {
 
     console.log("The token of the user is ", token);
 
-    res.cookie("token", token);
+    res.cookie("token", token,{
+      httpOnly: true
+    });
 
     console.log("Login successful, returning token ", req.cookies.token);
     return res.status(200).json({ msg: "done" });
