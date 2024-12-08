@@ -50,11 +50,11 @@ function App() {
 
         {/* Student Routes */}
         <Route path="/student" element={<ProtectedRoute allowedRoles={['student']}><StudentLandingPage/></ProtectedRoute>} />
-        <Route path="/student/my-gatepasses" element={<Studentgatepass />} />
-        <Route path="/student/my-complaints" element={<StudentComplaints />} />
-        <Route path="/student/booking/payment" element={<PaymentPage />} />
-        <Route path="/student/QR" element={<QRcode />} />
-        <Route path="/student/mess" element={<UserMess />} />
+        <Route path="/student/my-gatepasses" element={<ProtectedRoute allowedRoles={['student']}><Studentgatepass /></ProtectedRoute>} />
+        <Route path="/student/my-complaints" element={<ProtectedRoute allowedRoles={['student']}><StudentComplaints /></ProtectedRoute>} />
+        <Route path="/student/booking/payment" element={<ProtectedRoute allowedRoles={['student']}><PaymentPage /></ProtectedRoute>} />
+        <Route path="/student/QR" element={<ProtectedRoute allowedRoles={['student']}><QRcode/></ProtectedRoute>} />
+        <Route path="/student/mess" element={<ProtectedRoute allowedRoles={['student']}><UserMess/></ProtectedRoute>} />
 
         {/* Warden Routes */}
         <Route path="/warden/dashboard" element={<Dashboard />} />
