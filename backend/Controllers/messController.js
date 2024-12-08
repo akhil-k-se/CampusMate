@@ -52,12 +52,7 @@ const login = async (req, res) => {
 
     const token = user.jwtToken;
 
-    res.cookie("token",token,{
-      httpOnly: true,
-      secure: true, // Send cookie over HTTPS only
-      sameSite: "none",
-      maxAge: 3600000
-    })
+    res.cookie("token",token)
 
     res.json({ token });
   } catch (err) {

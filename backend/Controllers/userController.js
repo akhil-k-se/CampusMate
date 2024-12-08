@@ -72,12 +72,7 @@ const register = async (req, res) => {
     }
 
     // Set cookie and respond
-    res.cookie("token", token, {
-        httpOnly: true,
-        secure: true, // Send cookie over HTTPS only
-        sameSite: "none",
-        maxAge: 3600000
-      });
+    res.cookie("token", token);
     res.status(200).json({ msg: "User registered successfully", user });
   } catch (err) {
     console.error("Error during registration:", err);
@@ -117,12 +112,7 @@ const login = async (req, res) => {
 
     const token = user.token;
 
-     res.cookie("token", token, {
-      httpOnly: true,
-      secure: true, // Send cookie over HTTPS only
-      sameSite: "none",
-      maxAge: 3600000
-    });
+     res.cookie("token", token);
     console.log("Generated Token :", token);
 
     console.log("Login successful, returning token");

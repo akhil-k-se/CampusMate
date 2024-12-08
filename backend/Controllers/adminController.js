@@ -86,12 +86,7 @@ const login = async (req, res) => {
 
     console.log("The token of the user is ", token);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true, // Send cookie over HTTPS only
-      sameSite: "none",
-      maxAge: 3600000
-    });
+    res.cookie("token", token);
 
     console.log("Login successful, returning token ", req.cookies.token);
     return res.status(200).json({ msg: "done" });
