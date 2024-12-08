@@ -75,7 +75,7 @@ const register = async (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
         secure: true, // Send cookie over HTTPS only
-        sameSite: "lax",
+        sameSite: "none",
         maxAge: 3600000
       });
     res.status(200).json({ msg: "User registered successfully", user });
@@ -120,7 +120,7 @@ const login = async (req, res) => {
      res.cookie("token", token, {
       httpOnly: true,
       secure: true, // Send cookie over HTTPS only
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 3600000
     });
     console.log("Generated Token :", token);

@@ -89,7 +89,7 @@ const login = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true, // Send cookie over HTTPS only
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 3600000
     });
 

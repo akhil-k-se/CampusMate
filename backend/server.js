@@ -64,7 +64,7 @@ app.post("/getTokenForSecurity", (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true, // Send cookie over HTTPS only
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 3600000
     });
     console.log(token);
@@ -89,7 +89,7 @@ app.post("/logout", (req, res) => {
     domain: "stackmasters-campusmate.vercel.app", // Ensure this matches the domain of your app
     httpOnly: true,      // Restrict client-side access
     secure: true,        // Ensure cookie is sent over HTTPS
-    sameSite: "lax",    // Required for cross-origin requests
+    sameSite: "none",    // Required for cross-origin requests
   });
   res.status(200).send({ message: "Logged out successfully" });
 });
@@ -531,7 +531,7 @@ app.get("/clearcookie", async (req, res) => {
       domain: "stackmasters-campusmate.vercel.app", // Ensure this matches the domain of your app
       httpOnly: true,      // Restrict client-side access
       secure: true,        // Ensure cookie is sent over HTTPS
-      sameSite: "lax",    // Required for cross-origin requests
+      sameSite: "none",    // Required for cross-origin requests
     });
 
     console.log("Cookie cleared successfully.");
