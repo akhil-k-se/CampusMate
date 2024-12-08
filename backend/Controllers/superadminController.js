@@ -16,7 +16,7 @@ const login = async (req, res) => {
     if (email === storedUsername) {
         const isPasswordCorrect = password === storedPassword
         if (isPasswordCorrect) {
-            const token = jwt.sign({role:'super-warden'},JWT_SECRET);
+            const token = jwt.sign({role:'super-admin'},JWT_SECRET);
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: true, // Send cookie over HTTPS only
