@@ -38,19 +38,25 @@ function LandingPage() {
 
   // Make an API call when the component mounts
   useEffect(() => {
-    // Example using fetch API to hit your backend endpoint
-    fetch("https://campus-mate.onrender.com/clearcookie", {
-      method: "GET",  // You can change this to POST or other methods if needed
-      credentials: "include"  // This ensures cookies or credentials are included
-    })
-      .then(response => response.json())
-      .then(data => {
-        setApiData(data);
-        console.log("the data is ",apiData)  // Save the API data in the state
+      // Send request to clear cookie
+      fetch("https://campus-mate.onrender.com/clearcookie", {
+        method: "GET",
+        credentials: "include", // Include cookies with the request
       })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setApiData(data);
+          console.log("Data received:", data); // Verify the response from the server
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+ 
     
 
     // Your GSAP animations code

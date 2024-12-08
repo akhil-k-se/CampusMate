@@ -521,17 +521,18 @@ app.get("/clearcookie", async (req, res) => {
 
     // Clear the 'token' cookie
     res.clearCookie("token", {
-      path: "/",          // Makes the cookie accessible across the entire domain
-      domain: "https://campus-mate-roan.vercel.app", // Your deployed domain
-      secure: true,       // Ensures it works over HTTPS
-      sameSite: "none", // Match the SameSite attribute used when setting the cookie
+      path: "/",           // Makes the cookie accessible across the entire domain
+      domain: "campus-mate-roan.vercel.app", // Ensure this matches the domain of your app
+      httpOnly: true,      // Restrict client-side access
+      secure: true,        // Ensure cookie is sent over HTTPS
+      sameSite: "none",    // Required for cross-origin requests
     });
 
     console.log("Cookie cleared successfully.");
-    res.status(200).send("Cookie cleared successfully.");
+    res.status(200).json({ message: "Cookie cleared successfully." }); // Send JSON response
   } catch (error) {
     console.error("Error clearing cookie:", error);
-    res.status(500).send("Failed to clear cookie.");
+    res.status(500).json({ message: "Failed to clear cookie." }); // Send error response as JSON
   }
 });
 
