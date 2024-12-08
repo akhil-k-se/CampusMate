@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import { AuthProvider } from "./components/ProtectedRoutes/AuthContext";
-// import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoutes";
+import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoutes";
 
 // Import your components
 import LandingPage from "./components/LadingPage/LandingPage";
@@ -49,7 +49,7 @@ function App() {
         <Route path="/super-admin/login" element={<SuperLogin />} />
 
         {/* Student Routes */}
-        <Route path="/student" element={<StudentLandingPage />} />
+        <Route path="/student" element={<ProtectedRoute allowedRoles={['student']}><StudentLandingPage/></ProtectedRoute>} />
         <Route path="/student/my-gatepasses" element={<Studentgatepass />} />
         <Route path="/student/my-complaints" element={<StudentComplaints />} />
         <Route path="/student/booking/payment" element={<PaymentPage />} />
