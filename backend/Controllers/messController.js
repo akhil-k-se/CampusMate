@@ -53,7 +53,10 @@ const login = async (req, res) => {
     const token = user.jwtToken;
 
     res.cookie("token",token,{
-      httpOnly: true
+      httpOnly: true,
+      secure: true, // Send cookie over HTTPS only
+      sameSite: "lax",
+      maxAge: 3600000
     })
 
     res.json({ token });

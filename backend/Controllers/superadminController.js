@@ -17,9 +17,12 @@ const login = async (req, res) => {
         const isPasswordCorrect = password === storedPassword
         if (isPasswordCorrect) {
             const token = jwt.sign({role:'warden'},JWT_SECRET);
-        res.cookie("token", token,{
-            httpOnly: true
-          });
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true, // Send cookie over HTTPS only
+                sameSite: "lax",
+                maxAge: 3600000
+              });
 
             return res.status(200).json({ message: 'Login successful!' });
         } else {
