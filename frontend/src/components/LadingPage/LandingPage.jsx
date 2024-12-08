@@ -45,7 +45,8 @@ function LandingPage() {
     })
       .then(response => response.json())
       .then(data => {
-        setApiData(data);  // Save the API data in the state
+        setApiData(data);
+        console.log("the data is ",apiData)  // Save the API data in the state
       })
       .catch(error => {
         console.error("Error fetching data:", error);
