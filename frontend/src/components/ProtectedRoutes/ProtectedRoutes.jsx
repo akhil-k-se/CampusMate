@@ -39,7 +39,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   // Check if the role is not allowed
   if (allowedRoles.length > 0 && !allowedRoles.includes(userRole)) {
     console.warn(`User role (${userRole}) is not authorized. Redirecting to unauthorized page...`);
-    return <Navigate to="/unauthorized" />;
+    return <Navigate to="/" />;
   }
 
   // Render the protected component if role is authorized
