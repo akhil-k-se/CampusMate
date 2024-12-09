@@ -51,7 +51,7 @@ const Dashboard = () => {
       });
   }, []);
 
-  if (loading) return <Loading loadingTime={2000}/>;
+  if (loading) return <div className="w-full h-full flex items-center justify-center"><Loading loadingTime={2000}/></div>;
   if (error) return <div>{error}</div>;
 
   const { gatePass, students, complaints, messSecurity } = dashboardData;
