@@ -150,14 +150,6 @@ const Warden = () => {
               )}
             </select>
 
-            <input
-              type="text"
-              name="role"
-              placeholder="Role"
-              value={formData.role}
-              onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
-            />
             <select
               name="role"
               className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"

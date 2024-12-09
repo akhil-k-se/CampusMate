@@ -6,6 +6,8 @@ const bcrypt = require("bcrypt");
 const register = async (req, res) => {
   try {
     const { name, email, gender, hostel, role, password } = req.body;
+    console.log(req.body);
+
 
     if (!name || !email || !gender || !hostel || !password || !role) {
       return res.status(400).json({ msg: "All fields are required" });
