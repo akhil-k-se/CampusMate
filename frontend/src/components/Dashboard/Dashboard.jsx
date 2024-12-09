@@ -18,6 +18,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import Loading from "../Loader/Loading";
 
 // Register all the components used by Chart.js
 ChartJS.register(
@@ -50,7 +51,7 @@ const Dashboard = () => {
       });
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading loadingTime={2000}/>;
   if (error) return <div>{error}</div>;
 
   const { gatePass, students, complaints, messSecurity } = dashboardData;

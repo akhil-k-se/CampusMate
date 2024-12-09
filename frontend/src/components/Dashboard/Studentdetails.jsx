@@ -3,6 +3,7 @@ import Sidebar from './shared/Sidebar';
 import Navbar from './shared/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUtensils, faTshirt, faBed } from '@fortawesome/free-solid-svg-icons';
+import Loading from '../Loader/Loading';
 
 const Studentdetails = () => {
   const [isShrunk, setIsShrunk] = useState(false);
@@ -23,7 +24,7 @@ const Studentdetails = () => {
   
 
   if (!studentData.length) {
-    return <div>Loading...</div>;
+    return <Loading loadingTime={2000}/>;
   }
 
   return (

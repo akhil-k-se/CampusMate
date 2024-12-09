@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://campus-matee.vercel.app",
+    origin: "https://stackmasters-campusmate.vercel.app",
     credentials: true,
   })
 );
@@ -65,6 +65,7 @@ app.post("/getTokenForSecurity", (req, res) => {
       httpOnly: true,
       secure: true, // Send cookie over HTTPS only
       sameSite: "none",
+      maxAge: 3600000
     });
     console.log(token);
 
@@ -83,7 +84,13 @@ app.post("/getTokenForSecurity", (req, res) => {
 //   }));
 
 app.post("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/", // Same as the one used when setting the cookie
+});
+
   res.status(200).send({ message: "Logged out successfully" });
 });
 
@@ -514,10 +521,26 @@ app.get("/getUserRole", async (req, res) => {
   }
 });
 
-app.get("/clearcookie", (req, res) => {
-  res.clearCookie("token"); // Clear the 'token' cookie
-  res.status(200).send("Cookie cleared successfully");
+app.get("/clearcookie", async (req, res) => {
+  try {
+    console.log("Cookies before clearing:", req.cookies);
+
+    // Clear the 'token' cookie
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/", // Same as the one used when setting the cookie
+  });
+  
+    console.log("Cookie cleared successfully.");
+    res.status(200).json({ message: "Cookie cleared successfully." }); // Send JSON response
+  } catch (error) {
+    console.error("Error clearing cookie:", error);
+    res.status(500).json({ message: "Failed to clear cookie." }); // Send error response as JSON
+  }
 });
+
 
 //Booking Routes
 app.post("/reservation", reserve.reservation);

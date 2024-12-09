@@ -4,6 +4,7 @@ import Navbar from "./shared/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Loading from "../Loader/Loading";
 
 const Account = () => {
   const [isShrunk, setIsShrunk] = useState(false);
@@ -28,7 +29,7 @@ const Account = () => {
   if (!wardenProfile) {
     return (
       <div className="text-center mt-10">
-        <p>Loading user details...</p>
+        <Loading loadingTime={2000}/>
       </div>
     );
   }
