@@ -203,7 +203,7 @@ function StudentLandingPage() {
           <div class="explore__bg relative">
             <div className="black-div"></div>
             <div class="explore__content">
-              <p class="section__description">10th AUG 2024</p>
+              <p class="section__description">10th Dec 2024</p>
               <h4>A New Mess Menu Is Available In Our Hostels.</h4>
               <NavLink to="/student/mess">
                 <button class="btn">View Menu</button>

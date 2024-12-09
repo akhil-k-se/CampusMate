@@ -13,6 +13,33 @@ const register = async (req, res) => {
   try {
     const { name, email, password, enrollmentID } = req.body;
 
+    if (!name || !email || !password || !enrollmentID) {
+      return res.status(400).json({ msg: "All fields are required" });
+    }
+
+    if (/\d/.test(name)) {
+      return res.status(400).json({ msg: "Name should not contain numbers" });
+    }
+
+    if (enrollmentID < 2010990000) {
+      return res.status(400).json({ msg: "Enter a valid enrollmentID" })
+    }
+
+    if (/\s/.test(password)) {
+      return res.status(400).json({ msg: "Password should not contain spaces" });
+    }
+
+    // Check for valid email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ msg: "Invalid email format" });
+    }
+
+    // Check if password meets minimum length (example: 6 characters)
+    if (password.length < 6) {
+      return res.status(400).json({ msg: "Password should be at least 6 characters long" });
+    }
+
     // Check if user exists
     const existingUser = await User.findOne({
       $or: [{ email }, { enrollmentID }],
@@ -45,7 +72,7 @@ const register = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { email: user.email, _id: user._id, enrollmentID: user.enrollmentID ,role:'student'},
+      { email: user.email, _id: user._id, enrollmentID: user.enrollmentID, role: 'student' },
       JWT_SECRET
     );
 
@@ -73,11 +100,11 @@ const register = async (req, res) => {
 
     // Set cookie and respond
     res.cookie("token", token, {
-        httpOnly: true,
-        secure: true, // Send cookie over HTTPS only
-        sameSite: "none",
-        maxAge: 3600000
-      });
+      httpOnly: true,
+      secure: true, // Send cookie over HTTPS only
+      sameSite: "none",
+      maxAge: 3600000
+    });
     res.status(200).json({ msg: "User registered successfully", user });
   } catch (err) {
     console.error("Error during registration:", err);
@@ -117,7 +144,7 @@ const login = async (req, res) => {
 
     const token = user.token;
 
-     res.cookie("token", token, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true, // Send cookie over HTTPS only
       sameSite: "none",
@@ -297,8 +324,7 @@ const showMenu = async (req, res) => {
   const userBooking = await Reservation.findOne({
     enrollmentNumber: enrollmentId,
   });
-  if(!userBooking)
-  {
+  if (!userBooking) {
     return res.status(404).json({ msg: "Please Book the room first" });
   }
   const hostel = userBooking.hostelname;
