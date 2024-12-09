@@ -105,7 +105,7 @@ const About = () => {
             <div class="text-center">
               <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
                 <img
-                  src="/api/placeholder/128/128"
+                  src="https://imgs.search.brave.com/D2nL0SVkp3oXxJsSk3eTT7y3I6ZYESo7OUaZyvHU7Fo/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3IvcHJvZmlsZS1p/Y29uLW1hbGUtYXZh/dGFyXzQ4MzY5LTIx/MTcuanBnP3NlbXQ9/YWlzX2h5YnJpZA"
                   alt="Team Member"
                   class="w-full h-full object-cover rounded-full"
                 />
@@ -115,7 +115,7 @@ const About = () => {
             <div class="text-center">
               <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
                 <img
-                  src="/api/placeholder/128/128"
+                  src="https://imgs.search.brave.com/JI6kCA_dFEhdRv6RbRDK_zEg4qM9lg70511SMRCBJV0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3IvbWFuLXByb2Zp/bGVfMTA4MzU0OC0x/NTk2My5qcGc_c2Vt/dD1haXNfaHlicmlk"
                   alt="Team Member"
                   class="w-full h-full object-cover rounded-full"
                 />
@@ -125,7 +125,7 @@ const About = () => {
             <div class="text-center">
               <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
                 <img
-                  src="/api/placeholder/128/128"
+                  src="https://imgs.search.brave.com/GzZdvgp1t5tSlTOf6GD-Bda2_8C3rL-1zo4vRd4LgbU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS12ZWN0/b3IvcGVvcGxlLXBy/b2ZpbGUtaWNvbl8y/NDg3Ny00MDc2MC5q/cGc_c2VtdD1haXNf/aHlicmlk"
                   alt="Team Member"
                   class="w-full h-full object-cover rounded-full"
                 />
