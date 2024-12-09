@@ -61,6 +61,7 @@ const register = async (req, res) => {
       name,
       hostel,
       role,
+      gender,
       email,
       password: hashedPassword,
       profilePic: imageUrl
