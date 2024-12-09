@@ -3,6 +3,7 @@ import Sidebar from './shared/Sidebar';
 import Navbar from './shared/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Loading from '../Loader/Loading';
 
 const Gatepassdetails = () => {
   const [isShrunk, setIsShrunk] = useState(false);
@@ -69,7 +70,7 @@ const Gatepassdetails = () => {
   };
 
   if (!gatepassData.length) {
-    return <div>Loading...</div>;
+    return <div> <Loading loadingTime={2000}/></div>;
   }
 
   return (

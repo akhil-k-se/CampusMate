@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './shared/Sidebar';
 import Navbar from './shared/Navbar';
 import axios from 'axios'; // Import axios
+import Loading from '../../Loader/Loading';
 
 const SecurityDetails = () => {
   const [isShrunk, setIsShrunk] = useState(false);
@@ -46,7 +47,7 @@ const SecurityDetails = () => {
 
   // Show a loading message while the data is being fetched
   if (securityData.length === 0) {
-    return <div>Loading...</div>;
+    return  <Loading loadingTime={2000}/>;
   }
 
   return (

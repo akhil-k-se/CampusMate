@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './shared/Sidebar';
 import Navbar from './shared/Navbar';
 import axios from 'axios';  // Import Axios for making API calls
+import Loading from '../../Loader/Loading';
 
 function Dashboard1() {
   const [isShrunk, setIsShrunk] = useState(false);
@@ -33,7 +34,7 @@ function Dashboard1() {
   }, []);
 
   // Show loading state while fetching data
-  if (loading) return <div>Loading...</div>;
+  if (loading)  return <Loading loadingTime={2000}/>;
 
   // Show error if there is an issue fetching data
   if (error) return <div>{error}</div>;

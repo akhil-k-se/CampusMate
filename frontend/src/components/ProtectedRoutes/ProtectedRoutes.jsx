@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../Loader/Loading";
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const [userRole, setUserRole] = useState(null);
@@ -13,12 +14,12 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
         const response = await axios.get("https://campus-mate.onrender.com/getUserRole", { withCredentials: true });
         const role = response?.data?.role;
         console.log("Fetched user role:", role);
-        setUserRole(role);
+        setTimeout(2000,setUserRole(role));
       } catch (error) {
         console.error("Error fetching user role:", error);
-        setUserRole(null); // Handle error scenario (e.g., unauthorized access)
+        setTimeout(2000,setUserRole(null)); // Handle error scenario (e.g., unauthorized access)
       } finally {
-        setLoading(false);
+        setTimeout(3000,setLoading(false));
       }
     };
 
@@ -27,7 +28,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 
   // Wait until the user role is fetched
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><Loading loadingTime={2000}/></div>;
   }
 
   // Check if user role is not fetched or unauthorized

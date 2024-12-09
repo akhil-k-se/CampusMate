@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../Loader/Loading';
 
 const Navbar = ({ isShrunk }) => {
   const [wardenProfile, setWardenProfile] = useState(null);
@@ -55,7 +56,7 @@ const Navbar = ({ isShrunk }) => {
             <span className="font-semibold">{wardenProfile.name || "Warden"}</span>
           </div>
         ) : (
-          <span>Loading...</span>
+          <Loading loadingTime={2000}/>
         )}
         <button
           className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"
