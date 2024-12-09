@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Lottie from "react-lottie";
 import CampusLoader from "./CampusLoader.json";
 
-const Loading = ({ loadingTime = 2000 }) => {
+const Loading = ({ loadingTime }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
