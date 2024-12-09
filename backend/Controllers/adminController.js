@@ -34,12 +34,19 @@ const register = async (req, res) => {
       return res.status(400).json({ msg: "Password should be at least 8 characters long" });
     }
 
-    const existingUser = await Admin.findOne({ $or: [{ email: email }, { hostel: hostel }] });
-    if (existingUser) {
+    const existingMail = await Admin.findOne({ $or: [{ email: email }] });
+    if (existingMail) {
       console.log("User already exists");
       return res
         .status(400)
-        .json({ msg: "User already exists with this email or for this hostel already exists" });
+        .json({ msg: "User already exists with this email" });
+    }
+    const existingWarden = await Admin.findOne({ $and: [{ hostel: hostel }, { role: role }] });
+    if (existingWarden) {
+      console.log("User already exists");
+      return res
+        .status(400)
+        .json({ msg: `${role} already exists for ${hostel}` });
     }
 
     const imageUrl = req.file?.path;

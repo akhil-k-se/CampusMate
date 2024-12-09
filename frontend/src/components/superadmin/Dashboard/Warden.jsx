@@ -149,14 +149,6 @@ const Warden = () => {
                 )
               )}
             </select>
-            <input
-              type="text"
-              name="hostel"
-              placeholder="Hostel"
-              value={formData.hostel}
-              onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
-            />
 
             <input
               type="text"
@@ -166,6 +158,19 @@ const Warden = () => {
               onChange={handleChange}
               className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
+            <select
+              name="role"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
+              type="text"
+              placeholder="Role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="Role">Role</option>
+              <option value="Warden">Warden</option>
+              <option value="Assistant Warden">Assistant Warden</option>
+            </select>
 
 
             <div className="relative mb-5">

@@ -459,17 +459,17 @@ const Bookings = () => {
                       <option value="7">7</option>
                       <option value="8">8</option>
                     </select>
-                    <div className="flex items-center gap-3 text-[15px]">
-                      <input
-                        type="checkbox"
-                        checked={termsAgreed}
-                        onChange={handleCheckboxChange}
-                        required
-                      />
-                      <h1>
-                        I agree to <a href="#">Terms & Conditions</a>
-                      </h1>
-                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-[15px]">
+                    <input
+                      type="checkbox"
+                      checked={termsAgreed}
+                      onChange={handleCheckboxChange}
+                      required
+                    />
+                    <h1>
+                      I agree to <a href="#">Terms & Conditions</a>
+                    </h1>
                   </div>
                 </div>
                 <div className="flex justify-between mt-4 gap-3">
