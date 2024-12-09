@@ -30,7 +30,6 @@ const adminSchema = new mongoose.Schema({
     hostel: {
         type: String,
         required: true,
-        match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
     },
     role: {
         type: String,
