@@ -110,7 +110,7 @@ const Complaint = () => {
           />
 
           <p className="absolute z-10 text-white bottom-0 text-[70px] font-montserrat my-20 mx-[50px] font-bold block text-center">
-            HostelSync
+            CampusMate
           </p>
           <div className="w-full h-full relative rounded-2xl overflow-hidden">
             {images.map((image, index) => (

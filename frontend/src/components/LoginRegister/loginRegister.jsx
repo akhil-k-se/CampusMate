@@ -102,7 +102,7 @@ function RegisterLogin() {
         }));
         if (name === 'password' || name === 'confirmPassword') {
             setPasswordMatch(
-                name === 'password' ? value === formData.confirmPassword : value === formData.password
+                name === 'password' ? value === formData.confirmPassword.trim() : value === formData.password.trim()
             );
         }
     };
