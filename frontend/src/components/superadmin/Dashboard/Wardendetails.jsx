@@ -70,6 +70,7 @@ const Wardendetails = () => {
                 <div className="text-sm text-gray-300">
                   <p>Email: {warden.email}</p>
                   <p>Hostel Name: {warden.hostel}</p>
+                  <p>Role: {warden.role}</p>
                 </div>
               </div>
               <button
