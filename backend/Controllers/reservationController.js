@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const reserve = require('../models/reservationModel'); 
+const reserve = require('../models/reservationModel');
 const Admin = require('../models/adminModel');
 const User = require("../models/studentModel");
 const SendMail = require('../helpers/mailService');
@@ -26,14 +26,14 @@ const reservation = async (req, res) => {
         }
 
         const requiredFields = [
-            "firstName", "email", "enrollmentNumber", "gender", "phone", 
-            "address", "city", "state", "country", "roomtype", 
-            "hostelname", "roomseater", "roomfloor", "parentname", 
+            "firstName", "email", "enrollmentNumber", "gender", "phone",
+            "address", "city", "state", "country", "roomtype",
+            "hostelname", "roomseater", "roomfloor", "parentname",
             "parentphone", "parentEmail"
         ];
         for (const field of requiredFields) {
             if (!inputData[field]) {
-                return res.status(400).send({ message: `Field ${field} is required` });
+                return res.status(400).send({ message: `${field} is required` });
             }
         }
 
@@ -162,11 +162,10 @@ const getreservation = async (req, res) => {
 };
 
 
-const addbooking = async(req,res)=>{
+const addbooking = async (req, res) => {
     const inputData = req.body;
-    if(!inputData.firstname)
-    {
-        return res.send({message: 'fill firstName'});
+    if (!inputData.firstname) {
+        return res.send({ message: 'fill firstName' });
     }
 }
 

@@ -36,8 +36,8 @@ const register = async (req, res) => {
     }
 
     // Check if password meets minimum length (example: 6 characters)
-    if (password.length < 6) {
-      return res.status(400).json({ msg: "Password should be at least 6 characters long" });
+    if (password.length < 8) {
+      return res.status(400).json({ msg: "Password should be at least 8 characters long" });
     }
 
     // Check if user exists

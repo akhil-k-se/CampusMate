@@ -5,7 +5,21 @@ const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
   try {
-    const { name, email,password } = req.body;
+    const { name, email, password } = req.body;
+
+    if (/\d/.test(name)) {
+      return res.status(400).json({ msg: "Name should not contain numbers" });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ msg: "Invalid email format" });
+    }
+    if (/\s/.test(password)) {
+      return res.status(400).json({ msg: "Password should not contain spaces" });
+    }
+    if (password.length < 8) {
+      return res.status(400).json({ msg: "Password should be at least 8 characters long" });
+    }
 
     const existingUser = await MessSecurity.findOne({ email });
     if (existingUser) {
@@ -13,13 +27,13 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const token = jwt.sign({email,role:'mess-guard'},JWT_SECRET);
+    const token = jwt.sign({ email, role: 'mess-guard' }, JWT_SECRET);
 
     const user = await MessSecurity.create({
       name,
       email,
       password: hashedPassword,
-      jwtToken:token
+      jwtToken: token
     });
 
     res.json(user);
@@ -52,7 +66,7 @@ const login = async (req, res) => {
 
     const token = user.jwtToken;
 
-    res.cookie("token",token,{
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true, // Send cookie over HTTPS only
       sameSite: "none",
@@ -130,7 +144,7 @@ const checkSecurity = async (req, res, next) => {
   }
   try {
 
-    const messSecurity = await MessSecurity.findOne({jwtToken:token});
+    const messSecurity = await MessSecurity.findOne({ jwtToken: token });
     console.log(messSecurity);
     if (!messSecurity) {
       console.log("MessSecurity not found");

@@ -7,6 +7,20 @@ const register = async (req, res) => {
   try {
     const { email, name, password } = req.body;
 
+    if (/\d/.test(name)) {
+      return res.status(400).json({ msg: "Name should not contain numbers" });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ msg: "Invalid email format" });
+    }
+    if (/\s/.test(password)) {
+      return res.status(400).json({ msg: "Password should not contain spaces" });
+    }
+    if (password.length < 8) {
+      return res.status(400).json({ msg: "Password should be at least 8 characters long" });
+    }
+
     const existingUser = await GateSecurity.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ msg: "name already exists" });
@@ -14,7 +28,7 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const token = jwt.sign({ email ,role:'gate-security'}, JWT_SECRET);
+    const token = jwt.sign({ email, role: 'gate-security' }, JWT_SECRET);
 
     const user = await GateSecurity.create({
       name,

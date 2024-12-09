@@ -7,7 +7,34 @@ const register = async (req, res) => {
   try {
     const { name, hostel, role, email, password } = req.body;
 
-    const existingUser = await Admin.findOne({ $or: [{ email: email },{hostel:hostel}] });
+    if (!name || !email || !hostel || !password || !role) {
+      return res.status(400).json({ msg: "All fields are required" });
+    }
+
+    if (/\d/.test(name)) {
+      return res.status(400).json({ msg: "Name should not contain numbers" });
+    }
+
+    if (/\d/.test(role)) {
+      return res.status(400).json({ msg: "Name should not contain numbers" });
+    }
+
+    if (/\s/.test(password)) {
+      return res.status(400).json({ msg: "Password should not contain spaces" });
+    }
+
+    // Check for valid email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ msg: "Invalid email format" });
+    }
+
+    // Check if password meets minimum length (example: 6 characters)
+    if (password.length < 8) {
+      return res.status(400).json({ msg: "Password should be at least 8 characters long" });
+    }
+
+    const existingUser = await Admin.findOne({ $or: [{ email: email }, { hostel: hostel }] });
     if (existingUser) {
       console.log("User already exists");
       return res
@@ -27,11 +54,11 @@ const register = async (req, res) => {
       role,
       email,
       password: hashedPassword,
-      profilePic:imageUrl
+      profilePic: imageUrl
     });
 
     const token = jwt.sign(
-      { id: admin._id, email: admin.email, role:'warden' },
+      { id: admin._id, email: admin.email, role: 'warden' },
       JWT_SECRET
     );
 
@@ -44,7 +71,7 @@ const register = async (req, res) => {
     admin.save();
 
     console.log(admin);
-    return res.status(201).json({ success:true, msg: "User created successfully" });
+    return res.status(201).json({ success: true, msg: "User created successfully" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({
@@ -189,7 +216,7 @@ const showData = async (req, res) => {
         .json({ msg: "Admin not found with the provided token" });
     }
 
-    return res.status(200).json({admin});
+    return res.status(200).json({ admin });
   } catch (err) {
     console.error("Error happened:", err);
     return res.status(500).json({ msg: "Internal server error" });
@@ -242,26 +269,26 @@ const updateMenu = async (req, res) => {
 };
 
 
-const showMenu = async(req,res)=>{
+const showMenu = async (req, res) => {
   const token = req.cookies.token;
 
-    if (!token) {
-      return res.status(401).json({ msg: "Authorization token is missing" });
-    }
+  if (!token) {
+    return res.status(401).json({ msg: "Authorization token is missing" });
+  }
 
-    const admin = await Admin.findOne({ token });
+  const admin = await Admin.findOne({ token });
 
-    if (!admin) {
-      return res.status(401).json({ msg: "Admin not found, authorization failed" });
-    }
+  if (!admin) {
+    return res.status(401).json({ msg: "Admin not found, authorization failed" });
+  }
 
-    return res.status(200).json({
-      success: true,
-      msg: "Mess menu updated successfully",
-      imageUrl: admin.messMenu,
-      description: admin.messDesc
-    });
-    
+  return res.status(200).json({
+    success: true,
+    msg: "Mess menu updated successfully",
+    imageUrl: admin.messMenu,
+    description: admin.messDesc
+  });
+
 }
 
 

@@ -28,8 +28,14 @@ const createComplaint = async (req, res) => {
             return res.status(400).send({ message: "Fill Your Own Roll Number" });
         }
 
-        if (!inputData.issuetype || !inputData.issue || !inputData.description) {
-            return res.status(400).send({ message: "Must fill all necessary details" });
+        if (!inputData.issuetype) {
+            return res.status(400).send({ message: "Select an issue type !" });
+        }
+        if (!inputData.issue) {
+            return res.status(400).send({ message: "Must tell what the issue is !" });
+        }
+        if (!inputData.description) {
+            return res.status(400).send({ message: "Please Describe your issue !" });
         }
 
         const studentReservation = await reservation.findOne({ enrollmentNumber: inputData.enrollmentNumber });
