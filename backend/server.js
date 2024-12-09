@@ -359,7 +359,7 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
       user.gateEntry = user.gateEntry === "IN" ? "OUT" : "IN-OUT";
       await user.save();
 
-      const emailSubject = `${user.gateEntry=="OUT"? `- Left the Campus` : `- Returned to Campus`}`;
+      const emailSubject = `${user.gateEntry == "OUT" ? `- Left the Campus` : `- Returned to Campus`}`;
       const emailBody = `
               Welcome ${user.name}, 
   
@@ -367,11 +367,11 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
               - Email: ${user.email}
               - Enrollment ID: ${enrollmentID}
               - GatePass : ${latestGatePass}
-              ${user.gateEntry=="OUT"? `- Left the Campus at ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}` : `- Returned to Campus at ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`}
+              ${user.gateEntry == "OUT" ? `- Left the Campus at ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}` : `- Returned to Campus at ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`}
   
               Thank you for joining CampusMate!
           `;
-  
+
       const mail = await SendMail(user.email, emailSubject, emailBody);
 
       return res.send(`
