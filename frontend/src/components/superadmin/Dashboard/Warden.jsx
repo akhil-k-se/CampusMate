@@ -63,9 +63,10 @@ const Warden = () => {
 
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("gender", formData.gender);
     formDataToSend.append("hostel", formData.hostel);
     formDataToSend.append("role", formData.role);
-    formDataToSend.append("email", formData.email);
     formDataToSend.append("password", formData.password);
     if (image) {
       formDataToSend.append("image", image); // Append the image file
