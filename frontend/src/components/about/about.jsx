@@ -39,7 +39,7 @@ const About = () => {
               </p>
             </div>
             <div className="w-[600px] h-[300px]">
-              <Canvas id="canvas-container" className="w-full h-full">
+              {/* <Canvas id="canvas-container" className="w-full h-full">
                 <OrbitControls
                   enableRotate={true}
                   enablePan={true}
@@ -52,7 +52,8 @@ const About = () => {
                 <Hostel scale={0.75} position={[0, -5, 0]} />
                 <ambientLight intensity={1} />
                 <directionalLight intensity={1} position={[10, 10, 10]} />
-              </Canvas>
+              </Canvas> */}
+              <img src="/about.jpg" alt="About Us" />
             </div>
           </div>
         </div>

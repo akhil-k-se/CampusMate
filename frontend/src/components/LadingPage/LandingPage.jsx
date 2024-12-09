@@ -204,6 +204,7 @@ function LandingPage() {
               <ambientLight intensity={1} />
               <directionalLight intensity={1} position={[10, 10, 10]} />
             </Canvas> */}
+            <img src="/about.jpg" alt="About Us" />
           </div>
         </div>
         <div className="about__content opacity-0">
@@ -212,7 +213,7 @@ function LandingPage() {
             The Second home away from your house!
           </h2>
           <p className="section__description about-txt opacity-0">
-          With a focus on quality accommodations, personalized experiences,
+            With a focus on quality accommodations, personalized experiences,
             and seamless booking, our platform is dedicated to ensuring that
             every traveler embarks on their dream holiday with confidence and
             excitement.
