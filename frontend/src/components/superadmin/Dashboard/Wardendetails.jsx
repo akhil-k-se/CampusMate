@@ -47,7 +47,8 @@ const Wardendetails = () => {
   };
 
   // Show a loading message while the data is being fetched
-  if (wardenData.length === 0) {
+  if (wardenData.length ==0) {
+    alert("No Warden Found");
     return  <Loading />;
   }
 
