@@ -48,7 +48,7 @@ const GuardDetails = () => {
 
     // Show a loading message while the data is being fetched
     if (guardData.length === 0) {
-        return  <Loading loadingTime={2000}/>;
+        return  <Loading/>;
     }
 
     return (

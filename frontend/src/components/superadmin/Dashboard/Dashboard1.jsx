@@ -34,7 +34,7 @@ function Dashboard1() {
   }, []);
 
   // Show loading state while fetching data
-  if (loading)  return <Loading loadingTime={2000}/>;
+  if (loading)  return <Loading/>;
 
   // Show error if there is an issue fetching data
   if (error) return <div>{error}</div>;
