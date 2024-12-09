@@ -46,8 +46,9 @@ const SecurityDetails = () => {
   };
 
   // Show a loading message while the data is being fetched
-  if (securityData.length === 0) {
-    return  <Loading loadingTime={2000}/>;
+  if (securityData.length == 0) {
+    alert("No Security Gaurd Found");
+    return  <Loading />;
   }
 
   return (
