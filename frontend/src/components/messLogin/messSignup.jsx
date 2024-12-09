@@ -98,7 +98,7 @@ function MessSign() {
                             />
                         </div>
                         <div className='relative w-[100%]'>
-                            <input type={confirmPasswordVisible ? "text" : "password"} name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirm_password} placeholder="Confirm Password" />
+                            <input type={confirmPasswordVisible ? "text" : "password"} name="confirm_password" id='confirm_password' onChange={handleChange} value={formData.confirmPassword} placeholder="Confirm Password" />
                             <FontAwesomeIcon
                                 icon={confirmPasswordVisible ? faEyeSlash : faEye}
                                 onClick={toggleConfirmPasswordVisibility}
