@@ -1,18 +1,17 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
+require('dotenv').config()
 
-const url = 'mongodb+srv://akhilse2024:hotlineclasher123@cluster0.cigonb3.mongodb.net/CampusMate?retryWrites=true&w=majority&appName=Cluster0';
+const url = process.env.MONGO_URL;
 
-const Dbconnect=async()=>
-    {
-        try{
-            await mongoose.connect(url)
-            console.log('Db connected');
-        }
-        catch(err)
-        {
-            console.log(err);
-    
-        }
+const Dbconnect = async () => {
+    try {
+        await mongoose.connect(url)
+        console.log('Db connected');
     }
-    
-    module.exports=Dbconnect;
+    catch (err) {
+        console.log(err);
+
+    }
+}
+
+module.exports = Dbconnect;

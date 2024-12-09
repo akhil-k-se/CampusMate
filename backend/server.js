@@ -89,7 +89,7 @@ app.post("/logout", (req, res) => {
     secure: true,
     sameSite: "none",
     path: "/", // Same as the one used when setting the cookie
-});
+  });
 
   res.status(200).send({ message: "Logged out successfully" });
 });
@@ -531,8 +531,8 @@ app.get("/clearcookie", async (req, res) => {
       secure: true,
       sameSite: "none",
       path: "/", // Same as the one used when setting the cookie
-  });
-  
+    });
+
     console.log("Cookie cleared successfully.");
     res.status(200).json({ message: "Cookie cleared successfully." }); // Send JSON response
   } catch (error) {
@@ -642,6 +642,6 @@ app.get("/super-admin/guards", async (req, res) => {
   }
 });
 
-app.listen(3005, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server started on 3005");
 });
