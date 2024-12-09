@@ -9,16 +9,6 @@ const adminSchema = new mongoose.Schema({
         maxlength: [50, 'Name cannot exceed 50 characters'],
         match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
     },
-    hostel: {
-        type: String,
-        required: true,
-        match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
-    },
-    role: {
-        type: String,
-        required: true,
-        match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
-    },
     email: {
         type: String,
         required: true,
@@ -32,6 +22,21 @@ const adminSchema = new mongoose.Schema({
             message: 'Please provide a valid email address'
         }
     },
+    gender: {
+        type: String,
+        required: true,
+        enum: ['Male', 'Female']
+    },
+    hostel: {
+        type: String,
+        required: true,
+        match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
+    },
+    role: {
+        type: String,
+        required: true,
+        match: [/^[a-zA-Z\s]+$/, 'Can only contain alphabets and spaces']
+    },
     password: {
         type: String,
         required: true
@@ -39,15 +44,15 @@ const adminSchema = new mongoose.Schema({
     token: {
         type: String
     },
-    profilePic:{
-        type:String,
-        required:true
+    profilePic: {
+        type: String,
+        required: true
     },
-    messMenu:{
-        type:String,
+    messMenu: {
+        type: String,
     },
-    messDesc:{
-        type:String
+    messDesc: {
+        type: String
     }
 });
 

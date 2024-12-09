@@ -10,11 +10,17 @@ const Warden = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
+  const hostelNames = {
+    Female: ["IBN-A", "IBN-B", "IBN-C", "Pie-A", "Pie-B", "Pie-C", "Nightingale-A", "Nightingale-B", "Vasco"],
+    Male: ["Colambus", "Armstrong", "Franklin", "Marco Polo"],
+  };
+
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
+    gender: "",
     hostel: "",
     role: "",
-    email: "",
     password: "",
     confirmPassword: "",
   });
@@ -105,6 +111,45 @@ const Warden = () => {
             />
 
             <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
+            />
+            <select
+              name="gender"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
+              type="text"
+              placeholder="Gender"
+              value={formData.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+            <select
+              name="hostel"
+              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
+              type="text"
+              placeholder="Hostel"
+              value={formData.hostel}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Hostel</option>
+              {hostelNames[formData.gender]?.map(
+                (hostel, index) => (
+                  <option key={index} value={hostel}>
+                    {hostel}
+                  </option>
+                )
+              )}
+            </select>
+            <input
               type="text"
               name="hostel"
               placeholder="Hostel"
@@ -122,14 +167,6 @@ const Warden = () => {
               className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
             />
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="mb-5 w-full p-3 rounded-lg border-none bg-gray-800 text-stone-400"
-            />
 
             <div className="relative mb-5">
               <input
