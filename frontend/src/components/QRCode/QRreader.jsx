@@ -5,12 +5,11 @@ import axios from 'axios';
 
 const QRScanner = () => {
   const [error, setError] = useState("");
-  const [scanned, setScanned] = useState(false);  // New state to track if a scan has occurred
   const scannerRef = useRef(null);
-  const navigate = useNavigate();
+  const scanComplete = useRef(false); // Ref to prevent multiple scans
 
   useEffect(() => {
-    if (!scannerRef.current && !scanned) {  // Check if scanning has already occurred
+    if (!scannerRef.current) {
       const scanner = new Html5QrcodeScanner(
         "reader",
         {
@@ -21,9 +20,11 @@ const QRScanner = () => {
       );
 
       const handleScan = async (decodedText) => {
-        if (scanned) return;  // If already scanned, do nothing
-        
+        if (scanComplete.current) return; // Prevent multiple scans
+        scanComplete.current = true; // Mark scan as complete
+
         const token = localStorage.getItem("token");
+
         if (token) {
           try {
             const response = await fetch(
@@ -54,35 +55,36 @@ const QRScanner = () => {
         // Open the scanned URL in a new tab
         window.open(decodedText, "_blank");
 
-        // Mark as scanned to prevent further scanning
-        setScanned(true);
-
-        // Clear scanner after first successful scan
+        // Clear scanner to prevent re-trigger
         scanner.clear();
+        scanner.render(handleScan, handleError);
+        scanComplete.current = false; // Reset for future scans
       };
 
       const handleError = (err) => {
         setError("Scanning failed. Please try again.");
         console.error("QR Scanning Error: ", err);
+        scanComplete.current = false; // Reset scan state
       };
 
-      // Start the scanner and set it to scan only once
       scanner.render(handleScan, handleError);
       scannerRef.current = scanner;
     }
 
-    // Cleanup scanner on component unmount
     return () => {
       if (scannerRef.current) {
-        scannerRef.current.clear();
+        scannerRef.current.clear(); // Cleanup scanner
         scannerRef.current = null;
       }
     };
-  }, [scanned]);  // Re-run effect when `scanned` changes
+  }, []);
+
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       const response = await axios.post("https://campus-mate.onrender.com/logout", {}, { withCredentials: true });
+
       if (response.status === 200) {
         localStorage.clear();
         navigate("/");
@@ -97,7 +99,9 @@ const QRScanner = () => {
       <div className="grid grid-cols-3 gap-20">
         <div className="col-span-1/3"></div>
         <h1 className="text-3xl font-bold mb-4 text-white">QR Code Scanner</h1>
-        <button className="bg-[#e82574] w-20 text-white rounded-xl mb-5 ml-20 h-10" onClick={handleLogout}>Logout</button>
+        <button className="bg-[#e82574] w-20 text-white rounded-xl mb-5 ml-20 h-10" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
       <div className="bg-white w-[98%] h-[70%] flex flex-col items-center justify-center rounded-[10px]">
         <div id="reader" className="w-full max-w-sm mb-4"></div>
