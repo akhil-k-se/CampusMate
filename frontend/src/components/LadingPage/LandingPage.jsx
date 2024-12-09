@@ -169,7 +169,7 @@ function LandingPage() {
           </li>
         </ul>
         <div className="nav__btns">
-          <button className="btn nav__btn" onClick={() => setButtonPop(true)}>
+          <button className="btn" onClick={() => setButtonPop(true)}>
             Login
           </button>
         </div>
