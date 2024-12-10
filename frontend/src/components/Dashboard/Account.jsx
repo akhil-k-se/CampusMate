@@ -91,12 +91,12 @@ const Account = () => {
             </div>
           </div>
           <div className="bg-gray-100 px-3 py-2 text-right">
-            <button
+            {/* <button
               onClick={() => setIsEditing(!isEditing)}
               className="bg-pink-600 text-white px-3 py-1 rounded-md shadow-md hover:bg-pink-500 transition"
             >
               {isEditing ? "Save Changes" : "Edit Profile"}
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
