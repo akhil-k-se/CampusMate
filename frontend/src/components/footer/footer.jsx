@@ -6,9 +6,9 @@ import axios from 'axios'
 
 const Footer = ({ page }) => {
 
-  const sendMail = () => {
+  const sendMail = async () => {
     try {
-      axios.get("https://campus-mate.onrender.com/newsletter", {
+      await axios.get("https://campus-mate.onrender.com/newsletter", {
         withCredentials: true,
       })
       alert("You just Subscribed to our newsletter")
@@ -28,7 +28,8 @@ const Footer = ({ page }) => {
         <div className='w-full h-full flex flex-col font-montserrat justify-center items-center gap-6 my-5'>
           <h1 className='text-[30px]'>Subscribe to our News</h1>
           <p className='w-[500px] text-gray-500 text-center'>Stay Informed and never miss a Beat.Subscribe to our Exclusive News Updates</p>
-          <button className='bg-gray-800 w-[250px] h-[50px] text-white rounded-xl' onClick={sendMail}>Subscribe</button>
+          {page != 'main' ?
+            <button className='bg-gray-800 w-[250px] h-[50px] text-white rounded-xl' onClick={sendMail}>Subscribe</button> : <p>Login First</p>}
         </div>
       </div>
 
