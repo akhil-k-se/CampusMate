@@ -641,7 +641,24 @@ app.get("/super-admin/guards", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+app.get("/newsletter", async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(400).json({ msg: "No token found" })
+  }
+  const user = await student.findOne({ token })
+  if (!user) {
+    return res.status(400).json({ msg: "No User found" })
+  }
+  const emailBody = `
+            Welcome ${user.name}, 
+            Thank you for subscribing to our newsletter
 
+            Regards,
+            CampusMate by StackMasters
+        `;
+  await SendMail(user.email, "Subscribed to CampusMate newsletter", emailBody)
+})
 app.listen(process.env.PORT, () => {
   console.log("Server started on 3005");
 });

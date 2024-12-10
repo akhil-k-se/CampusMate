@@ -2,8 +2,22 @@ import React from 'react'
 import { IoMail } from "react-icons/io5"
 import { FaLinkedin } from "react-icons/fa"
 import { NavLink } from 'react-router-dom'
+import axios from 'axios'
 
 const Footer = ({ page }) => {
+
+  const sendMail = () => {
+    try {
+      axios.get("https://campus-mate.onrender.com/newsletter", {
+        withCredentials: true,
+      })
+      alert("You just Subscribed to our newsletter")
+    } catch (error) {
+      console.log(error.response?.data?.msg);
+      alert(error.response?.data?.msg);
+    }
+  }
+
   return (
     <div id='contact' className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 bg-pink-100'>
       <div className='flex flex-col items-center justify-between'>
@@ -14,8 +28,7 @@ const Footer = ({ page }) => {
         <div className='w-full h-full flex flex-col font-montserrat justify-center items-center gap-6 my-5'>
           <h1 className='text-[30px]'>Subscribe to our News</h1>
           <p className='w-[500px] text-gray-500 text-center'>Stay Informed and never miss a Beat.Subscribe to our Exclusive News Updates</p>
-          <input className='border-0 ' type="text" placeholder='Enter Your Email' />
-          <button className='bg-gray-800 w-[250px] h-[50px] text-white rounded-xl'>Subscribe</button>
+          <button className='bg-gray-800 w-[250px] h-[50px] text-white rounded-xl' onClick={sendMail}>Subscribe</button>
         </div>
       </div>
 
