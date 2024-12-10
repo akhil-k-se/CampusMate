@@ -659,6 +659,6 @@ app.get("/newsletter", async (req, res) => {
         `;
   await SendMail(user.email, "Subscribed to CampusMate newsletter", emailBody)
 })
-app.listen(process.env.PORT, () => {
+app.listen(3005, () => {
   console.log("Server started on 3005");
 });
