@@ -3,6 +3,8 @@ import Sidebar from './shared/Sidebar';
 import Navbar from './shared/Navbar';
 import axios from 'axios'; // Import axios
 import Loading from '../../Loader/Loading';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Wardendetails = () => {
   const [isShrunk, setIsShrunk] = useState(false);
@@ -36,13 +38,34 @@ const Wardendetails = () => {
 
       if (response.data.success) {
         setWardenData((prevData) => prevData.filter((warden) => warden._id !== wardenId));
-        alert('Warden removed successfully!');
+        toast.success('Warden removed successfully!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       } else {
-        alert('Failed to remove warden');
+        toast.error('Failed to remove warden', {
+                                position: "top-right",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                              });
       }
     } catch (error) {
       console.error('Error removing warden:', error);
-      alert('An error occurred while removing the warden.');
+      toast.error('An error occurred while removing the warden.', {
+                              position: "top-right",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                            });
     }
   };
 
@@ -56,6 +79,7 @@ const Wardendetails = () => {
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
       <div className={`transition-all duration-300 ${isShrunk ? 'ml-[80px]' : 'ml-[300px]'} p-4 bg-gray-800`}>
+      <ToastContainer />
         <div className="grid grid-cols-2 gap-4">
           {wardenData.map((warden) => (
             <div key={warden._id} className="bg-gray-900 shadow-md rounded-lg p-4 flex items-center space-x-2">

@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const UserMess = () => {
@@ -24,7 +26,14 @@ const UserMess = () => {
       }
     } catch (e) {
       const error = e.response?.data?.msg;
-      alert(error);
+      toast.error(error, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                });
     }
   };
   useEffect(() => {
@@ -39,6 +48,7 @@ const UserMess = () => {
 
   return (
     <div className="flex flex-col gap-3 h-screen w-full relative items-center justify-center">
+    <ToastContainer />
       <div>
         <button
           onClick={handleBack}

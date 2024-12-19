@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faHomeLgAlt } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -28,7 +31,14 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (!passwordMatch) {
-      alert("Passwords don't match");
+      toast.error("Passwords don't match", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
       return;
     }
     const data = new FormData();
@@ -48,7 +58,14 @@ const SignUp = () => {
           withCredentials: true,
         }
       );
-      alert("User registered successfully!");
+      toast.success("User registered successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       localStorage.setItem("enrollmentID", formData.enrollmentID);
       console.log("Registered user:", response.data);
       navigate("/student");
@@ -56,7 +73,14 @@ const SignUp = () => {
       console.error("Error during registration:", err);
       const errorMsg =
         err.response?.data?.msg || "An error occurred during registration.";
-      alert(errorMsg);
+      toast.error(errorMsg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -84,6 +108,7 @@ const SignUp = () => {
 
   return (
     <div className="w-fuull h-screen flex justify-center items-center bg-[#DFC9AC] font-sans">
+    <ToastContainer />
       <div className="relative grid grid-cols-1 md:grid-cols-2 h-[85%] w-[70%] bg-white items-center px-10 rounded-xl">
         <Link
           onClick={() => {
@@ -93,16 +118,18 @@ const SignUp = () => {
           className="absolute top-2 left-2"
           to="/"
         >
-          <button className="absolute z-20 md:px-7 md:py-3 px-5 py-2 text-white text-xl rounded-lg top-2 left-2 bg-[#383433]">
-            Home
-          </button>
+          <button
+                    className="absolute z-20 md:px-7 md:py-3 px-5 py-2 text-black text-4xl rounded-lg top-2 left-2 ]"
+                  >
+                    <FontAwesomeIcon icon={faHomeLgAlt}/>
+                  </button>
         </Link>
         <div className="w-[90%] h-[90%] flex flex-col items-center rounded-xl gap-20">
           <h1 className="text-3xl font-bold mt-10">Sign Up</h1>
           <div className="flex flex-col w-[80%] gap-5">
             <input
               type="text"
-              className=" bg-white focus:outline-none border-2 focus:border-pink-500 h-12 rounded-lg px-5"
+              className=" bg-white focus:outline-none border-2 focus:border-[#a48152] h-12 rounded-lg px-5"
               placeholder="Name"
               name="name"
               value={formData.name}
@@ -110,7 +137,7 @@ const SignUp = () => {
             />
             <input
               type="number"
-              className=" bg-white focus:outline-none border-2 focus:border-pink-500 h-12 rounded-lg px-5"
+              className=" bg-white focus:outline-none border-2 focus:border-[#a48152] h-12 rounded-lg px-5"
               placeholder="EnrollmentID"
               name="enrollmentID"
               value={formData.enrollmentID}
@@ -118,7 +145,7 @@ const SignUp = () => {
             />
             <input
               type="text"
-              className=" bg-white focus:outline-none border-2 focus:border-pink-500 h-12 rounded-lg px-5"
+              className=" bg-white focus:outline-none border-2 focus:border-[#a48152] h-12 rounded-lg px-5"
               placeholder="Email"
               name="email"
               value={formData.email}
@@ -131,7 +158,7 @@ const SignUp = () => {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-                className=" bg-white focus:outline-none border-2 focus:border-pink-500 h-12 rounded-lg px-5 w-full"
+                className=" bg-white focus:outline-none border-2 focus:border-[#a48152] h-12 rounded-lg px-5 w-full"
               />
               <FontAwesomeIcon
                 icon={passwordVisible ? faEyeSlash : faEye}
@@ -146,7 +173,7 @@ const SignUp = () => {
                 placeholder="Confirm Password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className=" bg-white focus:outline-none border-2 focus:border-pink-500 h-12 rounded-lg px-5 w-full"
+                className=" bg-white focus:outline-none border-2 focus:border-[#a48152] h-12 rounded-lg px-5 w-full"
               />
               <FontAwesomeIcon
                 icon={confirmPasswordVisible ? faEyeSlash : faEye}
@@ -160,7 +187,7 @@ const SignUp = () => {
               onChange={handleImageChange}
             />
             <button
-              className="mt-4 bg-[#383433] text-white h-12 rounded-lg hover:bg-white hover:text-pink-400 border-2 hover:outline-none hover:border-pink-400 transition-all duration-100 "
+              className="mt-4 bg-[#383433] text-white h-12 rounded-lg hover:bg-white hover:text-[#a48152] border-2 hover:outline-none hover:border-[#a48152] transition-all duration-100 "
               onClick={handleSignUp}
             >
               Create Account
@@ -168,7 +195,7 @@ const SignUp = () => {
           </div>
           <p className="font-semibold ">
             Already have an account ?{" "}
-            <Link to="/student-login" className="text-pink-400 font-semibold">
+            <Link to="/student-login" className="text-[#a48152] font-semibold">
               Login !
             </Link>
           </p>

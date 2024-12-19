@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faHomeLgAlt } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -11,6 +13,7 @@ const Login = () => {
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -32,27 +35,42 @@ const Login = () => {
         loginData,
         { withCredentials: true }
       );
-      alert("Login successful!");
-      navigate("/student");
+      toast.success("Login successful!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      // Wait for toast to be shown before navigating
+      setTimeout(() => {
+        navigate("/student");
+      }, 1000);
     } catch (err) {
       console.error("Error during login:", err);
-      const errorMsg =
-        err.response?.data?.msg || "An error occurred during login.";
-      alert(errorMsg);
+      const errorMsg = err.response?.data?.msg || "An error occurred during login.";
+      toast.error(errorMsg, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
   return (
     <div className="w-full h-screen flex justify-center items-center bg-[#DFC9AC]">
+      <ToastContainer />
       <div className="relative grid grid-cols-1 md:grid-cols-2 h-[85%] w-[70%] bg-white items-center px-10 rounded-xl">
         <Link onClick={()=>{
           navigate('/')
-      window.location.reload();
+          window.location.reload();
         }} className="absolute top-2 right-2" to="/">
-          <button
-            className="absolute z-20 md:px-7 md:py-3 px-5 py-2 text-white text-xl rounded-lg top-2 right-2 bg-[#383433]"
-          >
-            Home
+          <button className="absolute z-20 md:px-7 md:py-3 px-5 py-2 text-black text-4xl rounded-lg top-2 right-2">
+            <FontAwesomeIcon icon={faHomeLgAlt}/>
           </button>
         </Link>
         <div
@@ -68,7 +86,7 @@ const Login = () => {
             <label className=" text-lg font-semibold">EnrollmentID</label>
             <input
               type="number"
-              className=" bg-white focus:outline-none border-2 focus:border-pink-500 h-12 rounded-lg px-5"
+              className=" bg-white focus:outline-none border-2 focus:border-[#a48152] h-12 rounded-lg px-5"
               placeholder="EnrollmentID"
               name="enrollmentID"
               value={loginData.enrollmentID}
@@ -82,7 +100,7 @@ const Login = () => {
                 placeholder="Password"
                 value={loginData.password}
                 onChange={handleLoginChange}
-                className=" bg-white focus:outline-none border-2 focus:border-pink-500 h-12 rounded-lg px-5 w-full"
+                className=" bg-white focus:outline-none border-2 focus:border-[#a48152] h-12 rounded-lg px-5 w-full"
               />
               <FontAwesomeIcon
                 icon={passwordVisible ? faEyeSlash : faEye}
@@ -91,7 +109,7 @@ const Login = () => {
               />
             </div>
             <button
-              className="mt-3 bg-[#383433] text-white h-12 rounded-lg"
+              className="mt-4 bg-[#383433] text-white h-12 rounded-lg hover:bg-white hover:text-[#a48152] border-2 hover:outline-none hover:border-[#a48152] transition-all duration-100 "
               onClick={handleSignIn}
             >
               Login
@@ -99,7 +117,7 @@ const Login = () => {
           </div>
           <p className="font-semibold ">
             Don't have an account ?{" "}
-            <Link to="/student-signup" className="text-pink-400 font-semibold">
+            <Link to="/student-signup" className="text-[#a48152] font-semibold">
               SignUp !
             </Link>
           </p>

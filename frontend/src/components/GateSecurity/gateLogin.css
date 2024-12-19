@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary-color: #e82574;
-    --primary-color-dark: #bc1c5c;
+    --primary-color-dark: #DFC9AC;
+    --primary-color: #a48152;
     --text-dark: #0c0a09;
     --text-light: #78716c;
     --white: #ffffff;
@@ -17,8 +17,8 @@
 .logMain{
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
-    background-color: #fff;
-    background: linear-gradient(to right, #e3caea, #f0e9f0);
+    background-color: "#DFC9AC";
+    background: "#DFC9AC";
     display: flex;
     align-items: center;
     justify-content: center;

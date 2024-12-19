@@ -182,10 +182,7 @@ function LandingPage() {
             <a href="#about">About</a>
           </li>
           <li className="nav-li opacity-0">
-            <a href="#rooms">Rooms</a>
-          </li>
-          <li className="nav-li opacity-0">
-            <a href="#service">Services</a>
+            <a href="#rooms">Services</a>
           </li>
           <li className="nav-li opacity-0">
             <a href="#contact">Contact</a>
@@ -335,7 +332,7 @@ function LandingPage() {
 
       <AdminOrUser trigger={buttonPop}>
         <button
-          className="mt-5 bg-pink-600 px-8 py-3 text-white rounded-[10px] hover:text-pink-600 hover:bg-white transition-colors duration-100"
+          className="mt-5 bg-[#a48152] px-8 py-3 text-white rounded-[10px] hover:text-[#a48152] hover:bg-white transition-colors duration-100"
           onClick={() => setButtonPop(false)}
         >
           Close

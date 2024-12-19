@@ -24,6 +24,7 @@ const StudentComplaints = () => {
       if (response.status === 200) {
         localStorage.clear();
         navigate("/");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Logout failed:", error);
@@ -113,7 +114,7 @@ const StudentComplaints = () => {
         </div>
         <div className="nav__btns ml-auto">
           <button
-            className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"
+            className="btn bg-[#282524] text-white py-2 px-4 rounded hover:bg-[#a48152]"
             onClick={handleLogout}
           >
             Logout

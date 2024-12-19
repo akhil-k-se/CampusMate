@@ -77,9 +77,9 @@ const Gatepassdetails = () => {
     <>
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
-      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-gray-800`}>
+      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-[#383433]`}>
         {gatepassData.map((gatepass, index) => (
-          <div key={index} className="w-full bg-gray-900 shadow-md rounded-lg p-4 flex items-center space-x-4 mb-4">
+          <div key={index} className="w-full bg-[#282524] shadow-md rounded-lg p-4 flex items-center space-x-4 mb-4">
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-white">
                 {gatepass.studentId ? `${gatepass.studentId.firstName} ${gatepass.studentId.lastName}` : 'Student Name'}
@@ -121,7 +121,7 @@ const Gatepassdetails = () => {
               {(selectedStatuses[gatepass._id] === 'Pending' || gatepass.status === 'Pending') && (
                 <button
                   onClick={() => saveStatusChange(gatepass._id)}
-                  className="p-1 mt-2 bg-[#e82574] text-white rounded"
+                  className="p-1 mt-2 bg-[#282524] text-white rounded"
                 >
                   Save
                 </button>

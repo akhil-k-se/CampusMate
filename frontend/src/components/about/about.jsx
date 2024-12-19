@@ -9,7 +9,7 @@ const About = () => {
       <div class="py-16">
         <div class="container mx-auto text-center">
           <h1 class="text-4xl font-bold mb-4">
-            Welcome to <span className="text-pink-500">CampusMate</span>
+            Welcome to <span className="text-[#a48152]">CampusMate</span>
           </h1>
           <p class="text-gray-600 max-w-2xl mx-auto">
             Your home away from home, providing comfortable and secure
@@ -21,7 +21,7 @@ const About = () => {
       <div class="container mx-auto py-12 px-4">
         <div class="mb-16">
           <h2 class="mb-2 text-xl">
-            OUR STORY <span className="text-pink-500">-</span>
+            OUR STORY <span className="text-[#a48152]">-</span>
           </h2>
           <h1 className="font-semibold text-3xl">How we Started ?</h1>
           <div class="flex justify-around items-center">
@@ -60,14 +60,14 @@ const About = () => {
 
         <div class="mb-16">
           <h2 class="mb-2 text-xl">
-            WHY CHOOSE US <span className="text-pink-500">-</span>
+            WHY CHOOSE US <span className="text-[#a48152]">-</span>
           </h2>
           <h1 className="font-semibold text-3xl">
             What makes us different from others ?
           </h1>
           <div class="grid md:grid-cols-3 gap-8">
             <div class="bg-white p-6 rounded-lg shadow-md">
-              <h3 class="text-xl font-semibold text-pink-600 mb-4">
+              <h3 class="text-xl font-semibold text-[#a48152] mb-4">
                 Safe & Secure
               </h3>
               <p class="text-gray-600">
@@ -76,7 +76,7 @@ const About = () => {
               </p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md">
-              <h3 class="text-xl font-semibold text-pink-600 mb-4">
+              <h3 class="text-xl font-semibold text-[#a48152] mb-4">
                 Modern Facilities
               </h3>
               <p class="text-gray-600">
@@ -85,7 +85,7 @@ const About = () => {
               </p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md">
-              <h3 class="text-xl font-semibold text-pink-600 mb-4">
+              <h3 class="text-xl font-semibold text-[#a48152] mb-4">
                 Support Staff
               </h3>
               <p class="text-gray-600">
@@ -98,7 +98,7 @@ const About = () => {
 
         <div>
           <h2 class="mb-2 text-xl">
-            OUR TEAM <span className="text-pink-500">-</span>
+            OUR TEAM <span className="text-[#a48152]">-</span>
           </h2>
           <h1 className="font-semibold text-3xl mb-5">Meet our team members</h1>
           <div class="grid md:grid-cols-4 gap-6">
@@ -110,7 +110,7 @@ const About = () => {
                   class="w-full h-full object-cover rounded-full"
                 />
               </div>
-              <h3 class="font-semibold text-pink-600">Akashdeep Singla</h3>
+              <h3 class="font-semibold text-[#a48152]">Akashdeep Singla</h3>
             </div>
             <div class="text-center">
               <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
@@ -120,7 +120,7 @@ const About = () => {
                   class="w-full h-full object-cover rounded-full"
                 />
               </div>
-              <h3 class="font-semibold text-pink-600">Akhil Kumar</h3>
+              <h3 class="font-semibold text-[#a48152]">Akhil Kumar</h3>
             </div>
             <div class="text-center">
               <div class="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4">
@@ -130,7 +130,7 @@ const About = () => {
                   class="w-full h-full object-cover rounded-full"
                 />
               </div>
-              <h3 class="font-semibold text-pink-600">Aryan Suri</h3>
+              <h3 class="font-semibold text-[#a48152]">Aryan Suri</h3>
             </div>
           </div>
         </div>

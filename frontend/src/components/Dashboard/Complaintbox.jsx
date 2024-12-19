@@ -95,12 +95,12 @@ const Complaintbox = () => {
     <>
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
-      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-gray-800`}>
+      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-[#383433]`}>
         {complaints.length === 0 ? (
           <div className="text-white">No complaints available</div>
         ) : (
           complaints.map((complaint) => (
-            <div key={complaint._id} className="w-full bg-gray-900 text-white shadow-md rounded-lg p-4 mb-4">
+            <div key={complaint._id} className="w-full bg-[#282524] text-white shadow-md rounded-lg p-4 mb-4">
               <div className="flex items-center space-x-4">
                 <div className="flex-1">
                   <div className="text-sm text-gray-300 mt-2">
@@ -127,7 +127,7 @@ const Complaintbox = () => {
                     </select>
                     <button
                       onClick={() => saveStatusChange(complaint._id)}
-                      className="ml-4 p-1 bg-[#e82574] text-white rounded"
+                      className="ml-4 p-1 bg-[#282524] text-white rounded"
                     >
                       Save
                     </button>

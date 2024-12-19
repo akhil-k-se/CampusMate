@@ -88,6 +88,7 @@ const QRScanner = () => {
       if (response.status === 200) {
         localStorage.clear();
         navigate("/");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Logout failed:", error);
@@ -95,18 +96,18 @@ const QRScanner = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-pink-100">
+    <div className="flex flex-col items-center justify-center h-screen bg-[#DFC9AC]">
       <div className="grid grid-cols-3 gap-20">
         <div className="col-span-1/3"></div>
-        <h1 className="text-3xl font-bold mb-4 text-[#e82574]">QR Code Scanner</h1>
-        <button className="bg-[#e82574] w-20 text-white rounded-xl mb-5 ml-20 h-10" onClick={handleLogout}>
+        <h1 className="text-3xl font-bold mb-4 text-[#282524]">QR Code Scanner</h1>
+        <button className="bg-[#282524] w-20 text-white rounded-xl mb-5 ml-20 h-10" onClick={handleLogout}>
           Logout
         </button>
       </div>
       <div className="bg-white w-[98%] h-[70%] flex flex-col items-center justify-center rounded-[10px]">
         <div id="reader" className="w-full max-w-sm mb-4"></div>
         {error && (
-          <div className="mt-4 p-4 bg-red-100 text-red-800 rounded">
+          <div className="mt-4 p-4 bg-red-100 text-[#383433] rounded">
             <h2 className="text-lg font-semibold">Instructions:</h2>
             Reload The Page After each scan
           </div>

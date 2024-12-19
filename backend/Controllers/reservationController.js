@@ -118,6 +118,7 @@ const reservation = async (req, res) => {
 const getreservation = async (req, res) => {
     try {
         // Get the token from cookies
+        console.log("Hello");
         const token = req.cookies.token;
         console.log(token);
 
@@ -126,7 +127,7 @@ const getreservation = async (req, res) => {
         if (!admin) {
             return res.status(403).json({ message: "Unauthorized access" });
         }
-        console.log(admin);
+        // console.log(admin);
 
         // Get the hostel name from the admin's details
         const hostelName = admin.hostel;
@@ -141,7 +142,7 @@ const getreservation = async (req, res) => {
         const reservationData = await Promise.all(
             reservations.map(async (reservation) => {
                 const user = await User.findOne({ enrollmentID: reservation.enrollmentNumber });
-                console.log(user);
+                // console.log(user);
 
                 return {
                     ...reservation._doc, // Include all reservation data

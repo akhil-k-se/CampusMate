@@ -6,6 +6,9 @@ import { GiPlayButton } from "react-icons/gi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import axios from 'axios';
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,10 +43,24 @@ const Footer = ({ page }) => {
       await axios.get("https://campus-mate.onrender.com/newsletter", {
         withCredentials: true,
       });
-      alert("You just Subscribed to our newsletter");
+      toast.success("You just Subscribed to our newsletter", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (error) {
       console.log(error.response?.data?.msg);
-      alert(error.response?.data?.msg);
+      toast.error(error.response?.data?.msg, {
+                          position: "top-right",
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                        });
     }
   };
 
@@ -51,8 +68,10 @@ const Footer = ({ page }) => {
     <div
       ref={footerRef}
       className="relative overflow-hidden h-[95vh] w-full bg-[#282524] flex flex-col items-center justify-center"
+      id="contact"
     >
       <div className="w-full h-[75%] relative flex items-center justify-center">
+      <ToastContainer />
         <div className="w-[55%] h-full border-[2px] border-opacity-10 border-white flex flex-col items-center justify-center">
           <div className="w-full h-[40%] border-[2px] border-opacity-10 border-white border-l-0 border-r-0 border-b-0 border-t-0 flex items-center justify-center">
             <div className="w-full h-full flex items-center justify-center text-white text-4xl font-semibold">
@@ -65,11 +84,15 @@ const Footer = ({ page }) => {
           <div className="z-10 w-full h-[60%] border-[2px] border-opacity-10 border-white border-l-0 border-r-0 border-b-0 flex items-start justify-center text-xl">
             <div className="w-full h-full text-white flex flex-col items-center justify-center gap-10">
               <div className="text-2xl">Quick Navigations</div>
-              <div className="flex flex-col items-start justify-between gap-2">
-                <h1>Home</h1>
-                <h1>Gatepasses</h1>
-                <h1>Complaints</h1>
-              </div>
+              {page == 'main' ? <div className="flex flex-col items-start justify-between gap-2">
+                <a href="#"><h1>Home</h1></a>
+                <a href="#about"><h1>About</h1></a>
+                <a href="#rooms"><h1>Services</h1></a>
+              </div> : <div><div className="flex flex-col items-start justify-between gap-2">
+              <a href="#"><h1>Home</h1></a>
+                <Link to='/student/my-gatepasses'><h1>Gatepasses</h1></Link>
+                <Link to='/student/my-complaints'><h1>Complaints</h1></Link>
+              </div></div>}
             </div>
             <div className="w-full h-full text-white flex flex-col items-center justify-center gap-10">
               <div className="text-2xl">Address</div>

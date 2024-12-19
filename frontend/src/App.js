@@ -36,6 +36,7 @@ import GuardDetails from "./components/superadmin/Dashboard/GuardDetails";
 import Dashboard1 from "./components/superadmin/Dashboard/Dashboard1";
 import SignUp from "./components/LoginRegister/SignUp";
 import Login from "./components/LoginRegister/Login";
+import SecurityDetails from "./components/Dashboard/SecurityDetails";
 
 function App() {
   return (
@@ -113,6 +114,14 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["warden"]}>
               <MessSign />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/warden/details/mess-security"
+          element={
+            <ProtectedRoute allowedRoles={["warden"]}>
+              <SecurityDetails />
             </ProtectedRoute>
           }
         />

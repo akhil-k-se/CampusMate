@@ -9,32 +9,45 @@ const Studentdetails = () => {
   const [isShrunk, setIsShrunk] = useState(false);
   const [studentData, setStudentData] = useState([]);
 
-  useEffect(() => {
-    fetch('https://campus-mate.onrender.com/reservationlist', {
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.data);
-        setStudentData(data.data);
-      })
-      .catch(error => console.error('Error fetching student data:', error));
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://campus-mate.onrender.com/reservationlist', {
+  //     method: 'GET',
+  //     credentials: 'include',
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data.data);
+  //       setStudentData(data.data);
+  //     })
+  //     .catch(error => console.error('Error fetching student data:', error));
+  // }, []);
+      useEffect(() => {
+          const fetchData = async () => {
+            fetch('https://campus-mate.onrender.com/reservationlist', {
+              method: 'GET',
+              credentials: 'include',
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data.data);
+                setStudentData(data.data);
+              })
+              .catch(error => console.error('Error fetching student data:', error));
+          }
+  
+          fetchData();
+      }, []);
   
 
-  if (!studentData.length) {
-    return <Loading loadingTime={2000}/>;
-  }
 
   return (
     <>
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
-      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-gray-800`}>
+      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-[#383433]`}>
         <div className="grid grid-cols-2 gap-4"> 
           {studentData.map((student) => (
-            <div key={student._id} className="bg-gray-900 shadow-md rounded-lg p-4 flex items-center space-x-2">
+            <div key={student._id} className="bg-[#282524] shadow-md rounded-lg p-4 flex items-center space-x-2">
               <img
                 src={student.userImg}
                 alt={`${student.firstName} ${student.lastName}`}
@@ -53,15 +66,15 @@ const Studentdetails = () => {
               <div className="flex flex-col space-y-2">
                 <div className="flex items-center space-x-1">
                   <FontAwesomeIcon icon={faUtensils} className="text-white text-xl" />
-                  <span className="text-pink-500 text-xl">✔️</span>
+                  <span className="text-[#a48152] text-xl">✔️</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <FontAwesomeIcon icon={faTshirt} className="text-white text-xl" />
-                  <span className="text-pink-500 text-xl">✔️</span> 
+                  <span className="text-[#a48152] text-xl">✔️</span> 
                 </div>
                 <div className="flex items-center space-x-1">
                   <FontAwesomeIcon icon={faBed} className="text-white text-xl" />
-                  <span className="text-pink-500 text-xl">✔️</span> 
+                  <span className="text-[#a48152] text-xl">✔️</span> 
                 </div>
               </div>
             </div>

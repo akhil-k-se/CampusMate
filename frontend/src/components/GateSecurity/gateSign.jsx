@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MessSign() {
     const [formData, setFormData] = useState({
@@ -33,7 +35,7 @@ function MessSign() {
     const handleSignUp = async (e) => {
         e.preventDefault()
         if (!passwordMatch) {
-            alert("Passwords dont match")
+            ("Passwords dont match")
             console.log(formData);
             return
         }
@@ -46,7 +48,14 @@ function MessSign() {
 
             )
             console.log(response);
-            alert("User registered successfully !")
+            toast.success("User registered successfully !", {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                          });
 
             setFormData({
                 name: '',
@@ -63,7 +72,14 @@ function MessSign() {
             console.log(err);
             const errorMssg = err.response?.data?.msg || "An error occurred";
 
-            alert(errorMssg);
+            toast.error(errorMssg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
         }
     }
 
@@ -85,6 +101,7 @@ function MessSign() {
         <div className="logMain flex items-center justify-center">
 
             <div class="logContainer active flex items-center justify-center relative" id="logContainer">
+            <ToastContainer />
                 <button className='absolute top-5 left-5' onClick={handleBack}>Back</button>
                 <div className='w-[400px]'>
                     <form onSubmit={handleSignUp}>

@@ -48,13 +48,23 @@ const MarqueeComponent = () => {
 
   return (
     <div id="move">
-      {[...Array(7)].map((_, i) => (
+      {[...Array(10)].map((_, i) => (
         <div className="text-white"
           id="marque"
           key={i}
           ref={(el) => (marquees.current[i] = el)}
         >
           <h1>CampusMate</h1>
+          <img
+            src="/arrow-brown.svg"
+            alt="arrow"
+          />
+          <h1 className="w-[60%]">Complaints</h1>
+          <img
+            src="/arrow-brown.svg"
+            alt="arrow"
+          />
+          <h1>GatePasses</h1>
           <img
             src="/arrow-brown.svg"
             alt="arrow"

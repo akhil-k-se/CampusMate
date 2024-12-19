@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { IoArrowBack } from "react-icons/io5";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Studentgatepass = () => {
@@ -16,6 +18,7 @@ const Studentgatepass = () => {
             if (response.status === 200) {
                 localStorage.clear();
                 navigate("/");
+                window.location.reload();
             }
         } catch (error) {
             console.error("Logout failed:", error);
@@ -33,7 +36,14 @@ const Studentgatepass = () => {
             } catch (err) {
                 const errorMssg = err.response?.data?.msg || "An error occurred";
                 console.error('Error fetching gatepass data:', errorMssg);
-                alert(errorMssg);
+                toast.error(errorMssg || "An error occurred.", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                          });
             }
 
         }
@@ -74,6 +84,7 @@ const Studentgatepass = () => {
 
     return (
         <>
+        <ToastContainer />
               <div>
                 <button
                   onClick={handleBack}
@@ -87,7 +98,7 @@ const Studentgatepass = () => {
                     <a href="#"><img src="https://res.cloudinary.com/dhwaifalx/image/upload/v1732710122/logo-campusMate_m90scm.png" alt="logo" /></a>
                 </div>
                 <div className="nav__btns ml-auto">
-                    <button className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"
+                    <button className="btn bg-[#282524] text-white py-2 px-4 rounded hover:bg-[#a48152]"
                         onClick={handleLogout}>Logout</button>
                 </div>
             </nav>

@@ -93,32 +93,32 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-gray-800 w-full h-screen">
+    <div className="bg-[#383433] w-full h-screen">
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
-      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-gray-800`}>
+      <div className={`transition-all duration-300 ${isShrunk ? "ml-[80px]" : "ml-[300px]"} p-4 bg-[#383433]`}>
         <h1 className="text-3xl font-bold text-white mb-6">Hostel Warden Dashboard</h1>
         
 
         <div className="flex justify-between space-x-4 mb-6">
-          <div className="w-full bg-gray-900 shadow-md rounded-lg p-4">
+          <div className="w-full bg-[#282524] shadow-md rounded-lg p-4">
             <h2 className="text-xl font-semibold text-white mb-4">Complaints Status</h2>
             <Bar data={complaintsData} />
           </div>
 
-          <div className="w-full bg-gray-900 shadow-md rounded-lg p-4">
+          <div className="w-full bg-[#282524] shadow-md rounded-lg p-4">
             <h2 className="text-xl font-semibold text-white mb-4">Gate Pass Usage</h2>
             <Doughnut data={gatePassData} />
           </div>
 
-          <div className="w-full bg-gray-900 shadow-md rounded-lg p-4">
+          <div className="w-full bg-[#282524] shadow-md rounded-lg p-4">
             <h2 className="text-xl font-semibold text-white mb-4">Total Students</h2>
             <Line data={studentsData} />
           </div>
         </div>
 
 
-        <div className="bg-gray-900 shadow-md rounded-lg p-4">
+        <div className="bg-[#282524] shadow-md rounded-lg p-4">
           <h2 className="text-xl font-semibold text-white mb-4">Additional Information</h2>
           <p className="text-white">Total Complaints: {complaints.reduce((sum, c) => sum + c.count, 0)}</p>
           <p className="text-white">Mess Security Level: {messSecurity}%</p>

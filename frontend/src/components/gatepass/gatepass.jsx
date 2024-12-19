@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import axios from "axios";
 import '../repeatPop.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Gatepass = () => {
     const navigate = useNavigate();
@@ -101,14 +103,28 @@ const Gatepass = () => {
 
 
         if (outDate < today) {
-            return alert("You cannot apply for a gate pass for past dates.");
+            return toast.error("You cannot apply for a gate pass for past dates.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
         }
 
         const maxAllowedOutDate = new Date(today);
         maxAllowedOutDate.setDate(today.getDate() + 2);
 
         if (outDate > maxAllowedOutDate) {
-            return alert("Gate passes can only be applied for the current day or up to 2 days in advance.");
+            return toast.error("You can appply gatepass in advance for max of 2 days", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
         }
 
         const outTime = new Date(`2024-01-01T${formData.outtime}:00`);
@@ -117,40 +133,88 @@ const Gatepass = () => {
         const minOutTime = new Date(2024, 0, 1, 6, 0, 0);
         const maxInTime = new Date(2024, 0, 1, 20, 0, 0);
 
-        const currentTime = new Date();
-        // alert(currentTime.getTime());
 
 
         if (formData.outday === "Day Out") {
             if (outTime < minOutTime || outTime > maxInTime) {
-                return alert("For Day Out, Out-Time must be between 6 AM and 8 PM.");
+                return toast.error("For Day Out, Out-Time must be between 6 AM and 8 PM.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
             }
 
             if (inTime < minOutTime || inTime > maxInTime) {
-                return alert("In-Time must be between 6 AM and 8 PM.");
+                return toast.error("In-Time must be between 6 AM and 8 PM.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
+                
             }
 
             if (outTime >= inTime) {
-                return alert("Out-Time must be earlier than In-Time.");
+                return toast.error("Out-Time must be earlier than In-Time.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
             }
         }
 
         if (formData.outday === "Night Out") {
             if (!inDate) {
-                return alert("Please provide an In-Date for Night Out.");
+                return toast.error("Please provide an In-Date for Night Out.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
             }
 
             if (inDate <= outDate) {
-                return alert("In-Date must be later than Out-Date.");
+                return toast.error("In-Date must be later than Out-Date.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
             }
 
             const dayDifference = Math.ceil((inDate - outDate) / (1000 * 60 * 60 * 24));
             if (dayDifference > 7) {
-                return alert("Night Out cannot exceed 7 days. Contact the warden for approval.");
+                return toast.error("Night Out cannot exceed 7 days. Contact the warden for approval.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
             }
 
             if (outDate > maxAllowedOutDate) {
-                return alert("Night Out passes can only be applied for the current day or up to 2 days in advance.");
+                return toast.error("Night Out passes can only be applied for the current day or up to 2 days in advance.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
             }
         }
 
@@ -161,11 +225,25 @@ const Gatepass = () => {
                 { withCredentials: true }
             );
             if (response.data.exists) {
-                return alert("You can only apply for one Day Out gate pass per day.");
+                return toast.error("You can only apply for one Day Out gate pass per day.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                  });
             }
         } catch (err) {
             const errorMessage = err.response?.data?.message || "An error occurred";
-            return alert(errorMessage);
+            return toast.error(errorMessage, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
         }
 
         try {
@@ -174,11 +252,25 @@ const Gatepass = () => {
                 formData,
                 { withCredentials: true }
             );
-            alert("Gate Pass Applied Successfully");
+            toast.success("Gate Pass Applied Successfully", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
             navigate("/student");
         } catch (err) {
             const errorMessage = err.response?.data?.message || "An error occurred";
-            alert(errorMessage);
+            toast.error(errorMessage, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
         }
     };
 
@@ -195,6 +287,7 @@ const Gatepass = () => {
     return (
         <div className="fixer">
             <div className="black__div"></div>
+            <ToastContainer />
             <div className="w-full h-screen bg-transparent flex items-center justify-center main_form">
                 <div className="signup-container w-[70%] h-[90%] bg-white rounded-2xl flex overflow-hidden p-2 px-2 relative gap-3">
                     <img
@@ -341,7 +434,7 @@ const Gatepass = () => {
                             <div className="w-full h-full flex items-end">
                                 <button
                                     onClick={handleSubmit}
-                                    className="w-full text-[30px] text-white bg-[#e82574] p-3 rounded-2xl hover:bg-[#bc1c5c] transition-all"
+                                    className="w-full text-[30px] text-white bg-[#282524] p-3 rounded-2xl hover:bg-[#a48152] transition-all"
                                 >
                                     Apply
                                 </button>

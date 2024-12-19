@@ -14,6 +14,7 @@ const Navbar = ({ isShrunk }) => {
       if (response.status === 200) {
         localStorage.clear();
         navigate("/");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Logout failed:", error);
@@ -40,11 +41,11 @@ const Navbar = ({ isShrunk }) => {
 
   return (
     <div
-      className={`bg-gray-900 text-white flex justify-between items-center px-4 py-3 transition-all duration-300 ${
+      className={`bg-[#282524] text-white flex justify-between items-center px-4 py-3 transition-all duration-300 ${
         isShrunk ? "ml-[80px]" : "ml-[300px]"
       } ${isShrunk ? "w-[calc(100%-80px)]" : "w-[calc(100%-300px)]"}`}
     >
-      <div className="text-2xl font-bold text-[#e82574]">CampusMate</div>
+      <div className="text-2xl font-bold text-white">Campus<span className='text-[#DFC9AC]'>Mate</span></div>
       <div className="flex items-center space-x-4">
         {wardenProfile ? (
           <div className="flex items-center space-x-2">
@@ -59,7 +60,7 @@ const Navbar = ({ isShrunk }) => {
           <Loading loadingTime={2000}/>
         )}
         <button
-          className="btn bg-[#e82574] text-white py-2 px-4 rounded hover:bg-pink-500"
+          className="btn bg-[#c4a47b] text-white py-2 px-4 rounded hover:bg-[#a48152]"
           onClick={handleLogout}
         >
           Logout

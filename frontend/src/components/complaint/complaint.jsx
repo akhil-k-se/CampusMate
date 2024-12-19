@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import axios from "axios";
 import "../repeatPop.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Complaint = () => {
   const navigate = useNavigate();
@@ -81,12 +83,26 @@ const Complaint = () => {
         formData,
         { withCredentials: true }
       );
-      alert("Complaint Registered Successfully");
+      toast.success("Complaint registered Successsfully", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
       navigate("/student");
     } catch (err) {
       console.error(err);
       const errorMessage = err.response?.data?.message || "An error occurred";
-      alert(errorMessage);
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -100,6 +116,7 @@ const Complaint = () => {
   return (
     <div className="fixer">
       <div className="black__div"></div>
+      <ToastContainer />
       <div className="w-full h-screen bg-transparent flex items-center justify-center main_form">
         <div className="signup-container w-[70%] h-[70%] bg-white rounded-2xl flex overflow-hidden p-2 px-2 relative gap-3">
           <img
@@ -207,7 +224,7 @@ const Complaint = () => {
               <div className="w-full flex items-end">
                 <button
                   onClick={handleSubmit}
-                  className="w-full text-[30px] text-white bg-[#e82574] p-3 rounded-2xl hover:bg-[#bc1c5c] transition-all"
+                  className="w-full text-[30px] text-white bg-[#282524] p-3 rounded-2xl hover:bg-[#a48152] transition-all"
                 >
                   Submit
                 </button>

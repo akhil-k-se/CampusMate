@@ -12,6 +12,7 @@ import { BsFillPencilFill } from "react-icons/bs";
 import axios from "axios";
 import MarqueeComponent from "../Marquee/MarqueeComponent";
 import Hero from "./hero";
+import gsap from "gsap";
 
 function StudentLandingPage() {
   const [loopNum, setLoopNum] = useState(0);
@@ -56,24 +57,47 @@ function StudentLandingPage() {
       setLoopNum(loopNum + 1);
       setDelta(500);
     }
+
+
+    gsap.killTweensOf("body");
+
+    // gsap.to("body", {
+    //   backgroundColor: "#383433", // Dark color when scrolling down
+    //   duration: 1,
+    //   scrollTrigger: {
+    //     trigger: "#marquee",
+    //     start: "top 20%",
+    //     end: "bottom bottom",
+    //     scrub: 3,
+    //     toggleActions: "play reverse play reverse", // Play forward when scrolling down, reverse when scrolling up
+    //   },
+    // });
+    
+
   };
 
   function handlePopBook() {
     const forms = document.getElementsByClassName("popBook");
     for (let i = 0; i < forms.length; i++) {
       forms[i].style.transform = "scale(1)";
+      forms[i].style.zIndex = "9999"; 
+      // forms[i].style.position = "relative";
+      
     }
   }
   function handlePopGate() {
     const forms = document.getElementsByClassName("popGate");
     for (let i = 0; i < forms.length; i++) {
       forms[i].style.transform = "scale(1)";
+      forms[i].style.zIndex = "9999"; 
+
     }
   }
   function handlePopComplaint() {
     const forms = document.getElementsByClassName("popComplaint");
     for (let i = 0; i < forms.length; i++) {
       forms[i].style.transform = "scale(1)";
+      forms[i].style.zIndex = "9999"; 
     }
   }
   const [userData, setUserData] = useState(null);
@@ -132,7 +156,7 @@ function StudentLandingPage() {
 
             <div className="flex gap-x-10">
               <h1 className="text-[5rem] font-bold hidden lg:block z-20 text-yellow-50">
-                Welcome<span className="text-pink-500">!</span>
+                Welcome<span className="text-[#a48152]">!</span>
               </h1>
               <h1 className="text-[2rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] font-bold z-20 text-yellow-50">
                 {userData}
@@ -141,22 +165,19 @@ function StudentLandingPage() {
             <div className="grid grid-cols-2 gap-x-20">
               <div className="flex flex-col items-center gap-2 md:gap-10">
                 <p className="text-xl hidden lg:block text-white z-20 font-semibold">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
-                  non accusamus cum vel alias est repellendus sunt fugit neque
-                  libero amet quis quos, debitis quibusdam nam illum sapiente
-                  provident nesciunt?
+                Join our vibrant campus community and make yourself at home. From cozy rooms to modern amenities, we've got everything you need for a comfortable stay. Manage your hostel life effortlessly through our easy-to-use app.
                 </p>
               </div>
               <div className="flex flex-col items-center gap-20 text-white z-20 font-semibold">
                 <p className="text-xl hidden lg:block text-right">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
-                  non accusamus cum vel alias est repellendus sunt fugit neque
-                  libero amet quis quos, debitis quibusdam nam illum sapiente
-                  provident nesciunt?
+                Your comfort is our priority. Manage your hostel life effortlessly - from room selection to maintenance requests, everything you need is just a tap away.
                 </p>
-                <button className="bg-pink-500 text-white h-10 px-8 rounded-3xl z-20">
+                {
+                  !isRoomBooked && 
+                  (<button onClick={handlePopBook} className="bg-[#a48152] text-white h-10 px-8 rounded-3xl z-20">
                   Book Room
-                </button>
+                </button>)
+                }
               </div>
             </div>
             <div className="absolute overflow-hidden w-[40vw] h-[40vw] lg:w-[25vw] lg:h-[25vw] bg-black rounded-full left-[35vw] lg:left-[35%] bottom-40 lg:-bottom-20 border-white border-8 z-20">
@@ -194,19 +215,19 @@ function StudentLandingPage() {
           </div>
         </section>
 
-        <MarqueeComponent />
+        <MarqueeComponent id="marquee" />
 
         <section
           class="section__container about__container flex flex-wrap"
           id="complaint"
         >
           <div class="about__image">
-            <img src="/complaint.jpg" alt="about" />
+            <img src="/complaint.jpg" alt="about"/>
           </div>
           <div class="about__content">
-            <p class="section__subheader">COMPLAINTS</p>
-            <h2 class="section__header">Nothing goes unheard !</h2>
-            <p class="section__description">
+            <p class="section__subheader ">COMPLAINTS</p>
+            <h2 class="section__header ">Nothing goes unheard !</h2>
+            <p class="section__description ">
               With a focus on quality accommodations, personalized experiences,
               and seamless booking, our platform is dedicated to ensuring that
               every traveler embarks on their dream holiday with confidence and
@@ -221,8 +242,8 @@ function StudentLandingPage() {
         </section>
 
         <section class="explore" id="explore">
-          <p class="section__subheader">EXPLORE</p>
-          <h2 class="section__header">What's New Today.</h2>
+          <p class="section__subheader ">EXPLORE</p>
+          <h2 class="section__header ">What's New Today.</h2>
           <div class="explore__bg relative">
             <div className="black-div"></div>
             <div class="explore__content">

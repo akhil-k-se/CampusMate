@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SuperLogin() {
 
@@ -24,10 +26,26 @@ function SuperLogin() {
             }
             );
             console.log("The response is ", response.data)
-            alert("Login successful!");
-            navigate("/super-admin/dashboard");
+            toast.success("Login successful!", {
+                                            position: "top-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                          });
+            setTimeout(() => {
+                navigate("/super-admin/dashboard");
+            }, 1000);
         } catch (error) {
-            alert(error.response?.data?.message || "Login failed");
+            toast.error(error.response?.data?.message || "Login failed", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
         }
     };
 
@@ -37,6 +55,7 @@ function SuperLogin() {
     };
     const handleHomeClick = () => {
         navigate("/");
+        window.location.reload();
     }
 
     const handleChangeAgain = (e) => {
@@ -49,6 +68,7 @@ function SuperLogin() {
 
     return (
         <div className="logMain">
+        <ToastContainer />
             <div
                 class="messContainer active"
                 id="messContainer"

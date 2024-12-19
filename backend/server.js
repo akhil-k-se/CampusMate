@@ -10,8 +10,8 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    // origin: "https://stackmasters-campusmate.vercel.app",
-    origin:"https://stackmasters-campusmate.vercel.app",
+    origin: "https://stackmasters-campusmate.vercel.app",
+    // origin:"http://localhost:3000",
     credentials: true,
   })
 );
@@ -28,6 +28,7 @@ const student = require("./models/studentModel");
 const Complaints = require("./models/complaintModel");
 const gatepass = require("./models/gatepassModel");
 const Guard = require("./models/gateSecurityModel");
+const Mess = require("./models/messSecurity")
 
 const complaint = require("./Controllers/complaintController");
 const reserve = require("./Controllers/reservationController");
@@ -626,6 +627,16 @@ app.get("/super-admin/guards", async (req, res) => {
     res.send("Internal Server Error");
   }
 });
+
+app.get('/warden/mess', async(req, res)=> {
+  try {
+    const mess = await Mess.find({})
+    res.json(mess);
+  } catch (error) {
+    console.error(error);
+    res.send("Internal Server Error");
+  }
+})
 
 app.get("/super-admin/wardens", async (req, res) => {
   try {

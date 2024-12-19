@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import axios from "axios";
 import "../repeatPop.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Bookings = () => {
   const navigate = useNavigate();
@@ -136,7 +138,14 @@ const handleNextStep = () => {
   if (validateStep()) {
     setStep(step + 1); // Proceed to the next step if validation passes
   } else {
-    alert("Please fill out all required fields before proceeding..");
+    toast.error("Please fill out all required fields before proceeding..", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
   }
 };
 
@@ -156,7 +165,14 @@ const handleNextStep = () => {
 
   const handleSubmit = async () => {
     if (!termsAgreed) {
-      alert("You must agree to the terms and conditions.");
+      toast.error("You must agree to the terms and conditions.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       return;
     }
   
@@ -164,11 +180,6 @@ const handleNextStep = () => {
       // Step 1: Send the booking form data to your backend
       console.log(formData);
       
-      const response = await axios.post(
-        "https://campus-mate.onrender.com/reservation", // Your existing reservation API
-        formData,
-        { withCredentials: true }
-      );
   
       // Step 2: Initialize payment (call Razorpay backend to create order ID)
       const paymentResponse = await axios.post("https://campus-mate.onrender.com/api/payment/create-order", {
@@ -189,10 +200,23 @@ const handleNextStep = () => {
         order_id: order_id, // Order ID return0ed by your backend
         handler: async function (response) {
           // Step 4: Handle payment success
-          alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+          toast.success("Payment Successful! Payment ID: " + response.razorpay_payment_id, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
   
+          const responseReserve = await axios.post(
+            "https://campus-mate.onrender.com/reservation", // Your existing reservation API
+            formData,
+            { withCredentials: true }
+          );
           // Navigate to payment confirmation page
-          navigate("/student/booking/payment");
+        window.location.reload();
+          navigate("/student");
         },
         prefill: {
           name: formData.firstName + " " + formData.lastName,
@@ -200,7 +224,7 @@ const handleNextStep = () => {
           contact: formData.phone,
         },
         theme: {
-          color: "#e82574",
+          color: "#282524",
         },
       };
   
@@ -208,13 +232,33 @@ const handleNextStep = () => {
       razorpay.open();
   
       razorpay.on("payment.failed", function (response) {
-        alert("Payment Failed. Please try again.");
+        toast.error("Payment Failed. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        razorpay.close();
         console.error(response.error);
+        window.location.reload();
+        return navigate('/student');
+
       });
+
+
     } catch (error) {
       console.error("Error in Booking", error);
-      const errorMessage = error.response?.data?.message || "An error occurred";
-      alert(errorMessage);
+      const errorMessage = error.responseReserve?.data?.message || "An error occurred";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
   
@@ -228,6 +272,7 @@ const handleNextStep = () => {
 
   return (
     <div className="fixer">
+    <ToastContainer />
       <div className="black__div"></div>
       <div className="w-full h-screen bg-transparent flex items-center justify-center main_form">
         <div className="signup-container w-[70%] h-[70%] bg-white rounded-2xl flex p-2 px-2 relative gap-3">
@@ -313,7 +358,7 @@ const handleNextStep = () => {
                 <div className="w-full h-full flex items-end">
                   <button
                     onClick={handleNextStep}
-                    className="w-full text-[30px] text-white bg-[#e82574] p-3 rounded-2xl hover:bg-[#bc1c5c] transition-all"
+                    className="w-full text-[30px] text-white bg-[#282524] p-3 rounded-2xl hover:bg-[#a48152] transition-all"
                   >
                     Next
                   </button>
@@ -400,7 +445,7 @@ const handleNextStep = () => {
                   </button>
                   <button
                     onClick={handleNextStep}
-                    className="w-full text-[30px] text-white bg-[#e82574] p-3 rounded-2xl hover:bg-[#bc1c5c] transition-all"
+                    className="w-full text-[30px] text-white bg-[#282524] p-3 rounded-2xl hover:bg-[#a48152] transition-all"
                   >
                     Next
                   </button>
@@ -456,7 +501,7 @@ const handleNextStep = () => {
                   </button>
                   <button
                     onClick={handleNextStep}
-                    className="w-full text-[30px] text-white bg-[#e82574] p-3 rounded-2xl hover:bg-[#bc1c5c] transition-all"
+                    className="w-full text-[30px] text-white bg-[#282524] p-3 rounded-2xl hover:bg-[#a48152] transition-all"
                   >
                     Next
                   </button>
@@ -571,7 +616,7 @@ const handleNextStep = () => {
                   </button>
                   <button
                     onClick={handleSubmit}
-                    className="w-full text-[30px] text-white bg-[#e82574] p-3 rounded-2xl hover:bg-[#bc1c5c] transition-all"
+                    className="w-full text-[30px] text-white bg-[#282524] p-3 rounded-2xl hover:bg-[#a48152] transition-all"
                   >
                     Book
                   </button>

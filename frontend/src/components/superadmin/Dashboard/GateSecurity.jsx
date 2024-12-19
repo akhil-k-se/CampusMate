@@ -3,6 +3,8 @@ import Sidebar from "./shared/Sidebar";
 import Navbar from "./shared/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const GateSecurity = () => {
@@ -66,19 +68,37 @@ const GateSecurity = () => {
     setError("");
 
     try {
-      const response = await axios.post("https://campus-mate.onrender.com/gatesecurity/signup", {
-        name,
-        email,
-        password,
-        confirmPassword
-      }, {
-        withCredentials: true
-      });
+      const response = await axios.post(
+        "https://campus-mate.onrender.com/gatesecurity/signup",
+        {
+          name,
+          email,
+          password,
+          confirmPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
-      alert("User Created successfully !")
+      toast.success("User Created successfully !", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (error) {
       const errmsg = error.response?.data?.msg;
-      alert(errmsg || "An error occurred.");
+      toast.error(errmsg || "An error occurred.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -87,8 +107,11 @@ const GateSecurity = () => {
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
       <div className="w-full h-[91.75vh] bg-gray-800 flex justify-center items-center">
+        <ToastContainer />
         <div className="w-[33%] h-[650px] bg-gray-900 rounded-xl ml-[300px] p-6">
-          <p className="text-[25px] font-semibold flex items-center justify-center mt-[20px] mb-[40px] text-blue-500">Create Account</p>
+          <p className="text-[25px] font-semibold flex items-center justify-center mt-[20px] mb-[40px] text-blue-500">
+            Create Account
+          </p>
 
           <form onSubmit={handleSubmit}>
             <input

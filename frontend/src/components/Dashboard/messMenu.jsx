@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './shared/Sidebar';
 import Navbar from './shared/Navbar';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MessMenu = () => {
   const [isShrunk, setIsShrunk] = useState(false);
@@ -53,7 +55,14 @@ const MessMenu = () => {
     e.preventDefault();
 
     if (!image || !menuDescription) {
-      return alert('Please upload an image and provide a description.');
+      return toast.error('Please upload an image and provide a description.', {
+                          position: "top-right",
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                        });
     }
 
     const formData = new FormData();
@@ -72,13 +81,34 @@ const MessMenu = () => {
       if (response.data.success) {
         setMenuImageUrl(response.data.imageUrl);
         setUpdatedDescription(menuDescription);
-        alert('Mess Menu updated successfully!');
+        toast.success('Mess Menu updated successfully!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       } else {
-        alert('Failed to update the Mess Menu.');
+        toast.error('Failed to update the Mess Menu.', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (error) {
       console.error('Error uploading mess menu:', error);
-      alert('Error uploading mess menu. Please try again.');
+      toast.error('Failed to update the Mess Menu. Please try again', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -86,8 +116,9 @@ const MessMenu = () => {
     <>
       <Sidebar isShrunk={isShrunk} setIsShrunk={setIsShrunk} />
       <Navbar isShrunk={isShrunk} />
-      <div className={`transition-all duration-300 ${isShrunk ? 'ml-[80px]' : 'ml-[300px]'} p-4 bg-gray-800`}>
-        <div className="bg-gray-900 shadow-md rounded-lg p-6">
+      <div className={`transition-all duration-300 ${isShrunk ? 'ml-[80px]' : 'ml-[300px]'} p-4 bg-[#383524]`}>
+      <ToastContainer />
+        <div className="bg-[#282524] shadow-md rounded-lg p-6">
           <h2 className="text-2xl text-white font-semibold mb-4">Update Mess Menu</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -111,7 +142,7 @@ const MessMenu = () => {
                 className="block w-full p-2 mt-2 text-gray-700"
               />
             </div>
-            <button type="submit" className="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">
+            <button type="submit" className="bg-[#a48152] text-white py-2 px-4 rounded-lg hover:bg-[#a48152]">
               Update Menu
             </button>
           </form>
