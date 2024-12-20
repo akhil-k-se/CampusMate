@@ -5,23 +5,23 @@ import axios from "axios";
 
 function Navbar() {
   const navigate = useNavigate();
-  const [isRoomBooked, setIsRoomBooked] = useState(false);
+//   const [isRoomBooked, setIsRoomBooked] = useState(false);
   
 
-  useEffect(async ()=>{
-        try {
-          const response = await axios.get(
-            "https://campus-mate.onrender.com/student/isBooked",
-            {
-              withCredentials: true, // Include credentials for cookies
-            }
-          );
-          setIsRoomBooked(response.data.isRoomBooked);
-          console.log(response.data.isRoomBooked); // Update booking status
-        } catch (err) {
-          console.error("Error fetching room booking status:", err);
-        }
-})
+//   useEffect(async ()=>{
+//         try {
+//           const response = await axios.get(
+//             "https://campus-mate.onrender.com/student/isBooked",
+//             {
+//               withCredentials: true, // Include credentials for cookies
+//             }
+//           );
+//           setIsRoomBooked(response.data.isRoomBooked);
+//           console.log(response.data.isRoomBooked); // Update booking status
+//         } catch (err) {
+//           console.error("Error fetching room booking status:", err);
+//         }
+// })
 
   const handleLogout = async () => {
     try {
