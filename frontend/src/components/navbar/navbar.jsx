@@ -75,18 +75,13 @@ function Navbar() {
           <li>
             <a href="#contact">Contact</a>
           </li>
-{
-  !isRoomBooked && (
-    <span>
     <li>
             <a onClick={handleQR}>Your QR</a>
           </li>
           <li>
             <a onClick={handleMessMenu}>MessMenu</a>
           </li>
-    </span>
-  )
-}
+
         </ul>
         <button className="btn nav__btn" onClick={handleLogout}>
           Logout
