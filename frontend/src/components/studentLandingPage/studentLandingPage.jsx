@@ -142,7 +142,7 @@ function StudentLandingPage() {
   return (
     <div className="overflow-hidden">
       <section className="main_page w-screen">
-        <Navbar />
+        <Navbar booked={isRoomBooked} />
         <div className="flex items-center justify-center w-full">
           <div
             className="relative h-[70vh] w-[80vw] my-[2vh] rounded-3xl overflow-hidden flex flex-col items-center gap-20 px-10"

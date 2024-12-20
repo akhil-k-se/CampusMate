@@ -1,27 +1,10 @@
-import React, { useEffect, useState } from "react";
-import "./navbar.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./navbar.css";
 
-function Navbar() {
+function Navbar({ booked }) {
   const navigate = useNavigate();
-//   const [isRoomBooked, setIsRoomBooked] = useState(false);
-  
-
-//   useEffect(async ()=>{
-//         try {
-//           const response = await axios.get(
-//             "https://campus-mate.onrender.com/student/isBooked",
-//             {
-//               withCredentials: true, // Include credentials for cookies
-//             }
-//           );
-//           setIsRoomBooked(response.data.isRoomBooked);
-//           console.log(response.data.isRoomBooked); // Update booking status
-//         } catch (err) {
-//           console.error("Error fetching room booking status:", err);
-//         }
-// })
 
   const handleLogout = async () => {
     try {
@@ -40,12 +23,15 @@ function Navbar() {
       console.error("Logout failed:", error);
     }
   };
+
   const handleQR = () => {
     navigate("/student/QR");
   };
+
   const handleMessMenu = () => {
     navigate("/student/mess");
   };
+
   return (
     <>
       <nav>
@@ -75,13 +61,16 @@ function Navbar() {
           <li>
             <a href="#contact">Contact</a>
           </li>
-    <li>
-            <a onClick={handleQR}>Your QR</a>
-          </li>
-          <li>
-            <a onClick={handleMessMenu}>MessMenu</a>
-          </li>
-
+          {booked && (
+            <>
+              <li>
+                <a onClick={handleQR}>Your QR</a>
+              </li>
+              <li>
+                <a onClick={handleMessMenu}>Mess Menu</a>
+              </li>
+            </>
+          )}
         </ul>
         <button className="btn nav__btn" onClick={handleLogout}>
           Logout
