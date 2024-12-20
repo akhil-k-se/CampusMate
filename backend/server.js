@@ -126,71 +126,139 @@ app.get("/qr-scan/:enrollmentID", checkSecurity, async (req, res) => {
     }
 
     if (role == "MessSecurity") {
-      user.messEntry = user.messEntry === "OUT" ? "IN" : "OUT";
-      await user.save();
-
-      return res.send(`
-<html>
-  <head>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: gray;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-
-      .card {
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        width: 300px;
-        padding: 20px;
-        text-align: center;
-        transition: transform 0.3s ease;
-      }
-
-      h1 {
-        color: #27ae60;
-        font-size: 24px;
-        margin-bottom: 20px;
-      }
-
-      p {
-        color: #555;
-        font-size: 1.2em;
-      }
-
-      img {
-        margin-top: 20px;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 20px;
-      }
-
-      strong {
-        color: #333;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="card">
-      <h1>Mess Entry Status Updated</h1>
-      <p>Enrollment ID: <strong>${enrollmentID}</strong></p>
-      <p><strong>${user.name}</strong></p>
-      <img src="${user.img}" alt="Student Image" />
-      <p>New Mess Entry Status: <strong>${user.messEntry}</strong></p>
-    </div>
-  </body>
-</html>
+      // Check if the user is already "IN-OUT"
+      if (user.messEntry === "IN-OUT") {
+        return res.send(`
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+          }
+    
+          .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+          }
+    
+          h1 {
+            color: #e74c3c;
+            font-size: 24px;
+            margin-bottom: 20px;
+          }
+    
+          p {
+            color: #555;
+            font-size: 1.2em;
+          }
+    
+          img {
+            margin-top: 20px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+          }
+    
+          strong {
+            color: #333;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1>Access Denied</h1>
+          <p>Enrollment ID: <strong>${enrollmentID}</strong></p>
+          <p><strong>${user.name}</strong></p>
+          <img src="${user.img}" alt="Student Image" />
+          <p>Your current mess entry status is: <strong>${user.messEntry}</strong></p>
+          <p>You are not allowed to enter the mess again until your status is updated.</p>
+        </div>
+      </body>
+    </html>
         `);
-    } else if (role == "GateSecurity") {
+      } else {
+        // Update the mess entry status if it's not "IN-OUT"
+        user.messEntry = user.messEntry === "OUT" ? "IN" : "IN-OUT";
+        await user.save();
+    
+        return res.send(`
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+          }
+    
+          .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+          }
+    
+          h1 {
+            color: #27ae60;
+            font-size: 24px;
+            margin-bottom: 20px;
+          }
+    
+          p {
+            color: #555;
+            font-size: 1.2em;
+          }
+    
+          img {
+            margin-top: 20px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+          }
+    
+          strong {
+            color: #333;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1>Mess Entry Status Updated</h1>
+          <p>Enrollment ID: <strong>${enrollmentID}</strong></p>
+          <p><strong>${user.name}</strong></p>
+          <img src="${user.img}" alt="Student Image" />
+          <p>New Mess Entry Status: <strong>${user.messEntry}</strong></p>
+        </div>
+      </body>
+    </html>
+        `);
+      }
+    }
+     else if (role == "GateSecurity") {
       const gatePasses = await reservation
         .find({ enrollmentId: enrollmentID })
         .sort({ createdAt: -1 });

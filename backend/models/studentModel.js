@@ -69,8 +69,8 @@ const studentSchema = new mongoose.Schema({
     messEntry: {
         type: String,
         enum: {
-            values: ['IN', 'OUT'],
-            message: 'Mess entry must be either IN or OUT'
+            values: ['IN', 'OUT','IN-OUT'],
+            message: 'Mess entry must be IN ,OUT or IN-OUT'
         },
         default: 'OUT'
     },
