@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./navbar.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Navbar() {
   const navigate = useNavigate();
+  const [isRoomBooked, setIsRoomBooked] = useState(false);
+  
+
+  useEffect(async ()=>{
+        try {
+          const response = await axios.get(
+            "https://campus-mate.onrender.com/student/isBooked",
+            {
+              withCredentials: true, // Include credentials for cookies
+            }
+          );
+          setIsRoomBooked(response.data.isRoomBooked);
+          console.log(response.data.isRoomBooked); // Update booking status
+        } catch (err) {
+          console.error("Error fetching room booking status:", err);
+        }
+})
 
   const handleLogout = async () => {
     try {
@@ -58,12 +75,18 @@ function Navbar() {
           <li>
             <a href="#contact">Contact</a>
           </li>
-          <li>
+{
+  !isRoomBooked && (
+    <span>
+    <li>
             <a onClick={handleQR}>Your QR</a>
           </li>
           <li>
             <a onClick={handleMessMenu}>MessMenu</a>
           </li>
+    </span>
+  )
+}
         </ul>
         <button className="btn nav__btn" onClick={handleLogout}>
           Logout
