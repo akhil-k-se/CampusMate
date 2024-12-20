@@ -135,7 +135,7 @@ const updateGatepassStatus = async (req, res) => {
         let emailBody = `
             Dear ${student.name},
 
-            Your gatepass request has been ${status == 'APpproved' ? 'Approved' : 'Rejected'}.
+            Your gatepass request has been ${status == 'Approved' ? 'Approved' : 'Rejected'}.
 
             - EnrollmentID: ${student.enrollmentID}
             - Status: ${status == 'Approved' ? 'Approved' : 'Rejected'}
