@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
-console.log(process.env);
 const JWT_SECRET = process.env.JWT_SECRET;
 
 
@@ -9,6 +8,8 @@ const storedUsername = process.env.ADMIN_USERNAME;
 const storedPassword = process.env.ADMIN_PASSWORD;
 
 const login = async (req, res) => {
+console.log(process.env);
+console.log("The key in env is ",JWT_SECRET);
     const { email, password } = req.body;
     console.log(email," ",password," ",storedUsername," ",storedPassword);
     if (!email || !password) {
