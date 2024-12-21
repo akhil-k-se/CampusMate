@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
-const JWT_SECRET = process.env.jwtsecret;
+const jwtsecret = process.env.JWT_SECRET;
 
 
 const storedUsername = process.env.ADMIN_USERNAME;
@@ -9,7 +9,7 @@ const storedPassword = process.env.ADMIN_PASSWORD;
 
 const login = async (req, res) => {
 console.log(process.env);
-console.log("The key in env is ",JWT_SECRET);
+console.log("The key in env is ",jwtsecret);
     const { email, password } = req.body;
     console.log(email," ",password," ",storedUsername," ",storedPassword);
     if (!email || !password) {
@@ -19,7 +19,7 @@ console.log("The key in env is ",JWT_SECRET);
     if (email === storedUsername) {
         const isPasswordCorrect = password === storedPassword
         if (isPasswordCorrect) {
-            const token = jwt.sign({role:'super-admin'},JWT_SECRET);
+            const token = jwt.sign({role:'super-admin'},jwtsecret);
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: true, // Send cookie over HTTPS only
