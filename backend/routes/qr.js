@@ -1,6 +1,8 @@
 const MessSecurity = require("../models/messSecurity");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "123";
+const dotenv = require('dotenv');
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET
 
 
 const processQR = async (req, res) => {

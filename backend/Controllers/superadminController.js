@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = "123";
 
 require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 const storedUsername = process.env.ADMIN_USERNAME;
 const storedPassword = process.env.ADMIN_PASSWORD;

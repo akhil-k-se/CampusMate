@@ -20,7 +20,7 @@ const jwt = require("jsonwebtoken");
 
 const checkSecurity = require("./middlewares/checkSecurity").checkSecurity;
 
-const JWT_SECRET = "123";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const admin = require("./models/adminModel");
 const reservation = require("./models/gatepassModel");

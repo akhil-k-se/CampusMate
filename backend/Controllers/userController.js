@@ -1,6 +1,6 @@
 const User = require("../models/studentModel");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "123";
+const dotenv = require('dotenv');
 const bcrypt = require("bcrypt");
 const QRcode = require("../helpers/qrCodeGenerator");
 const Admin = require("../models/adminModel");
@@ -8,6 +8,11 @@ const Reservation = require("../models/reservationModel");
 const GatePass = require("../models/gatepassModel");
 const Complaint = require("../models/complaintModel");
 const SendMail = require("../helpers/mailService");
+
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 const register = async (req, res) => {
   try {
