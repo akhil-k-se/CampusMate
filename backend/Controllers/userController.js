@@ -52,7 +52,6 @@ const register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ msg: "User already exists" });
     }
-
     console.log("Hello");
 
     // Get Cloudinary image URL
@@ -74,6 +73,9 @@ const register = async (req, res) => {
       img: imageUrl,
       qrCode: qrData,
     });
+
+    console.log(JWT_SECRET);
+
 
     // Generate JWT token
     const token = jwt.sign(
